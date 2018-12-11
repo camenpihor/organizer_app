@@ -1,4 +1,5 @@
 """Utilities for views.py."""
+from collections import namedtuple
 from django.http import Http404
 
 from .models.core import CORE_OBJECT_TYPES, Book, Fact, Question, Topic, Word
@@ -10,9 +11,11 @@ from .serializers import (
     WordSerializer,
 )
 
+CoreObjectInfo = namedtuple("CoreObjectInfo", ["model", "serializer"])
+
 
 def check_core_object_type(core_object_type):
-    """Ensure input is in list `CORE_OBJECT_TYPES`.
+    """Ensure input is in `models.core.CORE_OBJECT_TYPES`.
 
     Parameters
     ----------
@@ -29,7 +32,7 @@ def check_core_object_type(core_object_type):
 
 
 def get_core_object_from_string(core_object_type):
-    """Get the core object class from string.
+    """Get the core object class from its type.
 
     Parameters
     ----------
@@ -49,8 +52,8 @@ def get_core_object_from_string(core_object_type):
     raise Http404
 
 
-def get_serializer_from_model(core_object_model):
-    """Get the core object serializer class for model.
+def get_core_serializer_from_model(core_object_model):
+    """Get the core object serializer from its model.
 
     Parameters
     ----------
@@ -73,3 +76,25 @@ def get_serializer_from_model(core_object_model):
         if core_object_model == serializer.Meta.model:
             return serializer
     raise Http404
+
+
+def validate_and_get_core_object_info(core_object_type):
+    """Validate input and retrieve adjacent information.
+
+    After validating `core_object_type` is in `models.core.CORE_OBJECT_TYPES`, retrieve
+    the model class and serializer that are attached to the core object.
+
+    Parameters
+    ----------
+    core_object_type : str
+        Core object type.
+
+    Returns
+    -------
+    CoreObjectInfo
+        Model class and serializer attached to core object.
+    """
+    check_core_object_type(core_object_type)
+    core_object_class = get_core_object_from_string(core_object_type)
+    core_object_serializer = get_core_serializer_from_model(core_object_class)
+    return CoreObjectInfo(model=core_object_class, serializer=core_object_serializer)

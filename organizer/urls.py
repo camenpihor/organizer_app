@@ -13,11 +13,12 @@ from . import views
 # https://www.django-rest-framework.org/api-guide/format-suffixes/
 app_name = "organizer"
 urlpatterns = [
-    path("", views.base, name="base"),
-    path("<str:core_object_type>/home", views.home, name="home"),
-    path("<str:core_object_type>/archive", views.archive, name="archive"),
-    path("<str:core_object_type>/stats", views.stats, name="stats"),
-    path("<str:core_object_type>/<int:object_id>", views.item, name="item"),
+    path("<str:core_object_type>/", views.CoreObjectList.as_view(), name="core-list"),
+    path(
+        "<str:core_object_type>/<int:object_id>/",
+        views.CoreObjectDetail.as_view(),
+        name="core-detail",
+    ),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

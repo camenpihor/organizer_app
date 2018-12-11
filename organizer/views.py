@@ -9,143 +9,111 @@ This module contains the backends for the four (4) pages of the five (5) core ob
 which have been factored to contain similar information so that the pages of each core
 object can be served by the same functions.
 """
-from django.shortcuts import get_object_or_404, render
+from django.http import Http404
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework.reverse import reverse
+from rest_framework.views import APIView
 
-import numpy as np
-
-from .models.core import DEFAULT_CORE_OBJECT_TYPE
-from .view_utils import (
-    check_core_object_type,
-    get_core_object_from_string,
-    get_serializer_from_model,
-)
-
-HOME_PAGE_OBJECTS = 5
+from .view_utils import validate_and_get_core_object_info
 
 
 @api_view(["GET"])
-def base(request, response_format=None):
-    """Redirects URL "/" to the `DEFAULT_CORE_OBJECT_TYPE`'s home page.
-
-    Parameters
-    ----------
-    request : HttpRequest
-        Metadata about the request.
-
-    Returns
-    -------
-    HttpResponse
-        The home page of the `DEFAULT_CORE_OBJECT_TYPE`.
-    """
-    return home(
-        request,
-        core_object_type=DEFAULT_CORE_OBJECT_TYPE,
-        response_format=response_format,
+def api_root(request, response_format=None):
+    """Entry-point for the organizer API."""
+    return Response(
+        {
+            "questions": reverse(
+                "core-list",
+                kwargs={"core_object_type": "question"},
+                request=request,
+                format=response_format,
+            ),
+            "books": reverse(
+                "core-list",
+                kwargs={"core_object_type": "book"},
+                request=request,
+                format=response_format,
+            ),
+            "topics": reverse(
+                "core-list",
+                kwargs={"core_object_type": "topic"},
+                request=request,
+                format=response_format,
+            ),
+            "facts": reverse(
+                "core-list",
+                kwargs={"core_object_type": "fact"},
+                request=request,
+                format=response_format,
+            ),
+            "words": reverse(
+                "core-list",
+                kwargs={"core_object_type": "word"},
+                request=request,
+                format=response_format,
+            ),
+        }
     )
 
 
-@api_view(["GET"])
-def home(request, core_object_type, response_format=None):
-    """Serve the home page of the organizer.
+class CoreObjectList(APIView):
+    """List all core objects of a single type, or create new core object instance."""
 
-    Parameters
-    ----------
-    request : HttpRequest
-        Metadata about the request.
-    core_object_type : str
-        Must be one of `CORE_OBJECT_TYPES`.
+    def get(self, request, core_object_type, response_format=None):
+        """List all core objects of a single type."""
+        core_object_info = validate_and_get_core_object_info(core_object_type)
 
-    Returns
-    -------
-    HttpResponse
-        Metadata aboue the response.
-    """
-    check_core_object_type(core_object_type)
-    core_object_class = get_core_object_from_string(core_object_type)
-    core_object_serializer = get_serializer_from_model(core_object_class)
-
-    core_object_all = core_object_class.objects.all()
-    if core_object_all:
-        num_to_take = np.min([len(core_object_all), HOME_PAGE_OBJECTS])
-        data = np.random.choice(core_object_all, size=num_to_take, replace=False)
-        serializer = core_object_serializer(data, many=True)
+        core_object_all = core_object_info.model.objects.all()
+        serializer = core_object_info.serializer(data=core_object_all, many=True)
         return Response(serializer.data)
-    else:
+
+    def post(self, request, core_object_type, response_format=None):
+        """Create new core object instance."""
+        core_object_info = validate_and_get_core_object_info(core_object_type)
+
+        serializer = core_object_info.serializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class CoreObjectDetail(APIView):
+    """Retrieve, update or delete a core object instance."""
+
+    @staticmethod
+    def get_object(model, object_id):
+        """Get a core object instance and validate."""
+        try:
+            return model.objects.get(object_id=object_id)
+        except model.DoesNotExist:
+            raise Http404
+
+    def get(self, request, core_object_type, object_id, response_format=None):
+        """Get a core object instance."""
+        core_object_info = validate_and_get_core_object_info(core_object_type)
+
+        core_object = self.get_object(core_object_info.model, object_id)
+        serializer = core_object_info.serializer(core_object)
+        return Response(serializer.data)
+
+    def put(self, request, core_object_type, object_id, response_format=None):
+        """Update a core object instance."""
+        core_object_info = validate_and_get_core_object_info(core_object_type)
+
+        core_object = self.get_object(core_object_info.model, object_id)
+        serializer = core_object_info.serializer(core_object, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, core_object_type, object_id, response_format=None):
+        """Delete a core object instance."""
+        core_object_info = validate_and_get_core_object_info(core_object_type)
+
+        core_object = self.get_object(core_object_info.model, object_id)
+        core_object.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-
-
-@api_view(["GET"])
-def archive(request, core_object_type):
-    """Serve the archive page of the organizer.
-
-    Parameters
-    ----------
-    request : HttpRequest
-        Metadata about `the request.
-    core_object_type : str
-        Must be one of `CORE_OBJECT_TYPES`.
-
-    Returns
-    -------
-    HttpResponse
-        Metadata about the response.
-    """
-    check_core_object_type(core_object_type)
-    core_object_class = get_core_object_from_string(core_object_type)
-    core_object_serializer = get_serializer_from_model(core_object_class)
-
-    core_object_all = core_object_class.objects.all()
-    serializer = core_object_serializer(core_object_all, many=True)
-    return Response(serializer.data)
-
-
-def stats(request, core_object_type):
-    """Serve the stats page of the organizer.
-
-    Parameters
-    ----------
-    request : HttpRequest
-        Metadata about the request.
-    core_object_type : str
-        Must be one of `CORE_OBJECT_TYPES`.
-
-    Returns
-    -------
-    HttpResponse
-        Metadata about the response.
-    """
-    check_core_object_type(core_object_type)
-    context = {"page_name": "Stats", "core_object_type": core_object_type.capitalize()}
-
-    return render(request, template_name="stats.html", context=context)
-
-
-def item(request, core_object_type, object_id):
-    """Serve the item page of the organizer.
-
-    Parameters
-    ----------
-    request : HttpRequest
-        Metadata about the request.
-    core_object_type : str
-        Must be one of `CORE_OBJECT_TYPES`.
-    object_id : int
-        ID for object to retrieve and display.
-
-    Returns
-    -------
-    HttpResponse
-        Metadata about the response.
-    """
-    check_core_object_type(core_object_type)
-    context = {"page_name": "Item", "core_object_type": core_object_type.capitalize()}
-
-    core_object_class = get_core_object_from_string(core_object_type)
-    core_object = get_object_or_404(core_object_class, pk=object_id)
-    core_object.increment_num_views()
-    context["core_object"] = core_object
-
-    return render(request, template_name="item.html", context=context)
