@@ -11,6 +11,14 @@ from .serializers import (
     WordSerializer,
 )
 
+CORE_OBJECT_MODELS = [Question, Book, Topic, Fact, Word]
+CORE_OBJECT_SERIALIZERS = [
+    QuestionSerializer,
+    BookSerializer,
+    TopicSerializer,
+    FactSerializer,
+    WordSerializer,
+]
 CoreObjectInfo = namedtuple("CoreObjectInfo", ["model", "serializer"])
 
 
@@ -45,8 +53,7 @@ def get_core_object_from_string(core_object_type):
         If `core_object_type` does not match the `__name__` of any core objects in
         models.py
     """
-    core_object_models = [Question, Book, Topic, Fact, Word]
-    for core_object in core_object_models:
+    for core_object in CORE_OBJECT_MODELS:
         if core_object_type == core_object.__name__.lower():
             return core_object
     raise Http404
@@ -65,14 +72,7 @@ def get_core_serializer_from_model(core_object_model):
     Http404
         If `core_object_model` is not the base of any serializer.
     """
-    core_object_serializers = [
-        QuestionSerializer,
-        BookSerializer,
-        TopicSerializer,
-        FactSerializer,
-        WordSerializer,
-    ]
-    for serializer in core_object_serializers:
+    for serializer in CORE_OBJECT_SERIALIZERS:
         if core_object_model == serializer.Meta.model:
             return serializer
     raise Http404

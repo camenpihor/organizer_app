@@ -30,4 +30,4 @@ class FactSerializer(serializers.HyperlinkedModelSerializer):
 class WordSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Word
-        fields = ("id", "word", "defintion", "num_views", "rating", "created_at_utc")
+        fields = ("id", "word", "definition", "num_views", "rating", "created_at_utc")

@@ -1,0 +1,55 @@
+[
+    {
+        "model": "organizer.book",
+        "pk": 1,
+        "fields": {
+            "created_at_utc": "2018-12-11T03:31:25.200Z",
+            "num_views": 0,
+            "rating": 0,
+            "author": "test",
+            "title": "test1",
+            "url": null
+        }
+    },
+    {
+        "model": "organizer.fact",
+        "pk": 1,
+        "fields": {
+            "created_at_utc": "2018-12-11T07:28:51.867Z",
+            "num_views": 0,
+            "rating": 0,
+            "fact": "testing1"
+        }
+    },
+    {
+        "model": "organizer.question",
+        "pk": 1,
+        "fields": {
+            "created_at_utc": "2018-12-10T23:51:57.794Z",
+            "num_views": 0,
+            "rating": 0,
+            "question": "this is test 1"
+        }
+    },
+    {
+        "model": "organizer.topic",
+        "pk": 1,
+        "fields": {
+            "created_at_utc": "2018-12-11T07:28:13.639Z",
+            "num_views": 0,
+            "rating": 0,
+            "topic": "testing"
+        }
+    },
+    {
+        "model": "organizer.word",
+        "pk": 1,
+        "fields": {
+            "created_at_utc": "2018-12-11T07:29:22.738Z",
+            "num_views": 0,
+            "rating": 0,
+            "word": "testing1",
+            "definition": "testing"
+        }
+    }
+]

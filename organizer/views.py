@@ -25,38 +25,37 @@ def api_root(request, response_format=None):
     return Response(
         {
             "questions": reverse(
-                "core-list",
+                "organizer:core-list",
                 kwargs={"core_object_type": "question"},
                 request=request,
                 format=response_format,
             ),
             "books": reverse(
-                "core-list",
+                "organizer:core-list",
                 kwargs={"core_object_type": "book"},
                 request=request,
                 format=response_format,
             ),
             "topics": reverse(
-                "core-list",
+                "organizer:core-list",
                 kwargs={"core_object_type": "topic"},
                 request=request,
                 format=response_format,
             ),
             "facts": reverse(
-                "core-list",
+                "organizer:core-list",
                 kwargs={"core_object_type": "fact"},
                 request=request,
                 format=response_format,
             ),
             "words": reverse(
-                "core-list",
+                "organizer:core-list",
                 kwargs={"core_object_type": "word"},
                 request=request,
                 format=response_format,
             ),
         }
     )
-
 
 class CoreObjectList(APIView):
     """List all core objects of a single type, or create new core object instance."""
@@ -66,7 +65,7 @@ class CoreObjectList(APIView):
         core_object_info = validate_and_get_core_object_info(core_object_type)
 
         core_object_all = core_object_info.model.objects.all()
-        serializer = core_object_info.serializer(data=core_object_all, many=True)
+        serializer = core_object_info.serializer(initial=core_object_all, many=True)
         return Response(serializer.data)
 
     def post(self, request, core_object_type, response_format=None):
@@ -87,7 +86,7 @@ class CoreObjectDetail(APIView):
     def get_object(model, object_id):
         """Get a core object instance and validate."""
         try:
-            return model.objects.get(object_id=object_id)
+            return model.objects.get(pk=object_id)
         except model.DoesNotExist:
             raise Http404
 
