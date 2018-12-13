@@ -1,7 +1,7 @@
 [run]
 omit =
-    organizer/tests/*,
+    api/tests/*,
     setup.py,
     manage.py,
     administration/*,
-    organizer/migrations/*
+    api/migrations/*

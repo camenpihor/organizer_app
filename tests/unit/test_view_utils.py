@@ -1,4 +1,4 @@
-"""Test view_utils for the organizer application.
+"""Test view_utils for the API.
 
 This uses pytest and pytest-django to test.
 
@@ -8,7 +8,7 @@ Django with pytest.
 from django.http import Http404
 import pytest
 
-from organizer.view_utils import (
+from api.view_utils import (
     get_core_object_from_string,
     get_core_serializer_from_model,
     CORE_OBJECT_TYPES,

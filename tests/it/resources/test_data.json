@@ -1,6 +1,6 @@
 [
     {
-        "model": "organizer.book",
+        "model": "api.book",
         "pk": 1,
         "fields": {
             "created_at_utc": "2018-12-11T03:31:25.200Z",
@@ -12,7 +12,7 @@
         }
     },
     {
-        "model": "organizer.fact",
+        "model": "api.fact",
         "pk": 1,
         "fields": {
             "created_at_utc": "2018-12-11T07:28:51.867Z",
@@ -22,7 +22,7 @@
         }
     },
     {
-        "model": "organizer.question",
+        "model": "api.question",
         "pk": 1,
         "fields": {
             "created_at_utc": "2018-12-10T23:51:57.794Z",
@@ -32,7 +32,7 @@
         }
     },
     {
-        "model": "organizer.topic",
+        "model": "api.topic",
         "pk": 1,
         "fields": {
             "created_at_utc": "2018-12-11T07:28:13.639Z",
@@ -42,7 +42,7 @@
         }
     },
     {
-        "model": "organizer.word",
+        "model": "api.word",
         "pk": 1,
         "fields": {
             "created_at_utc": "2018-12-11T07:29:22.738Z",

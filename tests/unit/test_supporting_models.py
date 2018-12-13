@@ -1,11 +1,11 @@
-"""Test supporting models for the organizer application.
+"""Test supporting models for the API.
 
 This uses pytest and pytest-django to test.
 
 Refer to https://pytest-django.readthedocs.io/en/latest/# for more information on testing
 Django with pytest.
 """
-from organizer.models.supporting import (
+from api.models.supporting import (
     SupportingObject,
     Answer,
     Concept,

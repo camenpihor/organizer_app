@@ -1,11 +1,11 @@
-"""Test core models for the organizer application.
+"""Test core models for the API.
 
 This uses pytest and pytest-django to test.
 
 Refer to https://pytest-django.readthedocs.io/en/latest/# for more information on testing
 Django with pytest.
 """
-from organizer.models.core import (
+from api.models.core import (
     CoreObject,
     Question,
     Fact,
@@ -14,7 +14,7 @@ from organizer.models.core import (
     Book,
     CORE_OBJECT_TYPES,
 )
-from organizer.view_utils import get_core_object_from_string
+from api.view_utils import get_core_object_from_string
 
 
 def test_core_object_model_inheritance():
@@ -27,7 +27,7 @@ def test_core_object_model_inheritance():
 
 
 def test_core_object_types_global():
-    """Check `organizer.models.CORE_OBJECT_TYPES`.
+    """Check `api.models.CORE_OBJECT_TYPES`.
 
     Ensure that every element in the core objects global variable is the __name__
     of a core object model.

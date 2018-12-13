@@ -1,14 +1,4 @@
-"""Backend for pages of the website.
-
-The website is organized into five (5) core objects: Questions, Books, Facts, Words,
-and Topics.
-
-Each core object above has four (4) pages: Home, Archive, Stats, and Item.
-
-This module contains the backends for the four (4) pages of the five (5) core objects,
-which have been factored to contain similar information so that the pages of each core
-object can be served by the same functions.
-"""
+"""Backend for the API."""
 from django.http import Http404
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -21,41 +11,42 @@ from .view_utils import validate_and_get_core_object_info
 
 @api_view(["GET"])
 def api_root(request, response_format=None):
-    """Entry-point for the organizer API."""
+    """Entry-point for the API."""
     return Response(
         {
             "questions": reverse(
-                "organizer:core-list",
+                "api:core-list",
                 kwargs={"core_object_type": "question"},
                 request=request,
                 format=response_format,
             ),
             "books": reverse(
-                "organizer:core-list",
+                "api:core-list",
                 kwargs={"core_object_type": "book"},
                 request=request,
                 format=response_format,
             ),
             "topics": reverse(
-                "organizer:core-list",
+                "api:core-list",
                 kwargs={"core_object_type": "topic"},
                 request=request,
                 format=response_format,
             ),
             "facts": reverse(
-                "organizer:core-list",
+                "api:core-list",
                 kwargs={"core_object_type": "fact"},
                 request=request,
                 format=response_format,
             ),
             "words": reverse(
-                "organizer:core-list",
+                "api:core-list",
                 kwargs={"core_object_type": "word"},
                 request=request,
                 format=response_format,
             ),
         }
     )
+
 
 class CoreObjectList(APIView):
     """List all core objects of a single type, or create new core object instance."""

@@ -1,4 +1,4 @@
-"""WSGI config for organizer_app project.
+"""WSGI config for the API.
 
 It exposes the WSGI callable as a module-level variable named `"application"`.
 
