@@ -32,11 +32,11 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
-ROOT_URLCONF = "administration.urls"
+ROOT_URLCONF = "api.administration.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [os.path.join(BASE_DIR, "api", "static", "html")],
+        "DIRS": [],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -48,7 +48,7 @@ TEMPLATES = [
         },
     }
 ]
-WSGI_APPLICATION = "administration.wsgi.application"
+WSGI_APPLICATION = "api.administration.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",

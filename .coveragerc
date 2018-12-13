@@ -1,7 +1,0 @@
-[run]
-omit =
-    api/tests/*,
-    setup.py,
-    manage.py,
-    administration/*,
-    api/migrations/*
