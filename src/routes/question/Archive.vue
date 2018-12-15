@@ -1,6 +1,6 @@
 <template>
-  <div id="fact">
-    <HelloWorld msg="Welcome to Fact"/>
+  <div id="question-archive">
+    <HelloWorld msg="Welcome to Question Archive"/>
   </div>
 </template>
 
@@ -8,15 +8,15 @@
 import HelloWorld from "@/components/HelloWorld.vue";
 
 export default {
-  name: "fact",
+  name: "question-archive",
   components: {
     HelloWorld
-  }
+  },
 };
 </script>
 
 <style>
-#fact {
+#question-archive {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

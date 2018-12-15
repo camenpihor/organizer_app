@@ -1,54 +1,43 @@
 /* eslint-disable implicit-arrow-linebreak */
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './Home.vue'
 
 
 Vue.use(Router);
 
 export default new Router({
   mode: 'history',
-  bae: __dirname,
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: Home,
+      redirect: '/questions'
     },
     {
       path: '/questions',
       name: 'questions',
       component: () =>
-        import(/* webpackChunkName: "questions" */ './Question.vue'),
+        import(/* webpackChunkName: "questions" */ './question/Home.vue'),
     },
     {
-      path: '/books',
-      name: 'books',
+      path: '/questions/archive',
+      name: 'questions-archive',
       component: () =>
-        import(/* webpackChunkName: "books" */ './Book.vue'),
+        import(/* webpackChunkName: "questions-archive" */ './question/Archive.vue'),
     },
     {
-      path: '/topics',
-      name: 'topics',
+      path: '/questions/stats',
+      name: 'questions-stats',
       component: () =>
-        import(/* webpackChunkName: "topics" */ './Topic.vue'),
+        import(/* webpackChunkName: "questions-stats" */ './question/Stats.vue'),
     },
     {
-      path: '/facts',
-      name: 'facts',
+      path: '/404',
       component: () =>
-        import(/* webpackChunkName: "facts" */ './Fact.vue'),
-    },
-    {
-      path: '/words',
-      name: 'words',
-      component: () =>
-        import(/* webpackChunkName: "words" */ './Word.vue'),
+        import(/* webpackChunkName: "404" */ './NotFound.vue'),
     },
     {
       path: '*',
-      redirect: '/',
-      // TODO: Add 404 page
+      redirect: '/404'
     },
   ],
 });

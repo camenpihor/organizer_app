@@ -79,3 +79,4 @@ usage.
 - Use Semantic UI
 - Test JS
 - Keyboard shortcut to switch to different core object
+- Perhaps add a global Home that gives stats or something

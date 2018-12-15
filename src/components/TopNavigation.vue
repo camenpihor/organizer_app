@@ -11,14 +11,9 @@
         </sui-dropdown-menu>
       </sui-dropdown>
       <sui-menu-menu>
-        <a
-          is="sui-menu-item"
-          v-for="item in items"
-          :active="isActive(item)"
-          :key="item"
-          :content="item"
-          @click="select(item)"
-        />
+        <router-link is="sui-menu-item" to="/questions" active-class="active" exact>Home</router-link>
+        <router-link is="sui-menu-item" to="/questions/archive" active-class="active" exact>Archive</router-link>
+        <router-link is="sui-menu-item" to="/questions/stats" active-class="active" exact>Stats</router-link>
       </sui-menu-menu>
       <sui-menu-menu position="right">
         <sui-menu-item right>
@@ -34,17 +29,8 @@ export default {
   name: "TopNavigation",
   data() {
     return {
-      active: "Home",
-      items: ["Home", "Archive", "Stats"]
+      activeParent: "Questions"
     };
-  },
-  methods: {
-    isActive(name) {
-      return this.active === name;
-    },
-    select(name) {
-      this.active = name;
-    }
   }
 };
 </script>

@@ -1,6 +1,6 @@
 <template>
-  <div id="topic">
-    <HelloWorld msg="Welcome to Topic"/>
+  <div id="question-stats">
+    <HelloWorld msg="Welcome to Question Stats"/>
   </div>
 </template>
 
@@ -8,15 +8,15 @@
 import HelloWorld from "@/components/HelloWorld.vue";
 
 export default {
-  name: "topic",
+  name: "question-stats",
   components: {
     HelloWorld
-  }
+  },
 };
 </script>
 
 <style>
-#topic {
+#question-stats {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
