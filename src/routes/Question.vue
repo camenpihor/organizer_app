@@ -11,7 +11,7 @@ export default {
   name: "question",
   components: {
     HelloWorld
-  }
+  },
 };
 </script>
 

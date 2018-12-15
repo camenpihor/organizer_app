@@ -1,16 +1,20 @@
 <template>
   <div id="app">
+    <top-navigation/>
     <v-content>
       <router-view/>
     </v-content>
   </div>
-  <!-- Add the navigation components here -->
 </template>
 
 <script>
+import TopNavigation from "./components/TopNavigation.vue";
+
 export default {
-  name: "app"
-  //   add the navigation components
+  name: "app",
+  components: {
+    TopNavigation
+  }
 };
 </script>
 

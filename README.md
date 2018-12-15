@@ -78,3 +78,4 @@ usage.
 - Should I check package-lock.json into VC
 - Use Semantic UI
 - Test JS
+- Keyboard shortcut to switch to different core object
