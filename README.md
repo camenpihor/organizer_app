@@ -65,25 +65,16 @@ small bursts of motivation to write more frequently.
 To aid my bad memory, I want to produce stats for each core object and the global site
 usage.
 
-## To Do
+## Repository
 
-1. Structure Backend
-    - create core object models
-    - create supporting object models
-    - create pages (home, archive, item, stats)
-    - test
+[Add information about backend and frontend]
 
-2. Navigation
-    - create top navigation
-    - create side navigation
-    - test
+## TODO
 
-3. Content
-    - come up with dummy objects and persist to database
-
-4. Fill in pages (HTML, CSS, JS)
-    - Home
-    - Item
-    - Archive
-    - Stats
-    - test
+- Update `Repository` section of README.md
+- Connect frontend to backend
+- Create Top and Side Navigation
+- Create pages
+- Should I check package-lock.json into VC
+- Use Semantic UI
+- Test JS

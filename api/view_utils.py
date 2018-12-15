@@ -1,5 +1,6 @@
 """Utilities for views.py."""
 from collections import namedtuple
+
 from django.http import Http404
 
 from .models.core import CORE_OBJECT_TYPES, Book, Fact, Question, Topic, Word

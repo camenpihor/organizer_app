@@ -5,15 +5,14 @@ This uses pytest and pytest-django to test.
 Refer to https://pytest-django.readthedocs.io/en/latest/# for more information on testing
 Django with pytest.
 """
-from django.http import Http404
 import pytest
-
+from django.http import Http404
 from api.view_utils import (
-    get_core_object_from_string,
-    get_core_serializer_from_model,
-    CORE_OBJECT_TYPES,
     CORE_OBJECT_MODELS,
     CORE_OBJECT_SERIALIZERS,
+    CORE_OBJECT_TYPES,
+    get_core_object_from_string,
+    get_core_serializer_from_model,
 )
 
 

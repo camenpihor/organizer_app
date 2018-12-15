@@ -117,4 +117,3 @@ class Word(CoreObject):
         """Metadata for `WOrd`."""
 
         db_table = "core_words"
-
