@@ -49,7 +49,7 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   var newCoreObject = to.meta.coreObject
-  if (newCoreObject && newCoreObject !== store.state.coreObject) {
+  if (newCoreObject && newCoreObject !== from.meta.coreObject) {
     store.commit("updateCoreObject", newCoreObject)
   }
   next()

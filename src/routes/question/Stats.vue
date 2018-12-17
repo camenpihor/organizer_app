@@ -11,7 +11,7 @@ export default {
   name: "question-stats",
   components: {
     HelloWorld
-  },
+  }
 };
 </script>
 

@@ -11,11 +11,6 @@ export default {
   name: "question-home",
   components: {
     HelloWorld
-  },
-  data () {
-      return {
-        activeParent: "hai"
-      }
   }
 };
 </script>
