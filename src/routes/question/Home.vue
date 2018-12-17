@@ -12,6 +12,11 @@ export default {
   components: {
     HelloWorld
   },
+  data () {
+      return {
+        activeParent: "hai"
+      }
+  }
 };
 </script>
 

@@ -1,3 +1,5 @@
+// TODO
+// questions/Archive does not match questions/archive for highlighting must is able to be routed
 <template>
   <div class="top-navigation">
     <sui-menu attached="top">
@@ -11,9 +13,9 @@
         </sui-dropdown-menu>
       </sui-dropdown>
       <sui-menu-menu>
-        <router-link is="sui-menu-item" to="/questions" active-class="active" exact>Home</router-link>
-        <router-link is="sui-menu-item" to="/questions/archive" active-class="active" exact>Archive</router-link>
-        <router-link is="sui-menu-item" to="/questions/stats" active-class="active" exact>Stats</router-link>
+        <router-link is="sui-menu-item" :to="'/' + coreObject" exact>Home</router-link>
+        <router-link is="sui-menu-item" :to="'/' + coreObject + '/archive'" exact>Archive</router-link>
+        <router-link is="sui-menu-item" :to="'/' + coreObject + '/stats'" exact>Stats</router-link>
       </sui-menu-menu>
       <sui-menu-menu position="right">
         <sui-menu-item right>
@@ -27,10 +29,10 @@
 <script>
 export default {
   name: "TopNavigation",
-  data() {
-    return {
-      activeParent: "Questions"
-    };
+  data () {
+      return {
+          coreObject: this.$store.getters.currentCoreObject
+      }
   }
 };
 </script>
