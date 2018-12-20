@@ -41,7 +41,7 @@ const router = new Router({
       name: 'questions-detail',
       meta: { coreObject: 'questions' },
       component: () =>
-        import(/* webpackChunkName: "questions-stats" */ './question/Detail.vue'),
+        import(/* webpackChunkName: "questions-describe" */ './question/Detail.vue'),
       beforeEnter: (to, from, next) => {
         coreObjectDetail("question", to.params.id)
           .get()
