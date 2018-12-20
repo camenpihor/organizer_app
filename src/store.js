@@ -7,11 +7,15 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    coreObject: 'questions'
+    coreObject: 'questions',
+    apiURL: 'http://127.0.0.1:8000'
   },
   getters: {
     currentCoreObject: state => {
       return state.coreObject
+    },
+    apiURL: state => {
+      return state.apiURL
     }
   },
   mutations: {

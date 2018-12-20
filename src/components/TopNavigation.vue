@@ -28,7 +28,7 @@
 
 <script>
 export default {
-  name: "TopNavigation",
+  name: "top-navigation",
   data () {
       return {
           coreObject: this.$store.getters.currentCoreObject

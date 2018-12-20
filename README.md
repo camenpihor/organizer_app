@@ -72,11 +72,13 @@ usage.
 ## TODO
 
 - Update `Repository` section of README.md
-- Connect frontend to backend
-- Create Top and Side Navigation
+- ~~Connect frontend to backend~~
+- ~~Create Top and Side Navigation~~
 - Create pages
-- Should I check package-lock.json into VC
-- Use Semantic UI
+- ~~Should I check package-lock.json into VC~~
+- ~~Use Semantic UI~~
 - Test JS
 - Keyboard shortcut to switch to different core object
 - Perhaps add a global Home that gives stats or something
+- best way to get around CORS
+- ~~factor out api calls into class~~

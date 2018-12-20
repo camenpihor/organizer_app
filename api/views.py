@@ -56,7 +56,7 @@ class CoreObjectList(APIView):
         core_object_info = validate_and_get_core_object_info(core_object_type)
 
         core_object_all = core_object_info.model.objects.all()
-        serializer = core_object_info.serializer(initial=core_object_all, many=True)
+        serializer = core_object_info.serializer(core_object_all, many=True)
         return Response(serializer.data)
 
     def post(self, request, core_object_type, response_format=None):

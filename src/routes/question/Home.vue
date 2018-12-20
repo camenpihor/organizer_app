@@ -1,16 +1,48 @@
 <template>
   <div id="question-home">
-    <HelloWorld msg="Welcome to Question"/>
+    <hello-world msg="Welcome to Question"/>
+
+    <section v-if="errored">
+      <p>Error</p>
+    </section>
+
+    <section v-else>
+      <question-list v-bind:questions="questions"/>
+    </section>
   </div>
 </template>
 
 <script>
 import HelloWorld from "@/components/HelloWorld.vue";
+import QuestionList from "@/components/QuestionList.vue";
+import { coreObjectList, getRandomSubset } from "@/api.js";
 
 export default {
   name: "question-home",
   components: {
-    HelloWorld
+    HelloWorld,
+    QuestionList
+  },
+  data() {
+    return {
+      questions: null,
+      errored: false
+    };
+  },
+  methods: {
+    getQuestions() {
+      coreObjectList("question")
+        .get()
+        .then(response => {
+          this.questions = getRandomSubset(response.data, 5);
+        })
+        .catch(() => {
+          this.errored = true;
+        });
+    }
+  },
+  mounted() {
+    this.getQuestions();
   }
 };
 </script>

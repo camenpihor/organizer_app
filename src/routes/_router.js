@@ -2,6 +2,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import store from '@/store.js'
+import { coreObjectDetail } from "@/api.js"
 
 Vue.use(Router);
 
@@ -34,6 +35,19 @@ const router = new Router({
       meta: { coreObject: 'questions' },
       component: () =>
         import(/* webpackChunkName: "questions-stats" */ './question/Stats.vue'),
+    },
+    {
+      path: '/questions/:id',
+      name: 'questions-detail',
+      meta: { coreObject: 'questions' },
+      component: () =>
+        import(/* webpackChunkName: "questions-stats" */ './question/Detail.vue'),
+      beforeEnter: (to, from, next) => {
+        coreObjectDetail("question", to.params.id)
+          .get()
+          .then(() => next())
+          .catch(() => next("/404"))
+      }
     },
     {
       path: '/404',
