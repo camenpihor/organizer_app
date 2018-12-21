@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import VueMoment from 'vue-moment'
 import App from './App.vue'
 import SuiVue from 'semantic-ui-vue'
 import 'semantic-ui-css/semantic.min.css';
@@ -7,6 +8,7 @@ import store from './store.js'
 
 Vue.config.productionTip = false
 Vue.use(SuiVue);
+Vue.use(VueMoment);
 
 
 new Vue({
