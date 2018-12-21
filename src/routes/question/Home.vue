@@ -1,14 +1,7 @@
 <template>
   <div id="question-home">
-    <hello-world msg="Welcome to Question"/>
-
-    <section v-if="errored">
-      <p>Error</p>
-    </section>
-
-    <section v-else>
-      <question-list v-bind:questions="questions"/>
-    </section>
+    <hello-world msg="Welcome to Questions"/>
+    <question-list v-bind:questions="questions"/>
   </div>
 </template>
 
@@ -35,9 +28,6 @@ export default {
         .get()
         .then(response => {
           this.questions = getRandomSubset(response.data, 5);
-        })
-        .catch(() => {
-          this.errored = true;
         });
     }
   },

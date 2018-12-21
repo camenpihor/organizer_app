@@ -1,7 +1,7 @@
 <template>
   <div id="question-detail">
     <HelloWorld msg="Welcome to Question Detail"/>
-    <div :key="question.id">{{ question }}</div>
+    <div :key="question_id">{{ question }}</div>
   </div>
 </template>
 
@@ -17,7 +17,6 @@ export default {
   data() {
     return {
       question: null,
-      loading: true,
       question_id: this.$route.params.id
     };
   },
@@ -28,7 +27,7 @@ export default {
         .then(response => {
           this.question = response.data;
         })
-    } 
+    }
   },
   mounted() {
     this.getQuestionDetail();

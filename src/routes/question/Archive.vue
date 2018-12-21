@@ -1,13 +1,7 @@
 <template>
   <div id="question-archive">
     <hello-world msg="Welcome to Question Archive"/>
-    <section v-if="errored">
-      <p>Error</p>
-    </section>
-
-    <section v-else>
-      <question-list v-bind:questions="questions"/>
-    </section>
+    <question-list v-bind:questions="questions"/>
   </div>
 </template>
 
@@ -34,10 +28,7 @@ export default {
         .get()
         .then(response => {
           this.questions = response.data;
-        })
-        .catch(() => {
-          this.errored = true;
-        })
+        });
     }
   },
   mounted() {
