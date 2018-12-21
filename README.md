@@ -67,18 +67,12 @@ usage.
 
 ## Repository
 
-[Add information about backend and frontend]
+I am using Django REST framework as a backend API for a Vue JS frontend.
 
 ## TODO
 
-- Update `Repository` section of README.md
-- ~~Connect frontend to backend~~
-- ~~Create Top and Side Navigation~~
-- Create pages
-- ~~Should I check package-lock.json into VC~~
-- ~~Use Semantic UI~~
-- Test JS
+- Test
 - Keyboard shortcut to switch to different core object
-- Perhaps add a global Home that gives stats or something
+- Perhaps add a global Home that gives global stats or something
 - best way to get around CORS
-- ~~factor out api calls into class~~
+- Develop `questions`
