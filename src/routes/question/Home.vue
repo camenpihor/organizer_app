@@ -8,7 +8,7 @@
             <router-link :to="'/questions/' + question.id">{{ question.question }}</router-link>
           </sui-card-header>
           <sui-card-meta>{{ question.created_at_utc | moment("dddd, MMMM Do YYYY") }}</sui-card-meta>
-          <sui-card-description>{{ question.num_views }} | {{ question.rating }}</sui-card-description>
+          <!-- <sui-card-description>{{ question.num_views }} | {{ question.rating }}</sui-card-description> -->
         </sui-card-content>
       </sui-card>
     </sui-card-group>
@@ -20,7 +20,8 @@ import { coreObjectList, getRandomSubset } from "@/api.js";
 
 export default {
   name: "question-home",
-  components: {},
+  components: {
+  },
   data() {
     return {
       questions: null,
@@ -53,7 +54,7 @@ export default {
 }
 
 #question-list {
-  max-width: 600px;
-  margin: auto;
+    max-width: 600px;
+    margin: auto
 }
 </style>
