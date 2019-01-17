@@ -55,7 +55,7 @@ class CoreObjectList(APIView):
         """List all core objects of a single type."""
         core_object_info = validate_and_get_core_object_info(core_object_type)
 
-        core_object_all = core_object_info.model.objects.all()
+        core_object_all = core_object_info.model.objects.order_by('-created_at_utc')
         serializer = core_object_info.serializer(core_object_all, many=True)
         return Response(serializer.data)
 

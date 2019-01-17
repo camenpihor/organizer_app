@@ -1,8 +1,13 @@
-.App {
+.entry-header a {
+  text-decoration: inherit;
+  color: inherit;
+}
+
+.entry {
   text-align: center;
 }
 
-.App-header {
+.entry-header {
   background-color: #282c34;
   min-height: 100vh;
   display: flex;

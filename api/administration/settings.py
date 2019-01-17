@@ -15,9 +15,6 @@ DEBUG = True
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ["SECRET_KEY"]
 ALLOWED_HOSTS = []
-CORS_ORIGIN_WHITELIST = [
-    'localhost:8080',
-]
 INSTALLED_APPS = [
     "api.apps.APIConfig",
     "rest_framework",
@@ -37,6 +34,8 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = False
 ROOT_URLCONF = "api.administration.urls"
 TEMPLATES = [
     {

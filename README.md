@@ -72,7 +72,13 @@ I am using Django REST framework as a backend API for a Vue JS frontend.
 ## TODO
 
 - Test
-- Keyboard shortcut to switch to different core object
 - Perhaps add a global Home that gives global stats or something
-- best way to get around CORS
-- Develop `questions`
+- in helper close if scroll or esc pressed
+- in search close if scroll
+- use let and const instead of var in functions
+- fix "Cant perform react state update on unmounted component error"
+- put this version of the app onto Apollo
+- stats in Home page
+- stats page
+- question/:id page
+- refactor for computer

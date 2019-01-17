@@ -1,0 +1,42 @@
+/* Common */
+.question {
+  background-color: #282c34;
+  color: white;
+  min-height: 100vh;
+  padding: 50px 25px;
+  margin-top: 20px;
+  padding-bottom: 50px;
+}
+
+.date-column {
+  width: 25% !important;
+}
+
+.text-column {
+  width: 75% !important;
+}
+
+/* Home */
+.question-list {
+  list-style: none;
+  padding: 0;
+  color: #4183c4;
+}
+
+.question-list-item {
+  padding-bottom: 1rem;
+}
+
+.home-section {
+  margin-top: 50px;
+}
+
+.create-button {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+}
+
+.year-section {
+  margin-bottom: 50px;
+}
