@@ -67,7 +67,7 @@ usage.
 
 ## Repository
 
-I am using Django REST framework as a backend API for a Vue JS frontend.
+I am using Django REST framework as a backend API with a ReactJS frontend.
 
 ## TODO
 
