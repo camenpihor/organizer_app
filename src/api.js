@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseURL = "http://127.0.0.1:8000"
+const baseURL = "http://127.0.0.1:8000/api"
 
 function coreObjectList(coreObject) {
   const url = `${baseURL}/${coreObject}/`
@@ -14,7 +14,7 @@ function coreObjectDetail(coreObject, id) {
   const url = `${baseURL}/${coreObject}/${id}`
   return {
     get: () => axios.get(url),
-  put: (toUpdate) => axios.put(url, toUpdate),
+    put: (toUpdate) => axios.put(url, toUpdate),
     delete: () => axios.delete(url)
   }
 }

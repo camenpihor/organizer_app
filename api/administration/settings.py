@@ -10,11 +10,11 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 import os
 
-DEBUG = True
+DEBUG = False
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ["SECRET_KEY"]
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
 INSTALLED_APPS = [
     "api.apps.APIConfig",
     "rest_framework",
@@ -34,7 +34,8 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
-CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_WHITELIST = ("localhost:3000",)
 CORS_ALLOW_CREDENTIALS = False
 ROOT_URLCONF = "api.administration.urls"
 TEMPLATES = [
