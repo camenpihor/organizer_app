@@ -104,6 +104,12 @@ class NavigationHelper extends Component {
     })
   }
 
+  captureClosingEvent = (event) => {
+    if (event.keyCode === 27) {
+      this.resetHelper()
+    }
+  }
+
   render() {
     const { helperVisible, results, value } = this.state;
 
@@ -122,6 +128,8 @@ class NavigationHelper extends Component {
             results={results}
             value={value}
             icon={false}
+            onKeyDown={this.captureClosingEvent}
+            onScroll={console.log("hi")}
           />
         }
       </div>
