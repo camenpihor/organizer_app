@@ -1,6 +1,9 @@
 .entry-header a {
   text-decoration: inherit;
   color: inherit;
+  font-size: 2rem;
+  padding: 1em;
+  -webkit-tap-highlight-color:transparent;
 }
 
 .entry {

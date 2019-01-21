@@ -1,9 +1,9 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-import Home from "../components/Entry";
-import { QuestionHome, QuestionArchive, QuestionDetail } from "../components/Questions";
-import PageNotFound from "../components/404"
+import Home from "components/Entry";
+import { QuestionHome, QuestionDetail, QuestionArchive } from 'components/questions'
+import PageNotFound from "components/404"
 
 const AppRouter = () => (
   <Router>

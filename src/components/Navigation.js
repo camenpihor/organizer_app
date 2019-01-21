@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import { NavLink } from 'react-router-dom'
 import { Menu, Search, Sidebar } from 'semantic-ui-react'
 
-import '../style/navigation.css'
+import 'style/navigation.css'
 
 const mainObjects = [
   { title: "Books", url: "books" },
@@ -129,7 +129,6 @@ class NavigationHelper extends Component {
             value={value}
             icon={false}
             onKeyDown={this.captureClosingEvent}
-            onScroll={console.log("hi")}
           />
         }
       </div>
