@@ -78,5 +78,4 @@ I am using Django REST framework as a backend API with a ReactJS frontend.
 - stats page
 - question/:id page
 - refactor for computer
-- create question form
 - new favicon
