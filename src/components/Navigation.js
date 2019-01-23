@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import React, { Component } from 'react'
 import { NavLink } from 'react-router-dom'
-import { Menu, Search, Sidebar } from 'semantic-ui-react'
+import { Icon, Input, Menu, Search, Sidebar } from 'semantic-ui-react'
 
 import 'style/navigation.css'
 
@@ -139,62 +139,59 @@ class NavigationHelper extends Component {
 
 class NavigationSearch extends Component {
   componentDidMount() {
-    window.addEventListener("keydown", this.focusSearch, false);
+    window.addEventListener("keydown", this.listenForSearch, false);
   }
 
   componentWillUnmount() {
-    window.removeEventListener("keydown", this.focusSearch, false);
+    window.removeEventListener("keydown", this.listenForSearch, false);
   }
 
   constructor(props) {
     super(props);
-    this.searchInput = React.createRef();
     this.state = {
-      results: [],
-      value: ""
+      visible: false
     };
   }
 
-  focusSearch = (event) => {
+  listenForSearch = (event) => {
     if (event.target.type !== "text") {
       if (event.key === "/") {
-        this.searchInput.current.focus();
-        event.preventDefault();
+        this.focusSearch(event)
       }
     }
   }
 
-  blurSearch = (event) => {
+  listenForBlur = (event) => {
     if (event.keyCode === 27) {
-      event.target.blur();
-      this.setState({ value: "" })
+      this.blurSearch(event)
     }
   }
 
-  handleResultSelect = (e, { result }) => console.log(result)
-  handleSearchChange = (e, { value }) => {
-    this.setState({
-      value: value,
-    })
+  focusSearch = (event) => {
+    this.setState({ visible: true })
+    event.preventDefault();
+  }
+
+  blurSearch = (event) => {
+    event.target.blur();
+    this.setState({ visible: false, value: "" })
   }
 
   render() {
-    const { results, value } = this.state
+    const { visible } = this.state
     return (
-      <Search
-        id="navigation-search"
-        input={{
-          ref: this.searchInput,
-          onKeyDown: this.blurSearch,
-          value: value
-        }}
-        selectFirstResult
-        showNoResults={false}
-        onResultSelect={this.handleResultSelect}
-        onSearchChange={this.handleSearchChange}
-        results={results}
-        value={value}
-      />
+      <Menu.Item position="right">
+        {visible ? (<Input
+          id="search-input"
+          size="mini"
+          transparent
+          placeholder='Search...'
+          onKeyDown={this.listenForBlur}
+          onBlur={this.blurSearch}
+          autoFocus
+        />) : (<Icon name="search" onClick={this.focusSearch} fitted />)
+        }
+      </Menu.Item>
     )
   }
 }

@@ -2,13 +2,14 @@ import React, { Component } from 'react'
 
 import AppNavigation from 'components/Navigation'
 import { coreObjectDetail } from 'api'
+
 import 'style/questions.css';
 
 export default class QuestionDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      question: 0,
+      question: 0
     };
   }
 
@@ -29,7 +30,6 @@ export default class QuestionDetail extends Component {
       <div className="question">
         <AppNavigation pageName="Question Detail" {...this.props} />
 
-        <p>{question.id}</p>
         <p>{question.created_at_utc}</p>
         <p>{question.num_views}</p>
         <p>{question.rating}</p>
