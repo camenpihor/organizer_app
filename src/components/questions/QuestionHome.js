@@ -80,7 +80,7 @@ class QuestionForm extends Component {
         }
         {visible &&
           <div ref={this.questionForm}>
-            <h3>Create</h3>
+            <h1>Create</h1>
             <Form
               onSubmit={this.handleQuestionFormSubmit}
               error={error}
@@ -109,7 +109,7 @@ class QuestionForm extends Component {
 function QuestionStats() {
   return (
     <div>
-      <h3>Stats</h3>
+      <h1>Stats</h1>
       <ul className="question-list">
         <li className="question-list-item">Last edit:</li>
         <li className="question-list-item">Longest streak:</li>
@@ -144,7 +144,7 @@ class QuestionList extends Component {
 
     return (
       <div className="home-section" >
-        <h3>Random Questions</h3>
+        <h1>Random Questions</h1>
         <Grid columns={2} divided>
           {questions.map(question => (
             <Grid.Row key={question.id} as={NavLink} to={`/questions/${question.id}`}>
@@ -175,7 +175,7 @@ function QuestionLinks() {
 
   return (
     <div className="home-section" >
-      <h3>Links</h3>
+      <h1>Links</h1>
       <ul className="question-list">
         {links.map(link => (
           <li className="question-list-item" key={link.title}>

@@ -1,3 +1,4 @@
+import Moment from 'react-moment'
 import React, { Component } from 'react'
 
 import AppNavigation from 'components/Navigation'
@@ -29,10 +30,14 @@ export default class QuestionDetail extends Component {
     return (
       <div className="question">
         <AppNavigation pageName="Question Detail" {...this.props} />
-
-        <p>{question.created_at_utc}</p>
-        <p>{question.num_views}</p>
-        <p>{question.rating}</p>
+        <h3>Question</h3>
+        <p>
+          <Moment format="MMM DD YYYY">
+            {question.created_at_utc}
+          </Moment>
+        </p>
+        <p>Numbier of views: {question.num_views}</p>
+        <p>Rating: {question.rating}</p>
         <p>{question.question}</p>
       </div>
     )

@@ -71,11 +71,9 @@ I am using Django REST framework as a backend API with a ReactJS frontend.
 
 ## TODO
 
-- Test
-- Perhaps add a global Home that gives global stats or something
 - fix "Cant perform react state update on unmounted component error"
-- stats in Home page
-- stats page
-- question/:id page
 - refactor for computer
-- new favicon
+
+- Model for stats on home page
+- Connect question to other model objects
+- Create notebook

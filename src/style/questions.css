@@ -1,13 +1,4 @@
 /* Common */
-.question {
-  background-color: #282c34;
-  color: white;
-  min-height: 100vh;
-  padding: 50px 25px;
-  margin-top: 20px;
-  padding-bottom: 50px;
-}
-
 .date-column {
   width: 25% !important;
 }

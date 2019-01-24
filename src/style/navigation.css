@@ -25,6 +25,10 @@
 
 
 /* Navigation */
+.top-nav {
+  margin-bottom: 120px;
+}
+
 .activeNavLink {
   border-right: solid !important;
 }
