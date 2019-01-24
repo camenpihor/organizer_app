@@ -183,7 +183,7 @@ class NavigationSearch extends Component {
       <Menu.Item position="right">
         {visible ? (<Input
           id="search-input"
-          size="mini"
+          size="large"
           transparent
           placeholder='Search...'
           onKeyDown={this.listenForBlur}
@@ -264,7 +264,7 @@ export default class AppNavigation extends Component {
       <div className="top-nav">
         <NavigationHelper {...this.props} />
 
-        <Menu fixed="top" borderless id="top-navigation">
+        <Menu fixed="top" borderless id="top-navigation" size="massive">
           <Menu.Menu position="left" id="left-nav">
             <Menu.Item icon="bars" onClick={this.showSidebar} />
           </Menu.Menu>
