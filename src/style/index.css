@@ -11,9 +11,10 @@ body {
   background-color: #282c34;
   color: white;
   min-height: 100vh;
-  max-width: 750px;
+  max-width: 1080px;
   margin: 0 auto !important;
   float: none !important;
+  padding: 0 25px;
 }
 
 code {
