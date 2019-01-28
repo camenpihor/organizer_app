@@ -17,6 +17,14 @@ export default class QuestionArchive extends Component {
           questions: response.data
         });
       })
+      .catch(error => {
+        if (error.response.status === 401) {
+          this.props.history.push("/")
+          sessionStorage.setItem("token", null)
+        } else {
+          console.log(error)
+        }
+      })
   }
 
   constructor(props) {

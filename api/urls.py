@@ -5,6 +5,7 @@ configuration in Django refer to https://docs.djangoproject.com/en/2.1/intro/tut
 """
 from django.urls import path
 from rest_framework.urlpatterns import format_suffix_patterns
+from rest_framework_jwt.views import obtain_jwt_token, verify_jwt_token
 
 from . import views
 
@@ -19,6 +20,8 @@ urlpatterns = [
         views.CoreObjectDetail.as_view(),
         name="core-detail",
     ),
+    path("api-token-auth/", obtain_jwt_token),
+    path("api-token-verify/", verify_jwt_token),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

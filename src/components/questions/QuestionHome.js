@@ -130,6 +130,14 @@ class QuestionList extends Component {
           questions: getRandomSubset(response.data, 5)
         });
       })
+      .catch(error => {
+        if (error.response.status === 401) {
+          this.props.history.push("/")
+          sessionStorage.setItem("token", null)
+        } else {
+          console.log(error)
+        }
+      })
   }
 
   constructor(props) {
@@ -195,7 +203,7 @@ export default class QuestionHome extends Component {
       <div className="question" >
         <AppNavigation {...this.props} />
         <QuestionStats />
-        <QuestionList />
+        <QuestionList {...this.props} />
         <QuestionLinks />
         <QuestionForm />
       </div>

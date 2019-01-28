@@ -1,22 +1,10 @@
-.entry-header a {
-  text-decoration: inherit;
-  color: inherit;
-  font-size: 2rem;
-  padding: 1em;
-  -webkit-tap-highlight-color:transparent;
-}
-
 .entry {
   text-align: center;
-}
-
-.entry-header {
+  font-size: 2rem !important;
   min-height: 100vh;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
   color: white;
   padding: 0 !important
 }
