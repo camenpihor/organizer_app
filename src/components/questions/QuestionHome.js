@@ -80,8 +80,7 @@ class QuestionForm extends Component {
         }
         {visible &&
           <div ref={this.questionForm}>
-            <p className="question-header">Create</p>
-
+            <h1>Create</h1>
             <Form
               onSubmit={this.handleQuestionFormSubmit}
               error={error}
@@ -109,7 +108,8 @@ class QuestionForm extends Component {
 
 function QuestionStats() {
   return (
-    <div className="home-section">
+    <div>
+      <h1>Stats</h1>
       <ul className="question-list">
         <li className="question-list-item">Last edit:</li>
         <li className="question-list-item">Longest streak:</li>
@@ -152,15 +152,16 @@ class QuestionList extends Component {
 
     return (
       <div className="home-section" >
+        <h1>Random Questions</h1>
         <Grid columns={2} divided>
           {questions.map(question => (
             <Grid.Row key={question.id} as={NavLink} to={`/questions/${question.id}`}>
-              <Grid.Column className="grid-column date-column">
+              <Grid.Column className="date-column">
                 <Moment format="MMM DD YYYY">
                   {question.created_at_utc}
                 </Moment>
               </Grid.Column>
-              <Grid.Column className="grid-column text-column">
+              <Grid.Column className="text-column">
                 {question.question}
               </Grid.Column>
             </Grid.Row>
@@ -182,6 +183,7 @@ function QuestionLinks() {
 
   return (
     <div className="home-section" >
+      <h1>Links</h1>
       <ul className="question-list">
         {links.map(link => (
           <li className="question-list-item" key={link.title}>
@@ -200,16 +202,9 @@ export default class QuestionHome extends Component {
     return (
       <div className="question" >
         <AppNavigation {...this.props} />
-
-        <p className="question-header">Stats</p>
         <QuestionStats />
-
-        <p className="question-header">Random Questions</p>
         <QuestionList {...this.props} />
-
-        <p className="question-header">Links</p>
         <QuestionLinks />
-
         <QuestionForm />
       </div>
     );

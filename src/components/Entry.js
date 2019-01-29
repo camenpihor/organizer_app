@@ -20,7 +20,7 @@ class LogInForm extends Component {
     const data = new FormData(event.target)
     logIn(data)
       .then(response => {
-        sessionStorage.setItem('token', response.data.token);
+        sessionStorage.setItem('token', response.data.access);
         this.props.history.push('/questions/')
       })
       .catch(_ => {
@@ -59,7 +59,7 @@ export default class Entry extends Component {
   componentWillUnmount() {
     document.body.classList.remove("entry-page")
   }
-  
+
   constructor(props) {
     super(props);
     this.state = {
