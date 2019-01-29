@@ -1,4 +1,8 @@
 /* Navigation Helper */
+body.sidebar-visible {
+  background: rgba(0, 0, 0, 0.411) !important;
+}
+
 .helper {
   position: fixed !important;
   top: 100px;
@@ -7,7 +11,11 @@
 }
 
 .helper input {
-  border-radius: 0 !important;
+  border-radius: 0.25rem !important;
+  background: black !important;
+  opacity: 0.95;
+  color: white !important;
+  font-size: 18px;
 }
 
 .helper input:focus {
@@ -27,6 +35,10 @@
 /* Navigation */
 .top-nav {
   margin-bottom: 100px;
+}
+
+#top-navigation {
+  background-color: #fafafa;
 }
 
 .activeNavLink {

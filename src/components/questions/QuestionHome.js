@@ -156,12 +156,12 @@ class QuestionList extends Component {
         <Grid columns={2} divided>
           {questions.map(question => (
             <Grid.Row key={question.id} as={NavLink} to={`/questions/${question.id}`}>
-              <Grid.Column className="date-column">
+              <Grid.Column className="grid-column date-column">
                 <Moment format="MMM DD YYYY">
                   {question.created_at_utc}
                 </Moment>
               </Grid.Column>
-              <Grid.Column className="text-column">
+              <Grid.Column className="grid-column text-column">
                 {question.question}
               </Grid.Column>
             </Grid.Row>

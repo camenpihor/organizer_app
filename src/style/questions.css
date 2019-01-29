@@ -1,4 +1,8 @@
 /* Common */
+.grid-column {
+  box-shadow: none !important;
+}
+
 .date-column {
   width: 25% !important;
 }
@@ -11,7 +15,6 @@
 .question-list {
   list-style: none;
   padding: 0;
-  color: #4183c4;
 }
 
 .question-list-item {
