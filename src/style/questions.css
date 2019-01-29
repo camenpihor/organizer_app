@@ -9,11 +9,16 @@
   line-height: 25px;
   transition: border-bottom 5s linear;
 }
-.date-column {
+
+.column {
+  box-shadow: none !important;
+}
+
+.date {
   width: 25% !important;
 }
 
-.text-column {
+.text {
   width: 75% !important;
 }
 
