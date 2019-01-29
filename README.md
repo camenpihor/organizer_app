@@ -75,6 +75,7 @@ I am using Django REST framework as a backend API with a ReactJS frontend.
 - add fontawesome pack
 - https (must have DNS)
 - add icons to side bar
+- dont allow clicking on links when sidebar is visible
 
 - Model for stats on home page
 - Connect question to other model objects

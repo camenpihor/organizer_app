@@ -199,6 +199,10 @@ class NavigationSearch extends Component {
 
 
 class NavigationSideBar extends Component {
+  componentWillUnmount() {
+    this.handleHideSidebar()
+  }
+
   handleShowSidebar = () => {
     document.body.classList.add("sidebar-visible");
   }
