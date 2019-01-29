@@ -22,6 +22,15 @@ body {
   transition: background-color 0.3s linear;
 }
 
+body.sidebar-visible {
+  background: rgba(0, 0, 0, 0.411) !important;
+}
+
+body.entry-page {
+  background-color: #282c34;
+  color: white;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;

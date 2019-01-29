@@ -52,6 +52,14 @@ class LogInForm extends Component {
 }
 
 export default class Entry extends Component {
+  componentDidMount() {
+    document.body.classList.add("entry-page")
+  }
+
+  componentWillUnmount() {
+    document.body.classList.remove("entry-page")
+  }
+  
   constructor(props) {
     super(props);
     this.state = {

@@ -1,8 +1,4 @@
 /* Navigation Helper */
-body.sidebar-visible {
-  background: rgba(0, 0, 0, 0.411) !important;
-}
-
 .helper {
   position: fixed !important;
   top: 100px;
