@@ -3,6 +3,12 @@
   box-shadow: none !important;
 }
 
+.question-header {
+  font-size: 16px;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.219);
+  line-height: 25px;
+  transition: border-bottom 5s linear;
+}
 .date-column {
   width: 25% !important;
 }
@@ -22,7 +28,7 @@
 }
 
 .home-section {
-  margin-top: 50px;
+  margin-bottom: 50px;
 }
 
 .create-button {

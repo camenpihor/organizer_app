@@ -80,7 +80,8 @@ class QuestionForm extends Component {
         }
         {visible &&
           <div ref={this.questionForm}>
-            <h1>Create</h1>
+            <p className="question-header">Create</p>
+
             <Form
               onSubmit={this.handleQuestionFormSubmit}
               error={error}
@@ -108,8 +109,7 @@ class QuestionForm extends Component {
 
 function QuestionStats() {
   return (
-    <div>
-      <h1>Stats</h1>
+    <div className="home-section">
       <ul className="question-list">
         <li className="question-list-item">Last edit:</li>
         <li className="question-list-item">Longest streak:</li>
@@ -152,7 +152,6 @@ class QuestionList extends Component {
 
     return (
       <div className="home-section" >
-        <h1>Random Questions</h1>
         <Grid columns={2} divided>
           {questions.map(question => (
             <Grid.Row key={question.id} as={NavLink} to={`/questions/${question.id}`}>
@@ -183,7 +182,6 @@ function QuestionLinks() {
 
   return (
     <div className="home-section" >
-      <h1>Links</h1>
       <ul className="question-list">
         {links.map(link => (
           <li className="question-list-item" key={link.title}>
@@ -202,9 +200,16 @@ export default class QuestionHome extends Component {
     return (
       <div className="question" >
         <AppNavigation {...this.props} />
+
+        <p className="question-header">Stats</p>
         <QuestionStats />
+
+        <p className="question-header">Random Questions</p>
         <QuestionList {...this.props} />
+
+        <p className="question-header">Links</p>
         <QuestionLinks />
+
         <QuestionForm />
       </div>
     );
