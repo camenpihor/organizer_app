@@ -9,6 +9,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 import os
+import datetime
 
 DEBUG = False
 
@@ -80,6 +81,7 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.BasicAuthentication",
     ),
 }
+JWT_AUTH = {"JWT_EXPIRATION_DELTA": datetime.timedelta(seconds=3600)}
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = "UTC"
 USE_I18N = True
