@@ -129,6 +129,7 @@ class NavigationHelper extends Component {
             value={value}
             icon={false}
             onKeyDown={this.captureClosingEvent}
+            size="large"
           />
         }
       </div>
@@ -198,6 +199,15 @@ class NavigationSearch extends Component {
 
 
 class NavigationSideBar extends Component {
+  handleShowSidebar = () => {
+    document.body.classList.add("sidebar-visible");
+  }
+
+  handleHideSidebar = () => {
+    document.body.classList.remove("sidebar-visible");
+    this.props.hideSidebar();
+  }
+
   render() {
     return (
       <Sidebar
@@ -205,10 +215,11 @@ class NavigationSideBar extends Component {
         as={Menu}
         animation='overlay'
         icon='labeled'
-        onHide={this.props.hideSidebar}
         vertical
         visible={this.props.state.sidebarVisible}
         width='thin'
+        onVisible={this.handleShowSidebar}
+        onHide={this.handleHideSidebar}
       >
         {mainObjects.map(mainObject => (
           <Menu.Item key={mainObject.title}>

@@ -7,7 +7,11 @@
 }
 
 .helper input {
-  border-radius: 0 !important;
+  border-radius: 0.25rem !important;
+  background: black !important;
+  opacity: 0.95;
+  color: white !important;
+  font-size: 18px;
 }
 
 .helper input:focus {
@@ -27,6 +31,10 @@
 /* Navigation */
 .top-nav {
   margin-bottom: 100px;
+}
+
+#top-navigation {
+  background-color: #fafafa;
 }
 
 .activeNavLink {

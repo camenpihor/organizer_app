@@ -74,6 +74,7 @@ I am using Django REST framework as a backend API with a ReactJS frontend.
 - fix "Cant perform react state update on unmounted component error"
 - add fontawesome pack
 - https (must have DNS)
+- add icons to side bar
 
 - Model for stats on home page
 - Connect question to other model objects

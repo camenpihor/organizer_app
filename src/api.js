@@ -3,12 +3,12 @@ import axios from "axios";
 const baseURL = "/api"
 
 function logIn(user) {
-  const url = "/api-token-auth/"
+  const url = "api/token"
   return axios.post(url, user)
 }
 
 function checkToken(t) {
-  const url = "/api-token-verify/"
+  const url = "api/token/verify"
   return axios.post(url, { token: t })
 }
 
@@ -17,12 +17,12 @@ function coreObjectList(coreObject) {
   return {
     get: () => axios.get(url, {
       headers: {
-        Authorization: `JWT ${sessionStorage.getItem('token')}`
+        Authorization: `Bearer ${sessionStorage.getItem('token')}`
       }
     }),
     post: (toCreate) => axios.post(url, toCreate, {
       headers: {
-        Authorization: `JWT ${sessionStorage.getItem('token')}`
+        Authorization: `Bearer ${sessionStorage.getItem('token')}`
       }
     })
   }
@@ -33,17 +33,17 @@ function coreObjectDetail(coreObject, id) {
   return {
     get: () => axios.get(url, {
       headers: {
-        Authorization: `JWT ${sessionStorage.getItem('token')}`
+        Authorization: `Bearer ${sessionStorage.getItem('token')}`
       }
     }),
     put: (toUpdate) => axios.put(url, toUpdate, {
       headers: {
-        Authorization: `JWT ${sessionStorage.getItem('token')}`
+        Authorization: `Bearer ${sessionStorage.getItem('token')}`
       }
     }),
     delete: () => axios.delete(url, {
       headers: {
-        Authorization: `JWT ${sessionStorage.getItem('token')}`
+        Authorization: `Bearer ${sessionStorage.getItem('token')}`
       }
     })
   }

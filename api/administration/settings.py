@@ -76,12 +76,15 @@ REST_FRAMEWORK = {
     "PAGE_SIZE": 10,
     "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
     "DEFAULT_AUTHENTICATION_CLASSES": (
-        "rest_framework_jwt.authentication.JSONWebTokenAuthentication",
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
         "rest_framework.authentication.SessionAuthentication",
         "rest_framework.authentication.BasicAuthentication",
     ),
 }
-JWT_AUTH = {"JWT_EXPIRATION_DELTA": datetime.timedelta(seconds=3600)}
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": datetime.timedelta(minutes=60),
+    "SIGNING_KEY": SECRET_KEY,
+}
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = "UTC"
 USE_I18N = True

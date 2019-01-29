@@ -1,9 +1,24 @@
 /* Common */
-.date-column {
+.grid-column {
+  box-shadow: none !important;
+}
+
+.question-header {
+  font-size: 16px;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.219);
+  line-height: 25px;
+  transition: border-bottom 5s linear;
+}
+
+.column {
+  box-shadow: none !important;
+}
+
+.date {
   width: 25% !important;
 }
 
-.text-column {
+.text {
   width: 75% !important;
 }
 
@@ -11,7 +26,6 @@
 .question-list {
   list-style: none;
   padding: 0;
-  color: #4183c4;
 }
 
 .question-list-item {
@@ -19,7 +33,7 @@
 }
 
 .home-section {
-  margin-top: 50px;
+  margin-bottom: 50px;
 }
 
 .create-button {

@@ -53,10 +53,10 @@ export default class QuestionArchive extends Component {
 
                 <Grid.Row key={question.id} as={NavLink} to={`/questions/${question.id}`}>
 
-                  <Grid.Column className="date-column">
+                  <Grid.Column className="column date">
                     <Moment format="MMM DD">{question.created_at_utc}</Moment>
                   </Grid.Column>
-                  <Grid.Column className="text-column">{question.question}</Grid.Column>
+                  <Grid.Column className="column text">{question.question}</Grid.Column>
 
                 </Grid.Row>
               ))}
