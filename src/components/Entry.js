@@ -43,7 +43,7 @@ class LogInForm extends Component {
         id="login-form"
       >
         <Message error content="Invalid username or password" />
-        <Form.Input placeholder="Email or Username..." name="username" autoFocus />
+        <Form.Input placeholder="Email or Username..." name="username" autoCapitalize="none" autoFocus />
         <Form.Input placeholder='Password' name="password" type="password" />
         <Button type='submit'>Submit</Button>
       </Form>
