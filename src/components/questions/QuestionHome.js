@@ -348,10 +348,11 @@ export default class QuestionHome extends Component {
         <p className="question-header">Links</p>
         <QuestionLinks />
 
+        <QuestionForm />
+
         <p className="question-header">Notebook</p>
         <Notebook {...this.props} />
 
-        <QuestionForm />
       </div>
     );
   }
