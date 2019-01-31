@@ -57,6 +57,11 @@ function coreObjectNotebook(coreObject) {
         Authorization: `Bearer ${sessionStorage.getItem('token')}`
       }
     }),
+    post: (toCreate) => axios.put(url, toCreate, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('token')}`
+      }
+    }),
   }
 }
 

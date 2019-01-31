@@ -59,12 +59,21 @@ class TestCoreObjectNotebook:
         assert response.data is not None
 
     def test_put(self):
-        """Test POST request."""
+        """Test PUT request."""
         self.client.login(username="test", password="test")
 
         url = reverse("api:core-notebook", kwargs={"core_object_type": "question"})
         data = {"pk": 1, "markdown": "new value", "model_type": "question"}
         response = self.client.put(url, data, response_format="json")
+        assert response.status_code == 200
+
+    def test_post(self):
+        """Test POST request."""
+        self.client.login(username="test", password="test")
+        core_object_type = "book"  # must not already exist in test_data.json
+        url = reverse("api:core-notebook", kwargs={"core_object_type": core_object_type})
+        data = {"markdown": "new value", "model_type": core_object_type}
+        response = self.client.post(url, data, response_format="json")
         assert response.status_code == 200
 
 

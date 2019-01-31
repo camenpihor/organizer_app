@@ -34,7 +34,7 @@ class Notebook extends Component {
     this.state = {
       showMarkdown: true,
       notebook: null,
-      sourceText: null,
+      sourceText: "",
       error: null,
       success: null,
       errorMessage: null
@@ -42,24 +42,44 @@ class Notebook extends Component {
   }
 
   handleFormSubmit = () => {
-    let toUpdate = this.state.notebook
-    toUpdate.markdown = this.state.sourceText
-    coreObjectNotebook("question")
-      .put(toUpdate)
-      .then(_ => {
-        this.setState({ success: true })
-        setTimeout(function () {
-          this.setState({ success: null });
-        }.bind(this), 10000);
-      })
-      .catch(error => {
-        if (error.response.status === 401) {
-          this.props.history.push("/")
-          sessionStorage.setItem("token", null)
-        } else {
-          this.setState({ error: true })
-        }
-      })
+    if (this.state.notebook !== null) {
+      let toUpdate = this.state.notebook
+      toUpdate.markdown = this.state.sourceText
+      coreObjectNotebook("question")
+        .put(toUpdate)
+        .then(_ => {
+          this.setState({ success: true })
+          setTimeout(function () {
+            this.setState({ success: null });
+          }.bind(this), 10000);
+        })
+        .catch(error => {
+          if (error.response.status === 401) {
+            this.props.history.push("/")
+            sessionStorage.setItem("token", null)
+          } else {
+            this.setState({ error: true })
+          }
+        })
+    } else {
+      let toCreate = { "markdown": this.state.sourceText, "model_type": "question" }
+      coreObjectNotebook("question")
+        .post(toCreate)
+        .then(_ => {
+          this.setState({ success: true })
+          setTimeout(function () {
+            this.setState({ success: null });
+          }.bind(this), 10000);
+        })
+        .catch(error => {
+          if (error.response.status === 401) {
+            this.props.history.push("/")
+            sessionStorage.setItem("token", null)
+          } else {
+            this.setState({ error: true })
+          }
+        })
+    }
   }
 
   handleTextChange = (e, { value }) => {

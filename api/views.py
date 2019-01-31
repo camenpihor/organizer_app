@@ -22,11 +22,21 @@ class CoreObjectNotebook(APIView):
         return Response(serializer.data)
 
     def put(self, request, core_object_type, response_format=None):
-        """Update a core object instance."""
+        """Update a notebook."""
         check_core_object_type(core_object_type)
 
         obj = get_object_or_404(Notebook, model_type=core_object_type)
         serializer = NotebookSerializer(obj, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def post(self, request, core_object_type, response_format=None):
+        """Create new notebook."""
+        check_core_object_type(core_object_type)
+
+        serializer = NotebookSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
