@@ -329,7 +329,7 @@ export default class QuestionHome extends Component {
         <QuestionLinks />
 
         <p className="question-header">Notebook</p>
-        <Notebook />
+        <Notebook {...this.props} />
 
         <QuestionForm />
       </div>
