@@ -34,7 +34,7 @@ class Notebook extends Component {
     this.state = {
       showMarkdown: true,
       notebook: null,
-      sourceText: "",
+      sourceText: "#Notebook\nThis is the beginning of a new notebook.",
       error: null,
       success: null,
       errorMessage: null
@@ -105,7 +105,7 @@ class Notebook extends Component {
     const { showMarkdown, sourceText, error, success, errorMessage } = this.state;
 
     return (
-      <div ref={this.notebookRef}>
+      <div className="home-section" ref={this.notebookRef}>
         {!showMarkdown &&
           <Form
             onSubmit={this.handleFormSubmit}
