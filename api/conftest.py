@@ -10,6 +10,8 @@ def django_db_setup(django_db_setup, django_db_blocker):
     For more information see
     https://github.com/pytest-dev/pytest-django/blob/master/docs/database.
     rst#using-a-template-database-for-tests.
+
+    To get model data in json format run `python manage.py dumpdata > db.json`
     """
     with django_db_blocker.unblock():
         call_command("loaddata", "api/tests/it/resources/test_data.json")

@@ -1,4 +1,9 @@
 /* Common */
+
+.question {
+  margin-bottom: 100px;
+}
+
 .grid-column {
   box-shadow: none !important;
 }

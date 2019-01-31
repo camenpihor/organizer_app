@@ -2,10 +2,129 @@ import React, { Component } from 'react'
 import Moment from 'react-moment'
 import { NavLink } from 'react-router-dom'
 import { Button, Form, Grid, Icon, Message } from 'semantic-ui-react'
-
+import Markdown from 'react-markdown'
 import AppNavigation from 'components/Navigation'
-import { coreObjectList, getRandomSubset } from 'api'
+import { coreObjectList, coreObjectNotebook, getRandomSubset } from 'api'
 import 'style/questions.css';
+
+
+class Notebook extends Component {
+  componentDidMount() {
+    coreObjectNotebook("question")
+      .get()
+      .then(response => {
+        this.setState({
+          notebook: response.data,
+          sourceText: response.data.markdown
+        });
+      })
+      .catch(error => {
+        if (error.response.status === 401) {
+          this.props.history.push("/")
+          sessionStorage.setItem("token", null)
+        } else {
+          console.log(error)
+        }
+      })
+  }
+
+  constructor(props) {
+    super(props);
+    this.notebookRef = React.createRef();
+    this.state = {
+      showMarkdown: true,
+      notebook: null,
+      sourceText: null,
+      error: null,
+      success: null,
+      errorMessage: null
+    };
+  }
+
+  handleFormSubmit = () => {
+    let toUpdate = this.state.notebook
+    toUpdate.markdown = this.state.sourceText
+    coreObjectNotebook("question")
+      .put(toUpdate)
+      .then(_ => {
+        this.setState({ success: true })
+        setTimeout(function () {
+          this.setState({ success: null });
+        }.bind(this), 10000);
+      })
+      .catch(error => {
+        if (error.response.status === 401) {
+          this.props.history.push("/")
+          sessionStorage.setItem("token", null)
+        } else {
+          this.setState({ error: true })
+        }
+      })
+  }
+
+  handleTextChange = (e, { value }) => {
+    this.setState({ sourceText: value })
+  }
+
+  renderMarkdown = () => {
+    this.setState({ showMarkdown: true })
+  }
+
+  editText = () => {
+    this.setState({
+      showMarkdown: false
+    }, () => {
+      window.scrollTo({
+        top: this.notebookRef.current.offsetTop,
+        behavior: "smooth"
+      });
+    })
+  }
+
+  render() {
+    const { showMarkdown, sourceText, error, success, errorMessage } = this.state;
+
+    return (
+      <div ref={this.notebookRef}>
+        {!showMarkdown &&
+          <Form
+            onSubmit={this.handleFormSubmit}
+            id="notebook-text"
+            error={error}
+            success={success}
+          >
+            <Form.TextArea
+              placeholder='Notebook'
+              name="notebook"
+              onChange={this.handleTextChange}
+              value={sourceText}
+              style={{ minHeight: 300 }}
+              autoFocus
+            />
+            <div>
+              <Button type="button" onClick={this.renderMarkdown}>Render</Button>
+              <Button type='submit'>Save</Button>
+            </div>
+            <Message
+              success
+              header='Successfully persisted'
+            />
+            <Message error header='Form Error' content={errorMessage} />
+          </Form>
+        }
+        {showMarkdown &&
+          <div>
+            <Button type="button" onClick={this.editText} fluid>Edit</Button>
+            <Markdown
+              source={sourceText}
+              linkTarget="_blank"
+            />
+          </div>
+        }
+      </div>
+    )
+  }
+}
 
 class QuestionForm extends Component {
   componentDidMount() {
@@ -208,6 +327,9 @@ export default class QuestionHome extends Component {
 
         <p className="question-header">Links</p>
         <QuestionLinks />
+
+        <p className="question-header">Notebook</p>
+        <Notebook />
 
         <QuestionForm />
       </div>

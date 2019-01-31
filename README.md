@@ -72,11 +72,16 @@ I am using Django REST framework as a backend API with a ReactJS frontend.
 ## TODO
 
 - fix "Cant perform react state update on unmounted component error"
+- fix npm via `npm audit`
+
 - add fontawesome pack
-- https (must have DNS)
 - add icons to side bar
 - dont allow clicking on links when sidebar is visible
-
+- swipe to open sidebar?
 - Model for stats on home page
+- think of ways to track usage (number of times a question was viewed, number of page changes, number of questions created or altered, last edit, total number of questions, total number of forgotten questions)
+- should I weight random question generation by last time visited?
+- plotting in js
 - Connect question to other model objects
-- Create notebook
+- Create notebook (render the markdown and onclick make it a form with two buttons -- render and save)
+- create notebook model or save on server

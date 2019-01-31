@@ -1,51 +1,36 @@
 """Backend for the API."""
 from django.http import Http404
+from django.shortcuts import get_object_or_404
 from rest_framework import status
-from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from rest_framework.reverse import reverse
 from rest_framework.views import APIView
 
-from .view_utils import validate_and_get_core_object_info
+from .view_utils import validate_and_get_core_object_info, check_core_object_type
+from .serializers import NotebookSerializer
+from .models.supporting import Notebook
 
 
-@api_view(["GET"])
-def api_root(request, response_format=None):
-    """Entry-point for the API."""
-    return Response(
-        {
-            "questions": reverse(
-                "api:core-list",
-                kwargs={"core_object_type": "question"},
-                request=request,
-                format=response_format,
-            ),
-            "books": reverse(
-                "api:core-list",
-                kwargs={"core_object_type": "book"},
-                request=request,
-                format=response_format,
-            ),
-            "topics": reverse(
-                "api:core-list",
-                kwargs={"core_object_type": "topic"},
-                request=request,
-                format=response_format,
-            ),
-            "facts": reverse(
-                "api:core-list",
-                kwargs={"core_object_type": "fact"},
-                request=request,
-                format=response_format,
-            ),
-            "words": reverse(
-                "api:core-list",
-                kwargs={"core_object_type": "word"},
-                request=request,
-                format=response_format,
-            ),
-        }
-    )
+class CoreObjectNotebook(APIView):
+    """Handle a core object's notebook."""
+
+    def get(self, request, core_object_type, response_format=None):
+        """Get a model's notebook."""
+        check_core_object_type(core_object_type)
+
+        obj = get_object_or_404(Notebook, model_type=core_object_type)
+        serializer = NotebookSerializer(obj)
+        return Response(serializer.data)
+
+    def put(self, request, core_object_type, response_format=None):
+        """Update a core object instance."""
+        check_core_object_type(core_object_type)
+
+        obj = get_object_or_404(Notebook, model_type=core_object_type)
+        serializer = NotebookSerializer(obj, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class CoreObjectList(APIView):
@@ -55,7 +40,7 @@ class CoreObjectList(APIView):
         """List all core objects of a single type."""
         core_object_info = validate_and_get_core_object_info(core_object_type)
 
-        core_object_all = core_object_info.model.objects.order_by('-created_at_utc')
+        core_object_all = core_object_info.model.objects.order_by("-created_at_utc")
         serializer = core_object_info.serializer(core_object_all, many=True)
         return Response(serializer.data)
 

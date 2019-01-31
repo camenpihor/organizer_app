@@ -1,5 +1,32 @@
 [
     {
+        "model": "auth.user",
+        "pk": 1,
+        "fields": {
+            "password": "pbkdf2_sha256$120000$RhqnQa3FyZNH$IFcmeN2PQ1wv5vNwimZ3RfhWezMkqsPtF2RTMBMUDmw=",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "test",
+            "first_name": "",
+            "last_name": "",
+            "email": "test@test.com",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2019-01-01T01:01:01.000Z",
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "api.notebook",
+        "pk": 1,
+        "fields": {
+            "created_at_utc": "2019-01-01T01:01:01.000Z",
+            "markdown": "Test notebook",
+            "model_type": "question"
+        }
+    },
+    {
         "model": "api.book",
         "pk": 1,
         "fields": {

@@ -1,6 +1,6 @@
-import _ from 'lodash'
-import React, { Component } from 'react'
-import { NavLink } from 'react-router-dom'
+import _ from 'lodash';
+import React, { Component } from 'react';
+import { NavLink } from 'react-router-dom';
 import { Icon, Input, Menu, Search, Sidebar } from 'semantic-ui-react'
 
 import 'style/navigation.css'
@@ -155,7 +155,8 @@ class NavigationSearch extends Component {
   }
 
   listenForSearch = (event) => {
-    if (event.target.type !== "text") {
+    let textTargets = ["text", "input", "textarea"]
+    if (!textTargets.includes(event.target.type)) {
       if (event.key === "/") {
         this.focusSearch(event)
       }

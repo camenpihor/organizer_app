@@ -79,12 +79,8 @@ class Concept(SupportingObject):
 class Notebook(SupportingObject):
     """Nootebooks."""
 
-    notebook = models.TextField()
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
-    book = models.ForeignKey(Book, on_delete=models.CASCADE)
-    word = models.ForeignKey(Word, on_delete=models.CASCADE)
-    fact = models.ForeignKey(Fact, on_delete=models.CASCADE)
+    markdown = models.TextField()
+    model_type = models.TextField(unique=True)
 
     class Meta(SupportingObject.Meta):
         """Metadata for `Notebook`."""

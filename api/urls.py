@@ -5,7 +5,7 @@ configuration in Django refer to https://docs.djangoproject.com/en/2.1/intro/tut
 """
 from django.urls import path
 from rest_framework.urlpatterns import format_suffix_patterns
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenVerifyView
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 from . import views
 
@@ -13,15 +13,18 @@ from . import views
 # https://www.django-rest-framework.org/api-guide/format-suffixes/
 app_name = "api"
 urlpatterns = [
-    path("api/", views.api_root, name="api-root"),
     path("api/<str:core_object_type>/", views.CoreObjectList.as_view(), name="core-list"),
     path(
         "api/<str:core_object_type>/<int:object_id>/",
         views.CoreObjectDetail.as_view(),
         name="core-detail",
     ),
+    path(
+        "api/<str:core_object_type>/notebook/",
+        views.CoreObjectNotebook.as_view(),
+        name="core-notebook",
+    ),
     path("api/token", TokenObtainPairView.as_view(), name="token_obtain_pair"),
-    path("api/token/verify", TokenVerifyView.as_view(), name="token_verify"),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

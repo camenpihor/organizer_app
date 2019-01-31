@@ -7,11 +7,6 @@ function logIn(user) {
   return axios.post(url, user)
 }
 
-function checkToken(t) {
-  const url = "api/token/verify"
-  return axios.post(url, { token: t })
-}
-
 function coreObjectList(coreObject) {
   const url = `${baseURL}/${coreObject}/`
   return {
@@ -49,6 +44,22 @@ function coreObjectDetail(coreObject, id) {
   }
 }
 
+function coreObjectNotebook(coreObject) {
+  const url = `${baseURL}/${coreObject}/notebook/`
+  return {
+    get: () => axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('token')}`
+      }
+    }),
+    put: (toUpdate) => axios.put(url, toUpdate, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('token')}`
+      }
+    }),
+  }
+}
+
 function getRandomSubset(inputArray, numItems) {
   if (numItems >= inputArray.length) {
     return inputArray;
@@ -61,4 +72,4 @@ function getRandomSubset(inputArray, numItems) {
   return outputArray;
 }
 
-export { coreObjectList, coreObjectDetail, getRandomSubset, logIn, checkToken }
+export { coreObjectList, coreObjectDetail, getRandomSubset, logIn, coreObjectNotebook }

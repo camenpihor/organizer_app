@@ -6,22 +6,11 @@ Refer to https://pytest-django.readthedocs.io/en/latest/# for more information o
 Django with pytest.
 """
 import pytest
+from django.contrib.auth.models import User
 from django.urls import reverse
 from rest_framework.test import APIClient
 
 from api.models.core import CORE_OBJECT_TYPES, Question
-
-
-class TestApiRoot:
-    """Tests for `"api:api_root"` URL."""
-
-    client = APIClient()
-
-    def test_get(self):
-        """Test GET request."""
-        url = reverse("api:api-root")
-        response = self.client.get(url)
-        assert response.status_code == 200
 
 
 @pytest.mark.django_db
@@ -33,6 +22,8 @@ class TestCoreObjectList:
     @pytest.mark.usefixtures("django_db_setup")
     def test_get(self):
         """Test GET request."""
+        self.client.login(username="test", password="test")
+
         for core_object_type in CORE_OBJECT_TYPES:
             url = reverse("api:core-list", kwargs={"core_object_type": core_object_type})
             response = self.client.get(url, response_format="json")
@@ -41,12 +32,40 @@ class TestCoreObjectList:
 
     def test_post(self):
         """Test POST request."""
+        self.client.login(username="test", password="test")
+
         question_id = 100
         url = reverse("api:core-list", kwargs={"core_object_type": "question"})
         data = {"question": "testing", "id": question_id}
 
         response = self.client.post(url, data, rsponse_format="json")
         assert response.status_code == 201
+
+
+@pytest.mark.django_db
+class TestCoreObjectNotebook:
+    """Tests for `"api:core-notebook` URL."""
+
+    client = APIClient()
+
+    @pytest.mark.usefixtures("django_db_setup")
+    def test_get(self):
+        """Test GET request."""
+        self.client.login(username="test", password="test")
+
+        url = reverse("api:core-notebook", kwargs={"core_object_type": "question"})
+        response = self.client.get(url, response_format="json")
+        assert response.status_code == 200
+        assert response.data is not None
+
+    def test_put(self):
+        """Test POST request."""
+        self.client.login(username="test", password="test")
+
+        url = reverse("api:core-notebook", kwargs={"core_object_type": "question"})
+        data = {"pk": 1, "markdown": "new value", "model_type": "question"}
+        response = self.client.put(url, data, response_format="json")
+        assert response.status_code == 200
 
 
 @pytest.mark.django_db
@@ -58,6 +77,8 @@ class TestCoreObjectDetail:
     @pytest.mark.usefixtures("django_db_setup")
     def test_get(self):
         """Test GET request."""
+        self.client.login(username="test", password="test")
+
         for core_object_type in CORE_OBJECT_TYPES:
             url = reverse(
                 "api:core-detail",
@@ -69,6 +90,8 @@ class TestCoreObjectDetail:
 
     def test_put(self):
         """Test PUT request."""
+        self.client.login(username="test", password="test")
+
         url = reverse(
             "api:core-detail", kwargs={"core_object_type": "question", "object_id": 1}
         )
@@ -78,6 +101,8 @@ class TestCoreObjectDetail:
 
     def test_delete(self):
         """Test DELETE request."""
+        self.client.login(username="test", password="test")
+
         question_id = 50
         Question.objects.create(question="Testing delete", pk=question_id)
         url = reverse(
