@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Icon, Input, Menu, Search, Sidebar } from 'semantic-ui-react'
+import { Icon, Input, Menu, Message, Search, Sidebar } from 'semantic-ui-react'
 
 import 'style/navigation.css'
 
@@ -17,6 +17,25 @@ const pages = [
   { title: "Archive", url: "archive" },
   { title: "Stats", url: "stats" }
 ]
+const availableShortcuts = (
+  <Message>
+    <Message.Header>Available Shortcuts</Message.Header>
+    <Message.List className="available-shortcuts">
+      <br />
+      <Message.Item>/ : focus search</Message.Item>
+      <br />
+      <Message.Header>ctrl</Message.Header>
+      <Message.Item>b : show sidebar</Message.Item>
+      <Message.Item>n : show question form</Message.Item>
+      <Message.Item>p : show helper</Message.Item>
+      <Message.Item>r : render and save (only in notebook)</Message.Item>
+      <Message.Item>u : insert date section (only in notebook)</Message.Item>
+      <Message.Item>click : edit text (only in notebook)</Message.Item>
+    </Message.List>
+  </Message>
+)
+const textTargets = ["text", "input", "textarea"]
+
 function createNavLink(mainObject, page) {
   return "/" + mainObject.url + "/" + page.url
 }
@@ -25,10 +44,12 @@ class NavigationHelper extends Component {
   componentDidMount() {
     this.sourcePages = this.createSearchGroups();
     window.addEventListener("keydown", this.toggleHelper, false);
+    window.addEventListener("keydown", this.toggleToolTip, false);
   }
 
   componentWillUnmount() {
     window.removeEventListener("keydown", this.toggleHelper, false);
+    window.addEventListener("keydown", this.toggleToolTip, false);
   }
 
   constructor(props) {
@@ -36,7 +57,8 @@ class NavigationHelper extends Component {
     this.state = {
       helperVisible: false,
       results: [],
-      value: ""
+      value: "",
+      toolTipVisible: false
     };
   }
 
@@ -96,11 +118,27 @@ class NavigationHelper extends Component {
     }
   }
 
+  toggleToolTip = (event) => {
+    if (!textTargets.includes(event.target.type)) {
+      if (event.key === '?') {
+        this.setState(state => ({
+          toolTipVisible: !state.toolTipVisible,
+        }));
+      }
+    }
+  }
+
   resetHelper = () => {
     this.setState({
       helperVisible: false,
       results: [],
       value: ""
+    })
+  }
+
+  resetToolTip = () => {
+    this.setState({
+      toolTipVisible: false
     })
   }
 
@@ -111,10 +149,15 @@ class NavigationHelper extends Component {
   }
 
   render() {
-    const { helperVisible, results, value } = this.state;
+    const { helperVisible, results, value, toolTipVisible } = this.state;
 
     return (
       <div>
+        {toolTipVisible &&
+          <div className="tool-tip" onClick={this.resetToolTip} >
+            {availableShortcuts}
+          </div>
+        }
         {helperVisible &&
           <Search
             className="helper"
@@ -155,7 +198,6 @@ class NavigationSearch extends Component {
   }
 
   listenForSearch = (event) => {
-    let textTargets = ["text", "input", "textarea"]
     if (!textTargets.includes(event.target.type)) {
       if (event.key === "/") {
         this.focusSearch(event)

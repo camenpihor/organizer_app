@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import moment from 'moment'
 import Moment from 'react-moment'
 import { NavLink } from 'react-router-dom'
 import { Button, Form, Grid, Icon, Message } from 'semantic-ui-react'
@@ -10,6 +11,8 @@ import 'style/questions.css';
 
 class Notebook extends Component {
   componentDidMount() {
+    console.log(new Date())
+
     coreObjectNotebook("question")
       .get()
       .then(response => {
@@ -28,6 +31,10 @@ class Notebook extends Component {
       })
   }
 
+  componentWillUnmount() {
+    this.handleFormSubmit()
+  }
+
   constructor(props) {
     super(props);
     this.notebookRef = React.createRef();
@@ -41,49 +48,96 @@ class Notebook extends Component {
     };
   }
 
+  resetMessages = () => {
+    this.setState({
+      error: null,
+      success: null,
+      errorMessage: null
+    })
+  }
+
   handleFormSubmit = () => {
-    if (this.state.notebook !== null) {
-      let toUpdate = this.state.notebook
-      toUpdate.markdown = this.state.sourceText
-      coreObjectNotebook("question")
-        .put(toUpdate)
-        .then(_ => {
-          this.setState({ success: true })
-          setTimeout(function () {
-            this.setState({ success: null });
-          }.bind(this), 10000);
-        })
-        .catch(error => {
-          if (error.response.status === 401) {
-            this.props.history.push("/")
-            sessionStorage.setItem("token", null)
-          } else {
-            this.setState({ error: true })
-          }
-        })
+    // if no new text has been added, don't do anything
+    if (this.state.notebook.markdown !== this.state.sourceText) {
+      // if notebook already exists, update it
+      if (this.state.notebook !== null) {
+        let toUpdate = this.state.notebook
+        toUpdate.markdown = this.state.sourceText
+        coreObjectNotebook("question")
+          .put(toUpdate)
+          .then(_ => {
+            this.setState({ success: true })
+            setTimeout(function () {
+              this.resetMessages();
+            }.bind(this), 5000);
+          })
+          .catch(error => {
+            if (error.response.status === 401) {
+              this.props.history.push("/")
+              sessionStorage.setItem("token", null)
+            } else {
+              this.setState({ error: true })
+            }
+          })
+      } else {  // else if notebook doesn't already exists, create one
+        let toCreate = { "markdown": this.state.sourceText, "model_type": "question" }
+        coreObjectNotebook("question")
+          .post(toCreate)
+          .then(_ => {
+            this.setState({ success: true })
+            setTimeout(function () {
+              this.resetMessages();
+            }.bind(this), 5000);
+          })
+          .catch(error => {
+            if (error.response.status === 401) {
+              this.props.history.push("/")
+              sessionStorage.setItem("token", null)
+            } else {
+              this.setState({ error: true })
+            }
+          })
+      }
     } else {
-      let toCreate = { "markdown": this.state.sourceText, "model_type": "question" }
-      coreObjectNotebook("question")
-        .post(toCreate)
-        .then(_ => {
-          this.setState({ success: true })
-          setTimeout(function () {
-            this.setState({ success: null });
-          }.bind(this), 10000);
-        })
-        .catch(error => {
-          if (error.response.status === 401) {
-            this.props.history.push("/")
-            sessionStorage.setItem("token", null)
-          } else {
-            this.setState({ error: true })
-          }
-        })
+      this.setState({ error: true, errorMessage: "There is no new text to save" })
+      setTimeout(function () {
+        this.resetMessages();
+      }.bind(this), 5000);
+    }
+  }
+
+  handleMarkdownClick = (event) => {
+    event.stopPropagation();
+    if (event.ctrlKey) {
+      this.editText()
     }
   }
 
   handleTextChange = (e, { value }) => {
     this.setState({ sourceText: value })
+  }
+
+  handleMarkdownKeyDown = (event) => {
+    if (event.ctrlKey) {
+      if (event.key === 's') {
+        this.handleFormSubmit()
+      } else if (event.key === 'u') {
+        const currentText = this.state.sourceText
+        const cursorPosition = event.target.selectionStart
+
+        const firstPart = currentText.slice(0, cursorPosition)
+        const header = "#### "
+        const currentDateTime = moment().format('LLLL')
+        const seperator = "*".repeat(5)
+        const lastPart = currentText.slice(cursorPosition + 1)
+        const newText = firstPart + header + currentDateTime + "\n" + seperator + "\n" + lastPart
+        this.setState({ sourceText: newText })
+      } else if (event.key === 'r') {
+        this.handleFormSubmit()
+        this.renderMarkdown()
+        this.resetMessages()
+      }
+    }
   }
 
   renderMarkdown = () => {
@@ -120,6 +174,7 @@ class Notebook extends Component {
               value={sourceText}
               style={{ minHeight: 300 }}
               autoFocus
+              onKeyDown={this.handleMarkdownKeyDown}
             />
             <div>
               <Button type="button" onClick={this.renderMarkdown}>Render</Button>
@@ -133,8 +188,7 @@ class Notebook extends Component {
           </Form>
         }
         {showMarkdown &&
-          <div>
-            <Button type="button" onClick={this.editText} fluid>Edit</Button>
+          <div onClick={this.handleMarkdownClick}>
             <Markdown
               source={sourceText}
               linkTarget="_blank"
@@ -198,12 +252,18 @@ class QuestionForm extends Component {
         }, () => {
           document.getElementById("question-form").reset();
         });
+        setTimeout(function () {
+          this.setState({ success: null });
+        }.bind(this), 5000);
       })
       .catch(error => {
         this.setState({
           error: true,
           errorMessage: error
         });
+        setTimeout(function () {
+          this.setState({ error: null, errorMessage: null });
+        }.bind(this), 5000);
       })
   }
 
@@ -336,7 +396,7 @@ function QuestionLinks() {
 export default class QuestionHome extends Component {
   render() {
     return (
-      <div className="question" >
+      <div className="question">
         <AppNavigation {...this.props} />
 
         <p className="question-header">Stats</p>
@@ -352,7 +412,6 @@ export default class QuestionHome extends Component {
 
         <p className="question-header">Notebook</p>
         <Notebook {...this.props} />
-
       </div>
     );
   }

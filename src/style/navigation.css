@@ -66,3 +66,16 @@
 #page-name {
   font-size: 12px !important;
 }
+
+.tool-tip {
+  position: fixed !important;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+}
+
+
+.available-shortcuts {
+  list-style-type: none;
+}
