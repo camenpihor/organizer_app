@@ -30,6 +30,8 @@ const availableShortcuts = (
       <Message.Item>p : show helper</Message.Item>
       <Message.Item>r : render and save (only in notebook)</Message.Item>
       <Message.Item>u : insert date section (only in notebook)</Message.Item>
+      <br />
+      <Message.Header>option</Message.Header>
       <Message.Item>click : edit text (only in notebook)</Message.Item>
     </Message.List>
   </Message>

@@ -108,7 +108,7 @@ class Notebook extends Component {
 
   handleMarkdownClick = (event) => {
     event.stopPropagation();
-    if (event.ctrlKey) {
+    if (event.altKey) {
       this.editText()
     }
   }
@@ -188,7 +188,7 @@ class Notebook extends Component {
           </Form>
         }
         {showMarkdown &&
-          <div onClick={this.handleMarkdownClick}>
+          <div onMouseDown={this.handleMarkdownClick}>
             <Markdown
               source={sourceText}
               linkTarget="_blank"
