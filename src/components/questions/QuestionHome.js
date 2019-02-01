@@ -152,6 +152,9 @@ class Notebook extends Component {
         top: this.notebookRef.current.offsetTop,
         behavior: "smooth"
       });
+      setTimeout(function() { // I dont know why, byt I need a timeout function here
+        document.getElementById("notebook-text").focus();
+    }, 0);
     })
   }
 
@@ -163,13 +166,13 @@ class Notebook extends Component {
         {!showMarkdown &&
           <Form
             onSubmit={this.handleFormSubmit}
-            id="notebook-text"
             error={error}
             success={success}
           >
             <Form.TextArea
               placeholder='Notebook'
               name="notebook"
+              id="notebook-text"
               onChange={this.handleTextChange}
               value={sourceText}
               style={{ minHeight: 300 }}
