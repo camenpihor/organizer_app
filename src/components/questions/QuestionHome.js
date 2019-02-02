@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import moment from 'moment'
 import Moment from 'react-moment'
 import { NavLink } from 'react-router-dom'
-import { Button, Form, Grid, Icon, Message } from 'semantic-ui-react'
+import { Button, Card, Form, Grid, Icon, Message } from 'semantic-ui-react'
 import Markdown from 'react-markdown'
 import AppNavigation from 'components/Navigation'
 import { coreObjectList, coreObjectNotebook, getRandomSubset } from 'api'
@@ -152,9 +152,9 @@ class Notebook extends Component {
         top: this.notebookRef.current.offsetTop,
         behavior: "smooth"
       });
-      setTimeout(function() { // I dont know why, byt I need a timeout function here
+      setTimeout(function () { // I dont know why, byt I need a timeout function here
         document.getElementById("notebook-text").focus();
-    }, 0);
+      }, 0);
     })
   }
 
@@ -376,20 +376,25 @@ function QuestionLinks() {
   const links = [
     { title: "SlateStarCodex", url: "https://slatestarcodex.com" },
     { title: "LessWrong", url: "https://lesswrong.com" },
-    { title: "The Zvi", url: "https://thezvi.wordpress.com/" },
+    { title: "The Zvi", url: "https://thezvi.wordpress.com" },
     { title: "Overcoming Bias", url: "http://www.overcomingbias.com" },
     { title: "Melting Asphalt", url: "http://meltingasphalt.com" }
   ]
 
   return (
     <div className="home-section" >
-      <ul className="question-list">
+      <Card.Group itemsPerRow={2}>
         {links.map(link => (
-          <li className="question-list-item" key={link.title}>
-            <a href={link.url} target="_blank" rel="noopener noreferrer">{link.title}</a>
-          </li>
+          <Card
+            href={link.url}
+            header={link.title}
+            rel="noopener noreferrer"
+            target="_blank"
+            key={link.title}
+            meta={link.url}
+          />
         ))}
-      </ul>
+      </Card.Group>
     </div>
   )
 }
