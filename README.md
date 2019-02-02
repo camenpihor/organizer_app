@@ -85,3 +85,4 @@ I am using Django REST framework as a backend API with a ReactJS frontend.
 - plotting in js (use d3 and can try it out on (some website))
 - Connect question to other model objects
 - when notebook is out of view render markdown
+- update all `<ul>` to `List`

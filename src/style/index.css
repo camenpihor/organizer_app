@@ -19,11 +19,6 @@ body {
   margin: 0 auto !important;
   float: none !important;
   padding: 0 25px;
-  transition: background-color 0.3s linear;
-}
-
-body.sidebar-visible {
-  background: rgba(0, 0, 0, 0.411) !important;
 }
 
 body.entry-page {
@@ -34,8 +29,4 @@ body.entry-page {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
-}
-
-input:focus {
-  outline: none;
 }

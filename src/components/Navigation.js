@@ -250,19 +250,6 @@ class NavigationSearch extends Component {
 
 
 class NavigationSideBar extends Component {
-  componentWillUnmount() {
-    this.handleHideSidebar()
-  }
-
-  handleShowSidebar = () => {
-    document.body.classList.add("sidebar-visible");
-  }
-
-  handleHideSidebar = () => {
-    document.body.classList.remove("sidebar-visible");
-    this.props.hideSidebar();
-  }
-
   render() {
     return (
       <Sidebar
@@ -273,8 +260,9 @@ class NavigationSideBar extends Component {
         vertical
         visible={this.props.state.sidebarVisible}
         width='thin'
-        onVisible={this.handleShowSidebar}
-        onHide={this.handleHideSidebar}
+        onVisible={this.props.handleDarken}
+        onHide={this.props.resetSidebar}
+        target={document.body}
       >
         {mainObjects.map(mainObject => (
           <Menu.Item key={mainObject.title}>
@@ -306,6 +294,7 @@ export default class AppNavigation extends Component {
 
   componentWillUnmount() {
     window.removeEventListener("keydown", this.toggleSideBar, false);
+    this.resetSidebar()
   }
 
   constructor(props) {
@@ -316,7 +305,16 @@ export default class AppNavigation extends Component {
   }
 
   showSidebar = () => this.setState({ sidebarVisible: true })
-  hideSidebar = () => this.setState({ sidebarVisible: false })
+  handleDarken = () => document.getElementById("dark-overlay").classList.add("visible");
+  handleUndarken = () => document.getElementById("dark-overlay").classList.remove("visible");
+  resetSidebar = () => {
+    this.setState({
+      sidebarVisible: false
+    }, () => {
+      this.handleUndarken();
+    })
+
+  }
   toggleSideBar = (event) => {
     if (event.ctrlKey && event.key === 'b') {
       this.setState(state => ({
@@ -328,9 +326,9 @@ export default class AppNavigation extends Component {
   render() {
     return (
       <div className="top-nav">
-        <NavigationHelper {...this.props} />
+        <NavigationHelper {...this} />
 
-        <Menu fixed="top" borderless className="top-navigation-menu" size="massive">
+        <Menu fixed="top" borderless className="top-nav-menu" size="massive">
           <Menu.Menu position="left" className="left-nav">
             <Menu.Item icon="bars" onClick={this.showSidebar} />
           </Menu.Menu>
@@ -338,6 +336,7 @@ export default class AppNavigation extends Component {
         </Menu >
 
         <NavigationSideBar {...this} />
+        <div id="dark-overlay"></div>
       </div>
     )
   }
