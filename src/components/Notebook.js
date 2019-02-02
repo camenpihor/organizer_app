@@ -14,7 +14,8 @@ export default class Notebook extends Component {
       .then(response => {
         this.setState({
           notebook: response.data,
-          sourceText: response.data.markdown
+          sourceText: response.data.markdown,
+          showMarkdown: true
         });
       })
       .catch(error => {
@@ -35,7 +36,7 @@ export default class Notebook extends Component {
     super(props);
     this.notebookRef = React.createRef();
     this.state = {
-      showMarkdown: true,
+      showMarkdown: false,
       notebook: null,
       sourceText: "#Notebook\nThis is the beginning of a new notebook.",
       error: null,
@@ -110,6 +111,17 @@ export default class Notebook extends Component {
     }
   }
 
+  handleMarkdownDoubleTap = () => {
+    const now = Date.now();
+    const doubleTapDelay = 300;
+    if (this.state.lastTap && (now - this.state.lastTap) < doubleTapDelay) {
+      this.editText()
+    }
+    else {
+      this.setState({ lastTap: now })
+    }
+  }
+
   handleTextChange = (e, { value }) => {
     this.setState({ sourceText: value })
   }
@@ -141,28 +153,17 @@ export default class Notebook extends Component {
     this.setState({ showMarkdown: true })
   }
 
-  handleDoubleTap = () => {
-    const now = Date.now();
-    const doubleTapDelay = 300;
-    if (this.state.lastTap && (now - this.state.lastTap) < doubleTapDelay) {
-      this.editText()
-    }
-    else {
-      this.setState({ lastTap: now })
-    }
-  }
-
   editText = () => {
     this.resetMessages();
     this.setState({
       showMarkdown: false
     }, () => {
-      window.scrollTo({
-        top: this.notebookRef.current.offsetTop,
-        behavior: "smooth"
-      });
-      setTimeout(function () { // I dont know why, byt I need a timeout function here
+      setTimeout(function () { // I dont know why, but I need a timeout function here
         document.getElementById("notebook-text").focus();
+        window.scrollTo({
+          top: document.body.scrollHeight,
+          behavior: "smooth"
+        })
       }, 0);
     })
   }
@@ -171,7 +172,7 @@ export default class Notebook extends Component {
     const { showMarkdown, sourceText, error, success, errorMessage } = this.state;
 
     return (
-      <div ref={this.notebookRef}>
+      <div>
         {!showMarkdown &&
           <Form
             onSubmit={this.handleFormSubmit}
@@ -200,7 +201,10 @@ export default class Notebook extends Component {
           </Form>
         }
         {showMarkdown &&
-          <div onMouseDown={this.handleMarkdownClick} onTouchEndCapture={this.handleDoubleTap}>
+          <div
+            onMouseDown={this.handleMarkdownClick}
+            onTouchEndCapture={this.handleMarkdownDoubleTap}
+          >
             <Markdown
               source={sourceText}
               linkTarget="_blank"

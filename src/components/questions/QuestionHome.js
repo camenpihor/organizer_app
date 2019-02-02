@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import moment from 'moment'
 import { NavLink } from 'react-router-dom'
-import { Button, Card, Form, Icon, Message } from 'semantic-ui-react'
+import { Button, Card, Form, Icon, Message, Segment } from 'semantic-ui-react'
 import Notebook from 'components/Notebook'
 import AppNavigation from 'components/Navigation'
 import { coreObjectList, getRandomSubset } from 'api'
@@ -34,22 +34,32 @@ class QuestionList extends Component {
     };
   }
 
+  navigateTo = (url) => {
+    this.props.history.push(url)
+  }
+
   render() {
     const { questions } = this.state;
 
     return (
       <div>
-         <Card.Group itemsPerRow={1}>
-         {questions.map(question => (
-          <Card
-            key={question.id}
-            href={`/questions/${question.id}`}
-            header={question.question}
-            meta={moment(question.created_at_utc).format('ll')}
-            className="question-item"
-          />
-        ))}
-      </Card.Group>
+        <Card.Group itemsPerRow={1}>
+          {questions.map(question => (
+            <Card
+              key={question.id}
+              className="question-link"
+            >
+              <Card.Content as="a" href={`/questions/${question.id}`}>
+                <Card.Header>
+                  {question.question}
+                </Card.Header>
+                <Card.Meta>
+                  {moment(question.created_at_utc).format('ll')}
+                </Card.Meta>
+              </Card.Content>
+            </Card>
+          ))}
+        </Card.Group>
       </div>
     )
   }
@@ -69,14 +79,14 @@ function QuestionLinks() {
       <Card.Group itemsPerRow={2} doubling>
         {links.map(link => (
           <Card
-            href={link.url}
-            header={link.title}
-            rel="noopener noreferrer"
-            target="_blank"
             key={link.title}
-            meta={link.url}
             className="question-link"
-          />
+          >
+            <Card.Content as="a" href={link.url} target="_blank" rel="noopener noreferrer">
+              <Card.Header>{link.title}</Card.Header>
+              <Card.Meta>{link.url}</Card.Meta>
+            </Card.Content>
+          </Card>
         ))}
       </Card.Group>
     </div>
@@ -195,7 +205,7 @@ export default class QuestionHome extends Component {
       <div className="question-page">
         <AppNavigation {...this.props} />
 
-          <div className="question-section">
+        <div className="question-section">
           <p className="question-header">Random Questions</p>
           <QuestionList {...this.props} />
         </div>
@@ -209,10 +219,10 @@ export default class QuestionHome extends Component {
           <QuestionForm />
         </div>
 
-        <div className="question-section">
+        <Segment className="notebook">
           <p className="question-header">Notebook</p>
           <Notebook {...this.props} />
-        </div>
+        </Segment>
 
       </div>
     );
