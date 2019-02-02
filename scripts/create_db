@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+set -e
+
+psql postgres -f ./scripts/create_database.sql -v ON_ERROR_STOP=1 -v db_name=$DB_NAME -v db_user=$DB_USER -v db_password=$DB_PASSWORD -v -e
