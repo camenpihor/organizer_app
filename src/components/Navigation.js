@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Icon, Input, Menu, Message, Search, Sidebar } from 'semantic-ui-react'
+import { Input, Menu, Message, Search, Sidebar } from 'semantic-ui-react'
 
 import 'style/navigation.css'
 
