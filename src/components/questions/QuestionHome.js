@@ -353,15 +353,15 @@ class QuestionList extends Component {
 
     return (
       <div className="home-section" >
-        <Grid columns={2} divided>
+        <Grid columns={2} divided className="question-grid">
           {questions.map(question => (
             <Grid.Row key={question.id} as={NavLink} to={`/questions/${question.id}`}>
-              <Grid.Column className="grid-column date">
+              <Grid.Column className="column date">
                 <Moment format="MMM DD YYYY">
                   {question.created_at_utc}
                 </Moment>
               </Grid.Column>
-              <Grid.Column className="grid-column text">
+              <Grid.Column className="column text">
                 {question.question}
               </Grid.Column>
             </Grid.Row>
@@ -399,7 +399,7 @@ function QuestionLinks() {
 export default class QuestionHome extends Component {
   render() {
     return (
-      <div className="question">
+      <div className="question-page">
         <AppNavigation {...this.props} />
 
         <p className="question-header">Stats</p>

@@ -36,7 +36,7 @@ export default class QuestionDetail extends Component {
     const { question } = this.state;
 
     return (
-      <div className="question">
+      <div className="question-page">
         <AppNavigation pageName="Question Detail" {...this.props} />
         <h3>Question</h3>
         <p>

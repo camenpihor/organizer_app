@@ -1,18 +1,7 @@
 /* Common */
 
-.question {
+.question-page {
   margin-bottom: 100px;
-}
-
-.grid-column {
-  box-shadow: none !important;
-}
-
-.question-header {
-  font-size: 16px;
-  border-bottom: 2px solid rgba(0, 0, 0, 0.219);
-  line-height: 25px;
-  transition: border-bottom 5s linear;
 }
 
 .column {
@@ -37,6 +26,13 @@
   padding-bottom: 2rem;
 }
 
+.question-header {
+  font-size: 16px;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.219);
+  line-height: 25px;
+  transition: border-bottom 5s linear;
+}
+
 .home-section {
   margin-bottom: 50px;
 }
@@ -47,6 +43,13 @@
   right: 30px;
   z-index: 100;
 }
+
+.question-grid {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+/* Archive */
 
 .year-section {
   margin-bottom: 50px;

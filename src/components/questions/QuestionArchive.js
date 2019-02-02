@@ -39,7 +39,7 @@ export default class QuestionArchive extends Component {
     const { questions, years } = this.state;
 
     return (
-      <div className="question">
+      <div className="question-page">
         <AppNavigation {...this.props} />
 
         {years.map(year => (
