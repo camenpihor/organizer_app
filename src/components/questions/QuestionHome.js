@@ -92,7 +92,7 @@ function QuestionLinks() {
 
   return (
     <div className="home-section" >
-      <Card.Group itemsPerRow={2}>
+      <Card.Group itemsPerRow={2} doubling>
         {links.map(link => (
           <Card
             href={link.url}
@@ -101,8 +101,6 @@ function QuestionLinks() {
             target="_blank"
             key={link.title}
             meta={link.url}
-            className="link"
-            fluid
           />
         ))}
       </Card.Group>
