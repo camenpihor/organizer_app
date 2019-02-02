@@ -31,6 +31,7 @@ class LogInForm extends Component {
 
   resetForm = () => {
     document.getElementById("login-form").reset();
+    document.getElementById("login-form-first").focus();
   }
 
   render() {
@@ -43,7 +44,7 @@ class LogInForm extends Component {
         id="login-form"
       >
         <Message error content="Invalid username or password" />
-        <Form.Input placeholder="Email or Username..." name="username" autoCapitalize="none" autoFocus />
+        <Form.Input id="login-form-first" placeholder="Email or Username..." name="username" autoCapitalize="none" autoFocus />
         <Form.Input placeholder='Password' name="password" type="password" />
         <Button type='submit'>Submit</Button>
       </Form>
@@ -68,7 +69,6 @@ export default class Entry extends Component {
   }
 
   showLogIn = () => this.setState({ visible: true })
-
 
   render() {
     const { visible } = this.state;
