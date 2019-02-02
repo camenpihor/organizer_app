@@ -49,6 +49,19 @@
   margin-bottom: 0 !important;
 }
 
+.question-form-input input, textarea {
+  background-color: inherit !important;
+}
+
+.link {
+  background: inherit !important;
+  box-shadow: 0 1px 3px 0 #72727236, 0 0 0 1px #72727236 !important;
+}
+
+.notebook-markdown hr {
+  border-color: #72727236;
+}
+
 /* Archive */
 
 .year-section {

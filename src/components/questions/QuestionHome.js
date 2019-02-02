@@ -101,6 +101,7 @@ function QuestionLinks() {
             target="_blank"
             key={link.title}
             meta={link.url}
+            className="link"
           />
         ))}
       </Card.Group>
@@ -194,8 +195,8 @@ class QuestionForm extends Component {
               success={success}
               id="question-form"
             >
-              <Form.Input placeholder='Rating' type='number' max={100} name="rating" />
-              <Form.TextArea placeholder='Question' name="question" autoFocus />
+              <Form.Input className="question-form-input" placeholder='Rating' type='number' max={100} name="rating" />
+              <Form.TextArea className="question-form-input" placeholder='Question' name="question" autoFocus />
               <Message
                 success
                 header='Question Created'
@@ -395,7 +396,7 @@ class Notebook extends Component {
           </Form>
         }
         {showMarkdown &&
-          <div onMouseDown={this.handleMarkdownClick} onTouchStartCapture={this.editText}>
+          <div className="notebook-markdown" onMouseDown={this.handleMarkdownClick} onTouchStartCapture={this.editText}>
             <Markdown
               source={sourceText}
               linkTarget="_blank"
