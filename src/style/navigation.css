@@ -1,4 +1,8 @@
-/* Navigation Helper */
+.top-nav {
+  margin-bottom: 100px;
+}
+
+/* Helper */
 .helper {
   position: fixed !important;
   top: 100px;
@@ -12,6 +16,7 @@
   opacity: 0.95;
   color: white !important;
   font-size: 18px;
+  max-width: 200px;;
 }
 
 .helper input:focus {
@@ -19,52 +24,24 @@
 }
 
 .helper .results {
-  max-width: 175px !important;
+  max-width: 200px !important;
 }
 
-/* Navigation Search */
-#navigation-search {
-  border: none;
-}
-
-
-/* Navigation */
-.top-nav {
-  margin-bottom: 100px;
-}
-
-#top-navigation {
+/* Top Menu */
+.top-navigation-menu {
   background-color: #fafafa;
 }
 
-.activeNavLink {
-  border-right: solid !important;
-}
-
-#side-navigation .item {
-  font-size: 16px !important;
-}
-
-#top-navigation .item {
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
-  font-size: 18px !important;
-}
-
-#left-nav {
+.left-nav {
   width: 50%;
 }
 
-#right-nav {
+.right-nav {
   width: 50%;
 }
 
-#right-nav .input {
+.right-nav .input {
   height: 100%
-}
-
-#page-name {
-  font-size: 12px !important;
 }
 
 .tool-tip {
@@ -75,7 +52,16 @@
   z-index: 100;
 }
 
+/* Side Menu */
+.activeNavLink {
+  border-right: solid !important;
+}
 
+.side-nav .item {
+  font-size: 16px !important;
+}
+
+/* Available Shortcuts */
 .available-shortcuts {
   list-style-type: none;
 }

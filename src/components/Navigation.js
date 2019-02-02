@@ -156,7 +156,7 @@ class NavigationHelper extends Component {
     return (
       <div>
         {toolTipVisible &&
-          <div className="tool-tip" onClick={this.resetToolTip} >
+          <div className="tool-tip">
             {availableShortcuts}
           </div>
         }
@@ -226,18 +226,24 @@ class NavigationSearch extends Component {
   render() {
     const { visible } = this.state
     return (
-      <Menu.Item position="right">
-        {visible ? (<Input
-          id="search-input"
-          size="large"
-          transparent
-          placeholder='Search...'
-          onKeyDown={this.listenForBlur}
-          onBlur={this.blurSearch}
-          autoFocus
-        />) : (<Icon name="search" onClick={this.focusSearch} fitted />)
+      <Menu.Menu position='right' className="right-nav">
+        {visible ? (
+          <Menu.Item position="right" id="search-container">
+            <Input
+              id="search-input"
+              size="large"
+              transparent
+              placeholder='Search...'
+              onKeyDown={this.listenForBlur}
+              onBlur={this.blurSearch}
+              autoFocus
+            />
+          </Menu.Item>
+        ) : (
+            <Menu.Item icon="search" position="right" onClick={this.focusSearch} />
+          )
         }
-      </Menu.Item>
+      </Menu.Menu>
     )
   }
 }
@@ -260,7 +266,7 @@ class NavigationSideBar extends Component {
   render() {
     return (
       <Sidebar
-        id="side-navigation"
+        className="side-nav"
         as={Menu}
         animation='overlay'
         icon='labeled'
@@ -324,13 +330,11 @@ export default class AppNavigation extends Component {
       <div className="top-nav">
         <NavigationHelper {...this.props} />
 
-        <Menu fixed="top" borderless id="top-navigation" size="massive">
-          <Menu.Menu position="left" id="left-nav">
+        <Menu fixed="top" borderless className="top-navigation-menu" size="massive">
+          <Menu.Menu position="left" className="left-nav">
             <Menu.Item icon="bars" onClick={this.showSidebar} />
           </Menu.Menu>
-          <Menu.Menu position='right' id="right-nav">
-            <NavigationSearch {...this.props} />
-          </Menu.Menu>
+          <NavigationSearch {...this.props} />
         </Menu >
 
         <NavigationSideBar {...this} />
