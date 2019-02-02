@@ -8,7 +8,7 @@ def django_db_setup(django_db_setup, django_db_blocker):
     """Fixture which adds populates the test database.
 
     For more information see
-    https://github.com/pytest-dev/pytest-django/blob/master/docs/database.
+    https://pytest-django.readthedocs.io/en/latest/database.html.
     rst#using-a-template-database-for-tests.
 
     To get model data in json format run `python manage.py dumpdata > db.json`
