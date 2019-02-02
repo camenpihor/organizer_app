@@ -1,3 +1,4 @@
+# pylint: disable=unused-argument, no-self-use
 """Backend for the API."""
 from django.http import Http404
 from django.shortcuts import get_object_or_404

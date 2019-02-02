@@ -25,7 +25,9 @@ class TestCoreObjectList:
         self.client.login(username="test", password="test")
 
         for core_object_type in CORE_OBJECT_TYPES:
-            url = reverse("api:core-list", kwargs={"core_object_type": core_object_type})
+            url = reverse(
+                "api:core-list", kwargs={"core_object_type": core_object_type}
+            )
             response = self.client.get(url, response_format="json")
             assert response.status_code == 200
             assert response.data is not None
@@ -71,7 +73,9 @@ class TestCoreObjectNotebook:
         """Test POST request."""
         self.client.login(username="test", password="test")
         core_object_type = "book"  # must not already exist in test_data.json
-        url = reverse("api:core-notebook", kwargs={"core_object_type": core_object_type})
+        url = reverse(
+            "api:core-notebook", kwargs={"core_object_type": core_object_type}
+        )
         data = {"markdown": "new value", "model_type": core_object_type}
         response = self.client.post(url, data, response_format="json")
         assert response.status_code == 200

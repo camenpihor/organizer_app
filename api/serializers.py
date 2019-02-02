@@ -29,7 +29,15 @@ class BookSerializer(serializers.HyperlinkedModelSerializer):
         """Additional information for the serializer."""
 
         model = Book
-        fields = ("id", "author", "title", "url", "num_views", "rating", "created_at_utc")
+        fields = (
+            "id",
+            "author",
+            "title",
+            "url",
+            "num_views",
+            "rating",
+            "created_at_utc",
+        )
 
 
 class TopicSerializer(serializers.HyperlinkedModelSerializer):
