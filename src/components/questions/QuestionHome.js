@@ -1,34 +1,12 @@
 import React, { Component } from 'react'
-import Moment from 'react-moment'
+import moment from 'moment'
 import { NavLink } from 'react-router-dom'
-import { Button, Card, Form, Grid, Icon, List, Message } from 'semantic-ui-react'
+import { Button, Card, Form, Icon, Message } from 'semantic-ui-react'
 import Notebook from 'components/Notebook'
 import AppNavigation from 'components/Navigation'
 import { coreObjectList, getRandomSubset } from 'api'
 import 'style/questions.css';
 
-
-function QuestionStats() {
-  return (
-    <List>
-      <List.Item>
-        Last edit:
-    </List.Item>
-      <List.Item>
-        Longest streak:
-    </List.Item>
-      <List.Item>
-        Edits per month:
-    </List.Item>
-      <List.Item>
-        Number of questions:
-    </List.Item>
-      <List.Item>
-        Number of questions:
-    </List.Item>
-    </List>
-  )
-}
 
 class QuestionList extends Component {
   componentDidMount() {
@@ -61,20 +39,17 @@ class QuestionList extends Component {
 
     return (
       <div>
-        <Grid columns={2} divided className="question-grid">
-          {questions.map(question => (
-            <Grid.Row key={question.id} as={NavLink} to={`/questions/${question.id}`}>
-              <Grid.Column className="column date">
-                <Moment format="MMM DD YYYY">
-                  {question.created_at_utc}
-                </Moment>
-              </Grid.Column>
-              <Grid.Column className="column text">
-                {question.question}
-              </Grid.Column>
-            </Grid.Row>
-          ))}
-        </Grid>
+         <Card.Group itemsPerRow={1}>
+         {questions.map(question => (
+          <Card
+            key={question.id}
+            href={`/questions/${question.id}`}
+            header={question.question}
+            meta={moment(question.created_at_utc).format('ll')}
+            className="question-item"
+          />
+        ))}
+      </Card.Group>
       </div>
     )
   }
@@ -100,7 +75,7 @@ function QuestionLinks() {
             target="_blank"
             key={link.title}
             meta={link.url}
-            className="link"
+            className="question-link"
           />
         ))}
       </Card.Group>
@@ -181,7 +156,7 @@ class QuestionForm extends Component {
     return (
       <div>
         {!visible &&
-          < Button icon circular size="huge" className="create-button" onClick={this.showQuestionForm} >
+          <Button icon circular size="huge" className="create-button" onClick={this.showQuestionForm} >
             <Icon name='add' />
           </Button >
         }
@@ -220,12 +195,7 @@ export default class QuestionHome extends Component {
       <div className="question-page">
         <AppNavigation {...this.props} />
 
-        <div className="question-section">
-          <p className="question-header">Stats</p>
-          <QuestionStats />
-        </div>
-
-        <div className="question-section">
+          <div className="question-section">
           <p className="question-header">Random Questions</p>
           <QuestionList {...this.props} />
         </div>
