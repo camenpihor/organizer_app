@@ -5,5 +5,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 !important
+  padding: 0 !important;
+}
+
+.entry-header {
+  cursor: pointer;
+  padding: 15rem;
 }

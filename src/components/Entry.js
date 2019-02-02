@@ -76,7 +76,7 @@ export default class Entry extends Component {
     return (
       <div className="entry">
         {!visible &&
-          <p onClick={this.showLogIn}>
+          <p onClick={this.showLogIn} className="entry-header">
             Organizer
           </p>
         }
