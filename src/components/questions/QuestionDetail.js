@@ -25,7 +25,7 @@ export default class QuestionDetail extends Component {
       .catch(error => {
         if (error.response.status === 401) {
           this.props.history.push("/")
-          sessionStorage.setItem("token", null)
+          localStorage.setItem("token", null)
         } else {
           console.log(error)
         }

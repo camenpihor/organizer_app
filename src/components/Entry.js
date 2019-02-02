@@ -20,7 +20,7 @@ class LogInForm extends Component {
     const data = new FormData(event.target)
     logIn(data)
       .then(response => {
-        sessionStorage.setItem('token', response.data.access);
+        localStorage.setItem('token', response.data.access);
         this.props.history.push('/questions/')
       })
       .catch(_ => {

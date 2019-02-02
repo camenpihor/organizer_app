@@ -1,17 +1,16 @@
 import React, { Component } from 'react'
-import moment from 'moment'
 import Moment from 'react-moment'
 import { NavLink } from 'react-router-dom'
 import { Button, Card, Form, Grid, Icon, List, Message } from 'semantic-ui-react'
-import Markdown from 'react-markdown'
+import Notebook from 'components/Notebook'
 import AppNavigation from 'components/Navigation'
-import { coreObjectList, coreObjectNotebook, getRandomSubset } from 'api'
+import { coreObjectList, getRandomSubset } from 'api'
 import 'style/questions.css';
 
 
 function QuestionStats() {
   return (
-    <List animated className="home-section">
+    <List>
       <List.Item>
         Last edit:
     </List.Item>
@@ -43,7 +42,7 @@ class QuestionList extends Component {
       .catch(error => {
         if (error.response.status === 401) {
           this.props.history.push("/")
-          sessionStorage.setItem("token", null)
+          localStorage.setItem("token", null)
         } else {
           console.log(error)
         }
@@ -61,7 +60,7 @@ class QuestionList extends Component {
     const { questions } = this.state;
 
     return (
-      <div className="home-section" >
+      <div>
         <Grid columns={2} divided className="question-grid">
           {questions.map(question => (
             <Grid.Row key={question.id} as={NavLink} to={`/questions/${question.id}`}>
@@ -91,7 +90,7 @@ function QuestionLinks() {
   ]
 
   return (
-    <div className="home-section" >
+    <div>
       <Card.Group itemsPerRow={2} doubling>
         {links.map(link => (
           <Card
@@ -180,7 +179,7 @@ class QuestionForm extends Component {
     const { visible, error, success, errorMessage, question, questionID } = this.state;
 
     return (
-      <div className="home-section">
+      <div>
         {!visible &&
           < Button icon circular size="huge" className="create-button" onClick={this.showQuestionForm} >
             <Icon name='add' />
@@ -214,200 +213,6 @@ class QuestionForm extends Component {
   }
 }
 
-class Notebook extends Component {
-  componentDidMount() {
-    console.log(new Date())
-
-    coreObjectNotebook("question")
-      .get()
-      .then(response => {
-        this.setState({
-          notebook: response.data,
-          sourceText: response.data.markdown
-        });
-      })
-      .catch(error => {
-        if (error.response.status === 401) {
-          this.props.history.push("/")
-          sessionStorage.setItem("token", null)
-        } else {
-          console.log(error)
-        }
-      })
-  }
-
-  componentWillUnmount() {
-    this.handleFormSubmit()
-  }
-
-  constructor(props) {
-    super(props);
-    this.notebookRef = React.createRef();
-    this.state = {
-      showMarkdown: true,
-      notebook: null,
-      sourceText: "#Notebook\nThis is the beginning of a new notebook.",
-      error: null,
-      success: null,
-      errorMessage: null
-    };
-  }
-
-  resetMessages = () => {
-    this.setState({
-      error: null,
-      success: null,
-      errorMessage: null
-    })
-  }
-
-  handleFormSubmit = () => {
-    // if no new text has been added, don't do anything
-    if (this.state.notebook.markdown !== this.state.sourceText) {
-      // if notebook already exists, update it
-      if (this.state.notebook !== null) {
-        let toUpdate = this.state.notebook
-        toUpdate.markdown = this.state.sourceText
-        coreObjectNotebook("question")
-          .put(toUpdate)
-          .then(_ => {
-            this.setState({ success: true })
-            setTimeout(function () {
-              this.resetMessages();
-            }.bind(this), 5000);
-          })
-          .catch(error => {
-            if (error.response.status === 401) {
-              this.props.history.push("/")
-              sessionStorage.setItem("token", null)
-            } else {
-              this.setState({ error: true })
-            }
-          })
-      } else {  // else if notebook doesn't already exists, create one
-        let toCreate = { "markdown": this.state.sourceText, "model_type": "question" }
-        coreObjectNotebook("question")
-          .post(toCreate)
-          .then(_ => {
-            this.setState({ success: true })
-            setTimeout(function () {
-              this.resetMessages();
-            }.bind(this), 5000);
-          })
-          .catch(error => {
-            if (error.response.status === 401) {
-              this.props.history.push("/")
-              sessionStorage.setItem("token", null)
-            } else {
-              this.setState({ error: true })
-            }
-          })
-      }
-    } else {
-      this.setState({ error: true, errorMessage: "There is no new text to save" })
-      setTimeout(function () {
-        this.resetMessages();
-      }.bind(this), 5000);
-    }
-  }
-
-  handleMarkdownClick = (event) => {
-    event.stopPropagation();
-    if (event.altKey) {
-      this.editText()
-    }
-  }
-
-  handleTextChange = (e, { value }) => {
-    this.setState({ sourceText: value })
-  }
-
-  handleMarkdownKeyDown = (event) => {
-    if (event.ctrlKey) {
-      if (event.key === 's') {
-        this.handleFormSubmit()
-      } else if (event.key === 'u') {
-        const currentText = this.state.sourceText
-        const cursorPosition = event.target.selectionStart
-
-        const firstPart = currentText.slice(0, cursorPosition)
-        const header = "#### "
-        const currentDateTime = moment().format('LLLL')
-        const seperator = "*".repeat(5)
-        const lastPart = currentText.slice(cursorPosition + 1)
-        const newText = firstPart + header + currentDateTime + "\n" + seperator + "\n" + lastPart
-        this.setState({ sourceText: newText })
-      } else if (event.key === 'r') {
-        this.handleFormSubmit()
-        this.renderMarkdown()
-        this.resetMessages()
-      }
-    }
-  }
-
-  renderMarkdown = () => {
-    this.setState({ showMarkdown: true })
-  }
-
-  editText = () => {
-    this.setState({
-      showMarkdown: false
-    }, () => {
-      window.scrollTo({
-        top: this.notebookRef.current.offsetTop,
-        behavior: "smooth"
-      });
-      setTimeout(function () { // I dont know why, byt I need a timeout function here
-        document.getElementById("notebook-text").focus();
-      }, 0);
-    })
-  }
-
-  render() {
-    const { showMarkdown, sourceText, error, success, errorMessage } = this.state;
-
-    return (
-      <div className="home-section" ref={this.notebookRef}>
-        {!showMarkdown &&
-          <Form
-            onSubmit={this.handleFormSubmit}
-            error={error}
-            success={success}
-          >
-            <Form.TextArea
-              placeholder='Notebook'
-              name="notebook"
-              id="notebook-text"
-              onChange={this.handleTextChange}
-              value={sourceText}
-              style={{ minHeight: 300 }}
-              autoFocus
-              onKeyDown={this.handleMarkdownKeyDown}
-            />
-            <div>
-              <Button type="button" onClick={this.renderMarkdown}>Render</Button>
-              <Button type='submit'>Save</Button>
-            </div>
-            <Message
-              success
-              header='Successfully persisted'
-            />
-            <Message error header='Form Error' content={errorMessage} />
-          </Form>
-        }
-        {showMarkdown &&
-          <div className="notebook-markdown" onMouseDown={this.handleMarkdownClick} onTouchStartCapture={this.editText}>
-            <Markdown
-              source={sourceText}
-              linkTarget="_blank"
-            />
-          </div>
-        }
-      </div>
-    )
-  }
-}
-
 
 export default class QuestionHome extends Component {
   render() {
@@ -415,18 +220,30 @@ export default class QuestionHome extends Component {
       <div className="question-page">
         <AppNavigation {...this.props} />
 
-        <p className="question-header">Stats</p>
-        <QuestionStats />
-        <p className="question-header">Random Questions</p>
-        <QuestionList {...this.props} />
+        <div className="question-section">
+          <p className="question-header">Stats</p>
+          <QuestionStats />
+        </div>
 
-        <p className="question-header">Links</p>
-        <QuestionLinks />
+        <div className="question-section">
+          <p className="question-header">Random Questions</p>
+          <QuestionList {...this.props} />
+        </div>
 
-        <QuestionForm />
+        <div className="question-section">
+          <p className="question-header">Links</p>
+          <QuestionLinks />
+        </div>
 
-        <p className="question-header">Notebook</p>
-        <Notebook {...this.props} />
+        <div className="question-section">
+          <QuestionForm />
+        </div>
+
+        <div className="question-section">
+          <p className="question-header">Notebook</p>
+          <Notebook {...this.props} />
+        </div>
+
       </div>
     );
   }

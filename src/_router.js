@@ -7,7 +7,7 @@ import PageNotFound from "components/404"
 
 
 function PrivateRoute({ component: Component, ...rest }) {
-  let authStatus = sessionStorage.getItem("token") !== null
+  let authStatus = localStorage.getItem("token") !== null
   return (
     <Route
       {...rest}

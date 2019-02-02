@@ -12,12 +12,12 @@ function coreObjectList(coreObject) {
   return {
     get: () => axios.get(url, {
       headers: {
-        Authorization: `Bearer ${sessionStorage.getItem('token')}`
+        Authorization: `Bearer ${localStorage.getItem('token')}`
       }
     }),
     post: (toCreate) => axios.post(url, toCreate, {
       headers: {
-        Authorization: `Bearer ${sessionStorage.getItem('token')}`
+        Authorization: `Bearer ${localStorage.getItem('token')}`
       }
     })
   }
@@ -28,17 +28,17 @@ function coreObjectDetail(coreObject, id) {
   return {
     get: () => axios.get(url, {
       headers: {
-        Authorization: `Bearer ${sessionStorage.getItem('token')}`
+        Authorization: `Bearer ${localStorage.getItem('token')}`
       }
     }),
     put: (toUpdate) => axios.put(url, toUpdate, {
       headers: {
-        Authorization: `Bearer ${sessionStorage.getItem('token')}`
+        Authorization: `Bearer ${localStorage.getItem('token')}`
       }
     }),
     delete: () => axios.delete(url, {
       headers: {
-        Authorization: `Bearer ${sessionStorage.getItem('token')}`
+        Authorization: `Bearer ${localStorage.getItem('token')}`
       }
     })
   }
@@ -49,17 +49,17 @@ function coreObjectNotebook(coreObject) {
   return {
     get: () => axios.get(url, {
       headers: {
-        Authorization: `Bearer ${sessionStorage.getItem('token')}`
+        Authorization: `Bearer ${localStorage.getItem('token')}`
       }
     }),
     put: (toUpdate) => axios.put(url, toUpdate, {
       headers: {
-        Authorization: `Bearer ${sessionStorage.getItem('token')}`
+        Authorization: `Bearer ${localStorage.getItem('token')}`
       }
     }),
     post: (toCreate) => axios.post(url, toCreate, {
       headers: {
-        Authorization: `Bearer ${sessionStorage.getItem('token')}`
+        Authorization: `Bearer ${localStorage.getItem('token')}`
       }
     }),
   }

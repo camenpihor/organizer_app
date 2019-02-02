@@ -86,3 +86,5 @@ I am using Django REST framework as a backend API with a ReactJS frontend.
 - Connect question to other model objects
 - when notebook is out of view render markdown
 - update all `<ul>` to `List`
+- update random question list to be cards?
+- make font around card larger
