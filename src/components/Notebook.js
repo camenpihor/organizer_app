@@ -111,10 +111,11 @@ export default class Notebook extends Component {
     }
   }
 
-  handleMarkdownDoubleTap = () => {
+  handleMarkdownDoubleTap = (event) => {
     const now = Date.now();
     const doubleTapDelay = 300;
     if (this.state.lastTap && (now - this.state.lastTap) < doubleTapDelay) {
+      event.preventDefault()
       this.editText()
     }
     else {
