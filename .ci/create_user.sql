@@ -1,2 +1,2 @@
-CREATE ROLE IF NOT EXISTS :db_user LOGIN PASSWORD :'db_password';
+CREATE ROLE :db_user LOGIN PASSWORD :'db_password';
 ALTER USER :db_user CREATEDB;
