@@ -2,6 +2,7 @@ services:
   - postgresql
 
 language: python
+cache: pip
 python:
   - "3.6"
 # command to install dependencies
