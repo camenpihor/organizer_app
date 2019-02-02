@@ -1,4 +1,4 @@
-# Organizer Web Application
+# Organizer Web Application [![Build Status](https://travis-ci.com/camenpihor/organizer_app.svg?branch=master)](https://travis-ci.com/camenpihor/organizer_app)
 
 To organize my questioning and answering
 
