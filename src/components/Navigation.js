@@ -1,3 +1,5 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSearch, faBars, faScrollOld, faPegasus, faSwords, faClouds, faAcorn } from '@fortawesome/pro-regular-svg-icons'
 import _ from 'lodash';
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
@@ -6,11 +8,11 @@ import { Input, Menu, Message, Search, Sidebar } from 'semantic-ui-react'
 import 'style/navigation.css'
 
 const mainObjects = [
-  { title: "Books", url: "books" },
-  { title: "Facts", url: "facts" },
-  { title: "Questions", url: "questions" },
-  { title: "Topics", url: "topics" },
-  { title: "Words", url: "words" }
+  { title: "Books", url: "books", icon: <FontAwesomeIcon icon={faScrollOld} /> },
+  { title: "Facts", url: "facts", icon: <FontAwesomeIcon icon={faPegasus} /> },
+  { title: "Questions", url: "questions", icon: <FontAwesomeIcon icon={faSwords} /> },
+  { title: "Topics", url: "topics", icon: <FontAwesomeIcon icon={faClouds} /> },
+  { title: "Words", url: "words", icon: <FontAwesomeIcon icon={faAcorn} /> }
 ]
 const pages = [
   { title: "Home", url: "" },
@@ -35,6 +37,12 @@ const availableShortcuts = (
       <Message.Item>click : edit text (only in notebook)</Message.Item>
     </Message.List>
   </Message>
+)
+const resultRenderer = ({ title, icon }) => (
+  <div key='content' className='content'>
+    <div className='result-icon'>{icon}</div>
+    <div className='result-title'>{title}</div>
+  </div>
 )
 const textTargets = ["text", "input", "textarea"]
 
@@ -72,6 +80,7 @@ class NavigationHelper extends Component {
           {
             object: mainObject.title,
             title: mainObject.title + " " + page.title,
+            icon: mainObject.icon,
             page: page.title,
             url: createNavLink(mainObject, page)
           }
@@ -166,6 +175,7 @@ class NavigationHelper extends Component {
             autoFocus
             selectFirstResult
             showNoResults={false}
+            resultRenderer={resultRenderer}
             onResultSelect={this.handleResultSelect}
             onSearchChange={this.handleSearchChange}
             onBlur={this.resetHelper}
@@ -239,7 +249,9 @@ class NavigationSearch extends Component {
             />
           </Menu.Item>
         ) : (
-            <Menu.Item icon="search" position="right" onClick={this.focusSearch} />
+            <Menu.Item position="right" onClick={this.focusSearch}>
+              <FontAwesomeIcon icon={faSearch} />
+            </Menu.Item>
           )
         }
       </Menu.Menu>
@@ -265,6 +277,7 @@ class NavigationSideBar extends Component {
       >
         {mainObjects.map(mainObject => (
           <Menu.Item key={mainObject.title}>
+            {mainObject.icon}
             <Menu.Header>{mainObject.title}</Menu.Header>
             <Menu.Menu>
               {pages.map(page => (
@@ -329,7 +342,9 @@ export default class AppNavigation extends Component {
 
         <Menu fixed="top" borderless className="top-nav-menu" size="massive">
           <Menu.Menu position="left" className="left-nav">
-            <Menu.Item icon="bars" onClick={this.showSidebar} />
+            <Menu.Item onClick={this.showSidebar}>
+              <FontAwesomeIcon icon={faBars} />
+            </Menu.Item>
           </Menu.Menu>
           <NavigationSearch {...this.props} />
         </Menu >

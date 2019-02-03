@@ -73,7 +73,6 @@ I am using Django REST framework as a backend API with a ReactJS frontend.
 
 - fix "Cant perform react state update on unmounted component error"
 
-- add fontawesome pack
 - Model for stats on home page
 - plotting in js (use d3 and can try it out on (some website))
 - think of ways to track usage (number of times a question was viewed, number of page changes, number of questions created or altered, last edit, total number of questions, total number of forgotten questions)

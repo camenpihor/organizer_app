@@ -51,6 +51,15 @@
   z-index: 999;
 }
 
+.result-icon, .result-title {
+  display: inline-flex;
+  padding-right: 1em;
+}
+
+.result-title {
+  display: inline-flex
+}
+
 /* Top Menu */
 .top-nav-menu {
   background-color: #fafafa;

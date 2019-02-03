@@ -1,10 +1,14 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlus } from '@fortawesome/pro-solid-svg-icons'
 import React, { Component } from 'react'
 import moment from 'moment'
 import { NavLink } from 'react-router-dom'
-import { Button, Card, Form, Icon, Message, Segment } from 'semantic-ui-react'
+import { Button, Card, Form, Message, Segment } from 'semantic-ui-react'
+
 import Notebook from 'components/Notebook'
 import AppNavigation from 'components/Navigation'
 import { coreObjectList, getRandomSubset } from 'api'
+
 import 'style/questions.css';
 
 
@@ -167,7 +171,8 @@ class QuestionForm extends Component {
       <div>
         {!visible &&
           <Button icon circular size="huge" className="create-button" onClick={this.showQuestionForm} >
-            <Icon name='add' />
+            {/* <Icon name='add' /> */}
+            <FontAwesomeIcon icon={faPlus} size="lg"/>
           </Button >
         }
         {visible &&
