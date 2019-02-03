@@ -24,6 +24,7 @@ body {
 body.entry-page {
   background-color: #282c34;
   color: white;
+  padding: 0;
 }
 
 code {
