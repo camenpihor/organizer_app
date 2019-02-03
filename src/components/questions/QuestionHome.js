@@ -49,8 +49,8 @@ class QuestionList extends Component {
               key={question.id}
               className="question-link"
             >
-              <Card.Content as="a" href={`/questions/${question.id}`}>
-                <Card.Header>
+              <Card.Content>
+                <Card.Header className="question-card-clickable" as="a" href={`/questions/${question.id}`}>
                   {question.question}
                 </Card.Header>
                 <Card.Meta>
@@ -82,8 +82,8 @@ function QuestionLinks() {
             key={link.title}
             className="question-link"
           >
-            <Card.Content as="a" href={link.url} target="_blank" rel="noopener noreferrer">
-              <Card.Header>{link.title}</Card.Header>
+            <Card.Content>
+              <Card.Header className="question-card-clickable" as="a" href={link.url} target="_blank" rel="noopener noreferrer">{link.title}</Card.Header>
               <Card.Meta>{link.url}</Card.Meta>
             </Card.Content>
           </Card>
@@ -195,7 +195,7 @@ class QuestionForm extends Component {
         }
       </div>
     );
-  } 
+  }
 }
 
 

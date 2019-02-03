@@ -5,6 +5,10 @@
 }
 
 /* Home */
+.question-card-clickable {
+  display: inline-block !important
+}
+
 .question-link {
   box-shadow: none !important;
 }
