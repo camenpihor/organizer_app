@@ -38,7 +38,7 @@ export default class Notebook extends Component {
     this.state = {
       showMarkdown: false,
       notebook: null,
-      sourceText: "#Notebook\nThis is the beginning of a new notebook.",
+      sourceText: '',
       error: null,
       success: null,
       errorMessage: null,
@@ -55,54 +55,58 @@ export default class Notebook extends Component {
   }
 
   handleFormSubmit = () => {
-    // if no new text has been added, don't do anything
-    if (this.state.notebook.markdown !== this.state.sourceText) {
-      // if notebook already exists, update it
-      if (this.state.notebook !== null) {
-        let toUpdate = this.state.notebook
-        toUpdate.markdown = this.state.sourceText
-        coreObjectNotebook("question")
-          .put(toUpdate)
-          .then(_ => {
-            this.setState({ success: true })
-            setTimeout(function () {
-              this.resetMessages();
-            }.bind(this), 5000);
-          })
-          .catch(error => {
-            if (error.response.status === 401) {
-              this.props.history.push("/")
-              localStorage.setItem("token", null)
-            } else {
-              this.setState({ error: true })
-            }
-          })
-      } else {  // else if notebook doesn't already exists, create one
-        let toCreate = { "markdown": this.state.sourceText, "model_type": "question" }
-        coreObjectNotebook("question")
-          .post(toCreate)
-          .then(_ => {
-            this.setState({ success: true })
-            setTimeout(function () {
-              this.resetMessages();
-            }.bind(this), 5000);
-          })
-          .catch(error => {
-            if (error.response.status === 401) {
-              this.props.history.push("/")
-              localStorage.setItem("token", null)
-            } else {
-              this.setState({ error: true })
-            }
-          })
+    // if there is no sourceText nor notebook don't save
+    if (this.state.sourceText) {
+      // if there is new sourceText then save
+      if (this.state.notebook.markdown !== this.state.sourceText) {
+        // if notebook already exists, update it
+        if (this.state.notebook) {
+          let toUpdate = this.state.notebook
+          toUpdate.markdown = this.state.sourceText
+          coreObjectNotebook("question")
+            .put(toUpdate)
+            .then(_ => {
+              this.setState({ success: true })
+              setTimeout(function () {
+                this.resetMessages();
+              }.bind(this), 5000);
+            })
+            .catch(error => {
+              if (error.response.status === 401) {
+                this.props.history.push("/")
+                localStorage.setItem("token", null)
+              } else {
+                this.setState({ error: true })
+              }
+            })
+        } else {  // else if notebook doesn't already exists, create one
+          let toCreate = { "markdown": this.state.sourceText, "model_type": "question" }
+          coreObjectNotebook("question")
+            .post(toCreate)
+            .then(_ => {
+              this.setState({ success: true })
+              setTimeout(function () {
+                this.resetMessages();
+              }.bind(this), 5000);
+            })
+            .catch(error => {
+              if (error.response.status === 401) {
+                this.props.history.push("/")
+                localStorage.setItem("token", null)
+              } else {
+                this.setState({ error: true })
+              }
+            })
+        }
+      } else {
+        this.setState({ error: true, errorMessage: "There is no new text to save" })
+        setTimeout(function () {
+          this.resetMessages();
+        }.bind(this), 5000);
       }
-    } else {
-      this.setState({ error: true, errorMessage: "There is no new text to save" })
-      setTimeout(function () {
-        this.resetMessages();
-      }.bind(this), 5000);
     }
   }
+
 
   handleMarkdownClick = (event) => {
     event.stopPropagation();

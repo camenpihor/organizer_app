@@ -195,7 +195,7 @@ class QuestionForm extends Component {
         }
       </div>
     );
-  }
+  } 
 }
 
 
