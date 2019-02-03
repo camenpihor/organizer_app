@@ -75,7 +75,15 @@ I am using Django REST framework as a backend API with a ReactJS frontend.
 
 - add fontawesome pack
 - Model for stats on home page
-- think of ways to track usage (number of times a question was viewed, number of page changes, number of questions created or altered, last edit, total number of questions, total number of forgotten questions)
 - plotting in js (use d3 and can try it out on (some website))
-- Connect question to other model objects
+- think of ways to track usage (number of times a question was viewed, number of page changes, number of questions created or altered, last edit, total number of questions, total number of forgotten questions)
+
 - when notebook is out of view render markdown ???
+
+- question archive
+- question detail
+- book home
+- book archive
+- book detail
+
+- connect books and questions
