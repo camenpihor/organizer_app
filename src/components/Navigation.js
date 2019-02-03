@@ -164,7 +164,6 @@ class NavigationHelper extends Component {
           <Search
             className="helper"
             autoFocus
-            defaultOpen
             selectFirstResult
             showNoResults={false}
             onResultSelect={this.handleResultSelect}
@@ -326,7 +325,7 @@ export default class AppNavigation extends Component {
   render() {
     return (
       <div className="top-nav">
-        <NavigationHelper {...this} />
+        <NavigationHelper {...this.props} />
 
         <Menu fixed="top" borderless className="top-nav-menu" size="massive">
           <Menu.Menu position="left" className="left-nav">
