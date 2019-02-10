@@ -1,3 +1,4 @@
+import * as d3 from "d3";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/pro-solid-svg-icons'
 import React, { Component } from 'react'
@@ -12,61 +13,74 @@ import { coreObjectList, getRandomSubset } from 'api'
 import 'style/questions.css';
 
 
-class QuestionList extends Component {
-  componentDidMount() {
-    coreObjectList("question")
-      .get()
-      .then(response => {
-        this.setState({
-          questions: getRandomSubset(response.data, 5)
-        });
-      })
-      .catch(error => {
-        if (error.response.status === 401) {
-          this.props.history.push("/")
-          localStorage.setItem("token", null)
-        } else {
-          console.log(error)
-        }
-      })
+function QuestionFrequencyPlot(props) {
+  const data = props.questions.map(q => {
+    return q.num_views
+  })
+
+  function getExtent(ary) {
+    var extent = d3.extent(ary),
+      range = extent[1] - extent[0];
+    return [extent[0] - 0.05 * range, extent[1] + 0.05 * range];
   }
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      questions: [],
-    };
-  }
+  var width = document.getElementById("root").clientWidth,
+    height = 200,
+    barWidth = width / data.length;
 
-  navigateTo = (url) => {
-    this.props.history.push(url)
-  }
+  var y = d3.scaleLinear()
+    .domain(getExtent(data))
+    .range([height, 0]);
 
-  render() {
-    const { questions } = this.state;
+  var chart = d3.select(".chart")
+    .attr("width", width)
+    .attr("height", height);
 
-    return (
-      <div>
-        <Card.Group itemsPerRow={1}>
-          {questions.map(question => (
-            <Card
-              key={question.id}
-              className="question-link"
-            >
-              <Card.Content>
-                <Card.Header className="question-card-clickable" as="a" href={`/questions/${question.id}`}>
-                  {question.question}
-                </Card.Header>
-                <Card.Meta>
-                  {moment(question.created_at_utc).format('ll')}
-                </Card.Meta>
-              </Card.Content>
-            </Card>
-          ))}
-        </Card.Group>
-      </div>
-    )
-  }
+  var bar = chart.selectAll("g")
+    .data(data)
+    .enter().append("g")
+    .attr("transform", function (d, i) { return "translate(" + i * barWidth + ", 0)"; });
+
+  bar.append("rect")
+    .attr("y", function (d) { return y(d) })
+    .attr("height", function (d) { return height - y(d); })
+    .attr("width", barWidth - 1);
+
+  bar.append("text")
+    .attr("x", barWidth / 2)
+    .attr("y", function (d) { return y(d) + 3; })
+    .attr("dy", ".75em")
+    .text(function (d) { return d; });
+
+  return (
+    <svg className="chart">
+    </svg>
+  )
+}
+
+
+function QuestionList(props) {
+  return (
+    <div>
+      <Card.Group itemsPerRow={1}>
+        {getRandomSubset(props.questions, 5).map(question => (
+          <Card
+            key={question.id}
+            className="question-link"
+          >
+            <Card.Content>
+              <Card.Header className="question-card-clickable" as="a" href={`/questions/${question.id}`}>
+                {question.question}
+              </Card.Header>
+              <Card.Meta>
+                {moment(question.created_at_utc).format('ll')}
+              </Card.Meta>
+            </Card.Content>
+          </Card>
+        ))}
+      </Card.Group>
+    </div>
+  )
 }
 
 function QuestionLinks() {
@@ -172,7 +186,7 @@ class QuestionForm extends Component {
         {!visible &&
           <Button icon circular size="huge" className="create-button" onClick={this.showQuestionForm} >
             {/* <Icon name='add' /> */}
-            <FontAwesomeIcon icon={faPlus} size="lg"/>
+            <FontAwesomeIcon icon={faPlus} size="lg" />
           </Button >
         }
         {visible &&
@@ -205,14 +219,44 @@ class QuestionForm extends Component {
 
 
 export default class QuestionHome extends Component {
+  componentDidMount() {
+    coreObjectList("question")
+      .get()
+      .then(response => {
+        this.setState({
+          questions: response.data
+        });
+      })
+      .catch(error => {
+        if (error.response.status === 401) {
+          this.props.history.push("/")
+          localStorage.setItem("token", null)
+        } else {
+          console.log(error)
+        }
+      })
+  }
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      questions: [],
+    };
+  }
+
   render() {
+    const { questions } = this.state;
     return (
       <div className="question-page">
         <AppNavigation {...this.props} />
 
         <div className="question-section">
+          <QuestionFrequencyPlot questions={questions} />
+        </div>
+
+        <div className="question-section">
           <p className="question-header">Random Questions</p>
-          <QuestionList {...this.props} />
+          <QuestionList questions={questions} />
         </div>
 
         <div className="question-section">

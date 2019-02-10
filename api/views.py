@@ -82,6 +82,7 @@ class CoreObjectDetail(APIView):
         core_object_info = validate_and_get_core_object_info(core_object_type)
 
         core_object = self.get_object(core_object_info.model, object_id)
+        core_object.increment_num_views()
         serializer = core_object_info.serializer(core_object)
         return Response(serializer.data)
 

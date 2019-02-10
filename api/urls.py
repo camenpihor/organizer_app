@@ -13,9 +13,7 @@ from . import views
 # https://www.django-rest-framework.org/api-guide/format-suffixes/
 app_name = "api"
 urlpatterns = [
-    path(
-        "api/<str:core_object_type>/", views.CoreObjectList.as_view(), name="core-list"
-    ),
+    path("api/<str:core_object_type>/", views.CoreObjectList.as_view(), name="core-list"),
     path(
         "api/<str:core_object_type>/<int:object_id>/",
         views.CoreObjectDetail.as_view(),

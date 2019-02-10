@@ -77,4 +77,10 @@ function getRandomSubset(inputArray, numItems) {
   return outputArray;
 }
 
-export { coreObjectList, coreObjectDetail, getRandomSubset, logIn, coreObjectNotebook }
+export {
+  coreObjectList,
+  coreObjectDetail,
+  coreObjectNotebook,
+  getRandomSubset,
+  logIn
+}

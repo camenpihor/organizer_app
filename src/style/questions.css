@@ -5,6 +5,17 @@
 }
 
 /* Home */
+
+.chart rect {
+  fill: steelblue;
+}
+
+.chart text {
+  fill: white;
+  font: 10px sans-serif;
+  text-anchor: middle;
+}
+
 .question-card-clickable {
   display: inline-block !important
 }
