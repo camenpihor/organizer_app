@@ -4,7 +4,7 @@ import { faPlus } from '@fortawesome/pro-solid-svg-icons'
 import React, { Component } from 'react'
 import moment from 'moment'
 import { NavLink } from 'react-router-dom'
-import { Button, Card, Form, Message, Segment } from 'semantic-ui-react'
+import { Button, Card, Form, Message } from 'semantic-ui-react'
 
 import Notebook from 'components/Notebook'
 import AppNavigation from 'components/Navigation'
@@ -13,49 +13,122 @@ import { coreObjectList, getRandomSubset } from 'api'
 import 'style/questions.css';
 
 
-function QuestionFrequencyPlot(props) {
-  const data = props.questions.map(q => {
-    return q.num_views
-  })
-
-  function getExtent(ary) {
-    var extent = d3.extent(ary),
-      range = extent[1] - extent[0];
-    return [extent[0] - 0.05 * range, extent[1] + 0.05 * range];
+class QuestionViewHistogram extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      visible: false,
+      selectedData: null
+    };
   }
 
-  var width = document.getElementById("root").clientWidth,
-    height = 200,
-    barWidth = width / data.length;
+  componentDidMount() {
+    this.drawHistogram()
+  }
 
-  var y = d3.scaleLinear()
-    .domain(getExtent(data))
-    .range([height, 0]);
+  binQuestions = (bins, data) => {
+    bins.forEach(bin => {
+      data.forEach(question => {
+        if (bin.x0 <= question.num_views && question.num_views < bin.x1) {
+          bin.push(question)
+        }
+      })
+    });
+    return bins
+  }
 
-  var chart = d3.select(".chart")
-    .attr("width", width)
-    .attr("height", height);
+  updateSelection = (selection) => {
+    this.setState({
+      visible: true,
+      selectedData: selection
+    })
+  }
 
-  var bar = chart.selectAll("g")
-    .data(data)
-    .enter().append("g")
-    .attr("transform", function (d, i) { return "translate(" + i * barWidth + ", 0)"; });
+  resetSelection = () => {
+    this.setState({ visible: false, selectedData: null })
+  }
 
-  bar.append("rect")
-    .attr("y", function (d) { return y(d) })
-    .attr("height", function (d) { return height - y(d); })
-    .attr("width", barWidth - 1);
+  drawHistogram = () => {
+    const data = this.props.questions;
+    const numBins = 20;
+    const mainWidth = document.getElementById("root").clientWidth;
+    const mainHeight = 200;
+    const margin = { top: 10, right: 50, bottom: 50, left: 50 };
+    const height = mainHeight - margin.top - margin.bottom;
+    const width = mainWidth - margin.left - margin.right;
+    const mainColor = "steelblue";
+    const thisComponent = this;
 
-  bar.append("text")
-    .attr("x", barWidth / 2)
-    .attr("y", function (d) { return y(d) + 3; })
-    .attr("dy", ".75em")
-    .text(function (d) { return d; });
+    var svg = d3.select(".chart")
+      .attr("width", mainWidth)
+      .attr("height", mainHeight);
 
-  return (
-    <svg className="chart">
-    </svg>
-  )
+    const chart = svg.append('g')
+      .attr('transform', `translate(${margin.left}, ${margin.top})`);
+
+    const xScale = d3.scaleLinear()
+      .domain(d3.extent(data, d => d.num_views)).nice()
+      .range([0, width - margin.right]);
+
+    const histogram = d3.histogram()
+      .domain(xScale.domain())
+      .thresholds(xScale.ticks(numBins));
+
+    var bins = this.binQuestions(histogram(data), data);
+
+    const yScale = d3.scaleLinear()
+      .domain([0, d3.max(bins, d => d.length)]).nice()
+      .range([height, 0]);
+
+    chart.append('g')
+      .attr('transform', `translate(0, ${height})`)
+      .call(d3.axisBottom(xScale));
+
+    var bar = chart.selectAll(".bar")
+      .data(bins)
+      .enter()
+      .append("g")
+      .attr("class", "g");
+
+    bar.append("rect")
+      .attr("fill", mainColor)
+      .attr("x", d => xScale(d.x0) + 1)
+      .attr("y", d => yScale(d.length))
+      .attr("width", d => Math.max(0, xScale(d.x1) - xScale(d.x0) - 1))
+      .attr('height', d => yScale(0) - yScale(d.length))
+      .style("cursor", "pointer")
+      .on("click", function (d) {
+        d3.selectAll("rect").attr("fill", mainColor)
+        d3.select(this).attr("fill", "green");
+        thisComponent.updateSelection(d);
+      })
+
+    bar.append("text")
+      .attr("fill", "white")
+      .attr("x", d => (xScale(d.x0) + Math.max(0, xScale(d.x1) - xScale(d.x0) - 1) / 2 - 3))
+      .attr("y", d => yScale(d.length) + 20)
+      .text(d => d.length);
+
+    chart.append('text')
+      .attr('x', width / 2)
+      .attr('y', height + margin.bottom - 7)
+      .attr('text-anchor', 'middle')
+      .text('Question Views');
+  }
+  render() {
+    const { visible, selectedData } = this.state;
+
+    return (
+      <div className="histogram">
+        <svg className="chart" >
+        </svg>
+
+        {visible &&
+          <QuestionList questions={selectedData} />
+        }
+      </div>
+    )
+  }
 }
 
 
@@ -63,7 +136,7 @@ function QuestionList(props) {
   return (
     <div>
       <Card.Group itemsPerRow={1}>
-        {getRandomSubset(props.questions, 5).map(question => (
+        {props.questions.map(question => (
           <Card
             key={question.id}
             className="question-link"
@@ -185,7 +258,6 @@ class QuestionForm extends Component {
       <div>
         {!visible &&
           <Button icon circular size="huge" className="create-button" onClick={this.showQuestionForm} >
-            {/* <Icon name='add' /> */}
             <FontAwesomeIcon icon={faPlus} size="lg" />
           </Button >
         }
@@ -199,7 +271,7 @@ class QuestionForm extends Component {
               id="question-form"
             >
               <Form.Input className="question-form-input" placeholder='Rating' type='number' max={100} name="rating" />
-              <Form.TextArea className="question-form-input" placeholder='Question' name="question" autoFocus />
+              <Form.TextArea className="question-form-input" placeholder='Question' name="question" />
               <Message
                 success
                 header='Question Created'
@@ -224,7 +296,8 @@ export default class QuestionHome extends Component {
       .get()
       .then(response => {
         this.setState({
-          questions: response.data
+          questions: response.data,
+          loadingData: false
         });
       })
       .catch(error => {
@@ -234,45 +307,49 @@ export default class QuestionHome extends Component {
         } else {
           console.log(error)
         }
-      })
+      });
   }
 
   constructor(props) {
     super(props);
     this.state = {
       questions: [],
+      loadingData: true
     };
   }
 
   render() {
-    const { questions } = this.state;
+    const { questions, loadingData } = this.state;
     return (
       <div className="question-page">
-        <AppNavigation {...this.props} />
+        {!loadingData &&
+          <div>
+            <AppNavigation {...this.props} />
 
-        <div className="question-section">
-          <QuestionFrequencyPlot questions={questions} />
-        </div>
+            <div className="question-section">
+              <QuestionViewHistogram questions={questions} />
+            </div>
 
-        <div className="question-section">
-          <p className="question-header">Random Questions</p>
-          <QuestionList questions={questions} />
-        </div>
+            <div className="question-section">
+              <p className="question-header">Random Questions</p>
+              <QuestionList questions={getRandomSubset(questions, 5)} name="random" />
+            </div>
 
-        <div className="question-section">
-          <p className="question-header">Links</p>
-          <QuestionLinks />
-        </div>
+            <div className="question-section">
+              <p className="question-header">Links</p>
+              <QuestionLinks />
+            </div>
 
-        <div className="question-section">
-          <QuestionForm />
-        </div>
+            <div className="question-section">
+              <QuestionForm />
+            </div>
 
-        <Segment className="notebook">
-          <p className="question-header">Notebook</p>
-          <Notebook {...this.props} />
-        </Segment>
-
+            <div className="notebook">
+              <p className="question-header">Notebook</p>
+              <Notebook {...this.props} />
+            </div>
+          </div>
+        }
       </div>
     );
   }

@@ -191,7 +191,6 @@ export default class Notebook extends Component {
               onChange={this.handleTextChange}
               value={sourceText}
               style={{ minHeight: 300 }}
-              autoFocus
               onKeyDown={this.handleMarkdownKeyDown}
             />
             <div>
