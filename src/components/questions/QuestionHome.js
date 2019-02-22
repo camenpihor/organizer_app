@@ -62,7 +62,7 @@ class QuestionViewHistogram extends Component {
       visible: false,
       selectedData: null,
       selectedWindow: null
-     });
+    });
   }
 
   drawHistogram = () => {
@@ -180,8 +180,9 @@ function QuestionLinks() {
     { title: "SlateStarCodex", url: "https://slatestarcodex.com" },
     { title: "LessWrong", url: "https://lesswrong.com" },
     { title: "The Zvi", url: "https://thezvi.wordpress.com" },
-    { title: "Overcoming Bias", url: "http://www.overcomingbias.com" },
-    { title: "Melting Asphalt", url: "http://meltingasphalt.com" }
+    { title: "Overcoming Bias", url: "https://www.overcomingbias.com" },
+    { title: "Melting Asphalt", url: "https://meltingasphalt.com" },
+    { title: "Eukaryote Writes Blog", url: "https://eukaryotewritesblog.com" }
   ]
 
   return (
