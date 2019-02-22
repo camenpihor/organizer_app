@@ -1,0 +1,32 @@
+import React, { Component } from 'react'
+import AppNavigation from 'components/Navigation'
+
+
+export default class BookHome extends Component {
+  componentDidMount() {
+    this.setState({ loadingData: false })
+  }
+  constructor(props) {
+    super(props);
+    this.state = {
+      books: [],
+      loadingData: true
+    };
+  }
+
+  render() {
+    const { books, loadingData } = this.state;
+
+    return (
+      <div className="book-page">
+        {!loadingData &&
+          <div>
+            <AppNavigation {...this.props} />
+
+            <h3>Book Home</h3>
+          </div>
+        }
+      </div>
+    )
+  }
+}

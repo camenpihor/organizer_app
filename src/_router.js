@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Redirect, Route, Switch } from "react-router-d
 
 import Home from "components/Entry";
 import { QuestionHome, QuestionDetail, QuestionArchive } from 'components/questions'
+import { BookHome, BookDetail, BookArchive } from 'components/books'
 import PageNotFound from "components/404"
 
 
@@ -35,6 +36,9 @@ const AppRouter = () => (
       <PrivateRoute exact path="/questions" component={QuestionHome} />
       <PrivateRoute exact path="/questions/archive" component={QuestionArchive} />
       <PrivateRoute exact path="/questions/:id" component={QuestionDetail} />
+      <PrivateRoute exact path="/books" component={BookHome} />
+      <PrivateRoute exact path="/books/archive" component={BookArchive} />
+      <PrivateRoute exact path="/books/:id" component={BookDetail} />
       <Route component={PageNotFound} />
     </Switch>
   </Router>
