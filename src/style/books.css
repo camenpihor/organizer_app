@@ -1,0 +1,6 @@
+.book-section {
+  font-size: 35px;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.219);
+  line-height: 25px;
+  transition: border-bottom 5s linear;
+}

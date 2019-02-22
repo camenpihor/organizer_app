@@ -2,7 +2,7 @@ import Moment from 'react-moment'
 import React, { Component } from 'react'
 
 import AppNavigation from 'components/Navigation'
-import { coreObjectDetail } from 'api'
+import { objectDetail } from 'api'
 
 import 'style/questions.css';
 
@@ -15,7 +15,7 @@ export default class QuestionDetail extends Component {
   }
 
   componentDidMount() {
-    coreObjectDetail("question", this.props.match.params.id)
+    objectDetail("question", this.props.match.params.id)
       .get()
       .then(response => {
         this.setState({

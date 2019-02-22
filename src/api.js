@@ -7,8 +7,8 @@ function logIn(user) {
   return axios.post(url, user)
 }
 
-function coreObjectList(coreObject) {
-  const url = `${baseURL}/${coreObject}/`
+function objectList(object_type) {
+  const url = `${baseURL}/${object_type}/`
   return {
     get: () => axios.get(url, {
       headers: {
@@ -23,8 +23,8 @@ function coreObjectList(coreObject) {
   }
 }
 
-function coreObjectDetail(coreObject, id) {
-  const url = `${baseURL}/${coreObject}/${id}`
+function objectDetail(object_type, id) {
+  const url = `${baseURL}/${object_type}/${id}`
   return {
     get: () => axios.get(url, {
       headers: {
@@ -79,8 +79,8 @@ function getRandomSubset(inputArray, numItems) {
 }
 
 export {
-  coreObjectList,
-  coreObjectDetail,
+  objectList,
+  objectDetail,
   coreObjectNotebook,
   getRandomSubset,
   logIn

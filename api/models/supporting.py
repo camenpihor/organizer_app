@@ -7,6 +7,16 @@ from django.db import models
 
 from .core import Question, Topic, Book, Word, Fact
 
+SUPPORTING_OBJECT_TYPES = [
+    "answer",
+    "concept",
+    "notebook",
+    "quote",
+    "review",
+    "resource",
+    "suggestedbook",
+]
+
 
 class SupportingObject(models.Model):
     """The project's supporting objects.
@@ -130,3 +140,21 @@ class Resource(SupportingObject):
         """Metadata for `Resource`."""
 
         db_table = "supporting_resources"
+
+
+class SuggestedBook(SupportingObject):
+    """Resources."""
+
+    author = models.TextField()
+    title = models.TextField()
+    url = models.URLField(null=True, blank=True)
+    genre = models.TextField()
+    notes = models.TextField(null=True, blank=True)
+    suggester = models.TextField()
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+
+    class Meta(SupportingObject.Meta):
+        """Metadata for `Resource`."""
+
+        db_table = "supporting_suggested_books"
+        ordering = ["title"]

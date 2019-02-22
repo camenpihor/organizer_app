@@ -6,7 +6,6 @@ Refer to https://pytest-django.readthedocs.io/en/latest/# for more information o
 Django with pytest.
 """
 import pytest
-from django.contrib.auth.models import User
 from django.urls import reverse
 from rest_framework.test import APIClient
 
@@ -14,8 +13,8 @@ from api.models.core import CORE_OBJECT_TYPES, Question
 
 
 @pytest.mark.django_db
-class TestCoreObjectList:
-    """Tests for `"api:core-list"` URL."""
+class TestObjectList:
+    """Tests for `"api:model-list"` URL."""
 
     client = APIClient()
 
@@ -26,7 +25,7 @@ class TestCoreObjectList:
 
         for core_object_type in CORE_OBJECT_TYPES:
             url = reverse(
-                "api:core-list", kwargs={"core_object_type": core_object_type}
+                "api:model-list", kwargs={"object_type": core_object_type}
             )
             response = self.client.get(url, response_format="json")
             assert response.status_code == 200
@@ -37,7 +36,7 @@ class TestCoreObjectList:
         self.client.login(username="test", password="test")
 
         question_id = 100
-        url = reverse("api:core-list", kwargs={"core_object_type": "question"})
+        url = reverse("api:model-list", kwargs={"object_type": "question"})
         data = {"question": "testing", "id": question_id}
 
         response = self.client.post(url, data, rsponse_format="json")
@@ -82,8 +81,8 @@ class TestCoreObjectNotebook:
 
 
 @pytest.mark.django_db
-class TestCoreObjectDetail:
-    """Tests for `"api:core-detail"` URL."""
+class TestObjectDetail:
+    """Tests for `"api:model-detail"` URL."""
 
     client = APIClient()
 
@@ -94,8 +93,8 @@ class TestCoreObjectDetail:
 
         for core_object_type in CORE_OBJECT_TYPES:
             url = reverse(
-                "api:core-detail",
-                kwargs={"core_object_type": core_object_type, "object_id": 1},
+                "api:model-detail",
+                kwargs={"object_type": core_object_type, "object_id": 1},
             )
             response = self.client.get(url, response_format="json")
             assert response.status_code == 200
@@ -106,7 +105,7 @@ class TestCoreObjectDetail:
         self.client.login(username="test", password="test")
 
         url = reverse(
-            "api:core-detail", kwargs={"core_object_type": "question", "object_id": 1}
+            "api:model-detail", kwargs={"object_type": "question", "object_id": 1}
         )
         data = {"question": "testing?", "rating": 10000}
         response = self.client.put(url, data, response_format="json")
@@ -119,8 +118,8 @@ class TestCoreObjectDetail:
         question_id = 50
         Question.objects.create(question="Testing delete", pk=question_id)
         url = reverse(
-            "api:core-detail",
-            kwargs={"core_object_type": "question", "object_id": question_id},
+            "api:model-detail",
+            kwargs={"object_type": "question", "object_id": question_id},
         )
         response = self.client.delete(url)
         assert response.status_code == 204

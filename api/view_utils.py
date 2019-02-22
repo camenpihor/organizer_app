@@ -4,27 +4,34 @@ from collections import namedtuple
 from django.http import Http404
 
 from .models.core import CORE_OBJECT_TYPES, Book, Fact, Question, Topic, Word
+from .models.supporting import SUPPORTING_OBJECT_TYPES, SuggestedBook
 from .serializers import (
     BookSerializer,
     FactSerializer,
     QuestionSerializer,
     TopicSerializer,
     WordSerializer,
+    SuggestedBookSerializer,
 )
 
-CORE_OBJECT_MODELS = [Question, Book, Topic, Fact, Word]
-CORE_OBJECT_SERIALIZERS = [
+OBJECT_MODELS = [Question, Book, Topic, Fact, Word, SuggestedBook]
+OBJECT_SERIALIZERS = [
     QuestionSerializer,
     BookSerializer,
     TopicSerializer,
     FactSerializer,
     WordSerializer,
+    SuggestedBookSerializer,
 ]
-CoreObjectInfo = namedtuple("CoreObjectInfo", ["model", "serializer"])
+
+ObjectInfo = namedtuple("ObjectInfo", ["model", "serializer"])
 
 
-def check_core_object_type(core_object_type):
-    """Ensure input is in `models.core.CORE_OBJECT_TYPES`.
+def check_object_type(object_type):
+    """Validate object type.
+
+    Ensure input is in `models.core.CORE_OBJECT_TYPES` or in
+    `models.supporting.SUPPORTING_OBJECT_TYPES.
 
     Parameters
     ----------
@@ -36,66 +43,67 @@ def check_core_object_type(core_object_type):
     Http404
         If `core_object_type` not in `CORE_OBJECT_TYPES`.
     """
-    if core_object_type not in CORE_OBJECT_TYPES:
+    if (
+        object_type not in CORE_OBJECT_TYPES
+        and object_type not in SUPPORTING_OBJECT_TYPES
+    ):
         raise Http404
 
 
-def get_core_object_from_string(core_object_type):
-    """Get the core object class from its type.
+def get_object_from_string(object_type):
+    """Get the object class from its type.
 
     Parameters
     ----------
-    core_object_type : str
-        A string representing the core object.
+    object_type : str
+        A string representing the object model.
 
     Raises
     ------
     Http404
-        If `core_object_type` does not match the `__name__` of any core objects in
-        models.py
+        If `object_type` does not match the `__name__` of any objects in
+        core.py or supporting.py
     """
-    for core_object in CORE_OBJECT_MODELS:
-        if core_object_type == core_object.__name__.lower():
-            return core_object
+    for object_model in OBJECT_MODELS:
+        if object_type == object_model.__name__.lower():
+            return object_model
     raise Http404
 
 
-def get_core_serializer_from_model(core_object_model):
-    """Get the core object serializer from its model.
+def get_serializer_from_model(object_model):
+    """Get the object serializer from its model.
 
     Parameters
     ----------
-    core_object_model : models.core.CoreObject
-        A core object subclass.
+    object_model : models.core.CoreObject || models.supproting.SupportingObject
 
     Raises
     ------
     Http404
-        If `core_object_model` is not the base of any serializer.
+        If `object_model` is not the base of any serializer.
     """
-    for serializer in CORE_OBJECT_SERIALIZERS:
-        if core_object_model == serializer.Meta.model:
+    for serializer in OBJECT_SERIALIZERS:
+        if object_model == serializer.Meta.model:
             return serializer
     raise Http404
 
 
-def validate_and_get_core_object_info(core_object_type):
+def validate_and_get_object_info(object_type):
     """Validate input and retrieve adjacent information.
 
-    After validating `core_object_type` is in `models.core.CORE_OBJECT_TYPES`, retrieve
-    the model class and serializer that are attached to the core object.
+    After validating `object_type`, retrieve the model class and serializer that are
+    attached to the core object.
 
     Parameters
     ----------
-    core_object_type : str
-        Core object type.
+    object_type : str
 
     Returns
     -------
-    CoreObjectInfo
+    ObjectInfo
         Model class and serializer attached to core object.
     """
-    check_core_object_type(core_object_type)
-    core_object_class = get_core_object_from_string(core_object_type)
-    core_object_serializer = get_core_serializer_from_model(core_object_class)
-    return CoreObjectInfo(model=core_object_class, serializer=core_object_serializer)
+    check_object_type(object_type)
+    object_class = get_object_from_string(object_type)
+    object_serializer = get_serializer_from_model(object_class)
+    return ObjectInfo(model=object_class, serializer=object_serializer)

@@ -8,7 +8,7 @@ import { Button, Card, Form, Message } from 'semantic-ui-react'
 
 import Notebook from 'components/Notebook'
 import AppNavigation from 'components/Navigation'
-import { coreObjectList, getRandomSubset } from 'api'
+import { objectList, getRandomSubset } from 'api'
 
 import 'style/questions.css';
 
@@ -246,7 +246,7 @@ class QuestionForm extends Component {
 
   handleQuestionFormSubmit = (event) => {
     const data = new FormData(event.target)
-    coreObjectList("question")
+    objectList("question")
       .post(data)
       .then(response => {
         this.setState({
@@ -312,7 +312,7 @@ class QuestionForm extends Component {
 
 export default class QuestionHome extends Component {
   componentDidMount() {
-    coreObjectList("question")
+    objectList("question")
       .get()
       .then(response => {
         this.setState({

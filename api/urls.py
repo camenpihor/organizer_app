@@ -14,12 +14,12 @@ from . import views
 app_name = "api"
 urlpatterns = [
     path(
-        "api/<str:core_object_type>/", views.CoreObjectList.as_view(), name="core-list"
+        "api/<str:object_type>/", views.ObjectList.as_view(), name="model-list"
     ),
     path(
-        "api/<str:core_object_type>/<int:object_id>/",
-        views.CoreObjectDetail.as_view(),
-        name="core-detail",
+        "api/<str:object_type>/<int:object_id>/",
+        views.ObjectDetail.as_view(),
+        name="model-detail",
     ),
     path(
         "api/<str:core_object_type>/notebook/",

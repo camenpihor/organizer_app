@@ -14,7 +14,7 @@ from api.models.core import (
     Book,
     CORE_OBJECT_TYPES,
 )
-from api.view_utils import get_core_object_from_string
+from api.view_utils import get_object_from_string
 
 
 def test_core_object_model_inheritance():
@@ -33,5 +33,5 @@ def test_core_object_types_global():
     of a core object model.
     """
     for core_object_type in CORE_OBJECT_TYPES:
-        core_object = get_core_object_from_string(core_object_type)
+        core_object = get_object_from_string(core_object_type)
         assert core_object.__name__.lower() == core_object_type

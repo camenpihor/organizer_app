@@ -67,11 +67,13 @@ class Book(CoreObject):
     author = models.TextField()
     title = models.TextField()
     url = models.URLField(null=True, blank=True)
+    genre = models.TextField()
 
     class Meta(CoreObject.Meta):
         """Metadata for `Book`."""
 
         db_table = "core_books"
+        ordering = ['title']
 
 
 class Fact(CoreObject):
@@ -83,6 +85,7 @@ class Fact(CoreObject):
         """Metadata for `Fact`."""
 
         db_table = "core_facts"
+        ordering = ['-created_at_utc']
 
 
 class Question(CoreObject):
@@ -94,6 +97,7 @@ class Question(CoreObject):
         """Metadata for `Question`."""
 
         db_table = "core_questions"
+        ordering = ['-created_at_utc']
 
 
 class Topic(CoreObject):
@@ -105,6 +109,7 @@ class Topic(CoreObject):
         """Metadata for `Topic`."""
 
         db_table = "core_topics"
+        ordering = ['-created_at_utc']
 
 
 class Word(CoreObject):
@@ -117,3 +122,4 @@ class Word(CoreObject):
         """Metadata for `WOrd`."""
 
         db_table = "core_words"
+        ordering = ['-created_at_utc']

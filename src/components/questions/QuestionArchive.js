@@ -5,12 +5,12 @@ import { NavLink } from 'react-router-dom'
 import { Grid } from 'semantic-ui-react'
 
 import AppNavigation from 'components/Navigation'
-import { coreObjectList } from 'api'
+import { objectList } from 'api'
 import 'style/questions.css';
 
 export default class QuestionArchive extends Component {
   componentDidMount() {
-    coreObjectList("question")
+    objectList("question")
       .get()
       .then(response => {
         this.setState({

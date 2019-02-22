@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import AppNavigation from 'components/Navigation'
 
+import 'style/books.css';
 
 export default class BookHome extends Component {
   componentDidMount() {
@@ -22,8 +23,9 @@ export default class BookHome extends Component {
         {!loadingData &&
           <div>
             <AppNavigation {...this.props} />
-
-            <h3>Book Home</h3>
+            <p className="book-section">Suggestions</p>
+            <p className="book-section">Create</p>
+            <p className="book-section">Archive</p>
           </div>
         }
       </div>
