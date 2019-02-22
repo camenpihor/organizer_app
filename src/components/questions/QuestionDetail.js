@@ -38,7 +38,7 @@ export default class QuestionDetail extends Component {
     return (
       <div className="question-page">
         <AppNavigation pageName="Question Detail" {...this.props} />
-        <h3>Question</h3>
+        <h3>{question.question}</h3>
         <p>
           <Moment format="MMM DD YYYY">
             {question.created_at_utc}
@@ -46,7 +46,6 @@ export default class QuestionDetail extends Component {
         </p>
         <p>Numbier of views: {question.num_views}</p>
         <p>Rating: {question.rating}</p>
-        <p>{question.question}</p>
       </div>
     )
   }
