@@ -18,7 +18,8 @@ class QuestionViewHistogram extends Component {
     super(props);
     this.state = {
       visible: false,
-      selectedData: null
+      selectedData: null,
+      selectedWindow: null
     };
   }
 
@@ -37,27 +38,42 @@ class QuestionViewHistogram extends Component {
     return bins
   }
 
-  updateSelection = (selection) => {
+  handleUpdateSelection = (selection, barElement) => {
+    if (barElement !== this.state.selectedWindow) {
+      this.updateSelection(selection, barElement)
+    } else {
+      this.resetSelection()
+    }
+  }
+
+  updateSelection = (selection, barElement) => {
+    d3.selectAll("rect").attr("fill", "steelblue");
+    d3.select(barElement).attr("fill", "green");
     this.setState({
       visible: true,
-      selectedData: selection
+      selectedData: selection,
+      selectedWindow: barElement
     })
   }
 
   resetSelection = () => {
-    this.setState({ visible: false, selectedData: null })
+    d3.selectAll("rect").attr("fill", "steelblue");
+    this.setState({
+      visible: false,
+      selectedData: null,
+      selectedWindow: null
+     });
   }
 
   drawHistogram = () => {
     const data = this.props.questions;
-    const numBins = 20;
     const mainWidth = document.getElementById("root").clientWidth;
     const mainHeight = 200;
     const margin = { top: 10, right: 50, bottom: 50, left: 50 };
     const height = mainHeight - margin.top - margin.bottom;
     const width = mainWidth - margin.left - margin.right;
-    const mainColor = "steelblue";
     const thisComponent = this;
+    var numBins = 20;
 
     var svg = d3.select(".chart")
       .attr("width", mainWidth)
@@ -66,8 +82,13 @@ class QuestionViewHistogram extends Component {
     const chart = svg.append('g')
       .attr('transform', `translate(${margin.left}, ${margin.top})`);
 
+    var maxViews = d3.max(data, d => d.num_views);
+    if (maxViews < 10) {
+      maxViews = 10
+      numBins = 10
+    }
     const xScale = d3.scaleLinear()
-      .domain(d3.extent(data, d => d.num_views)).nice()
+      .domain([0, maxViews]).nice()
       .range([0, width - margin.right]);
 
     const histogram = d3.histogram()
@@ -78,7 +99,7 @@ class QuestionViewHistogram extends Component {
 
     const yScale = d3.scaleLinear()
       .domain([0, d3.max(bins, d => d.length)]).nice()
-      .range([height, 0]);
+      .rangeRound([height, 0]);
 
     chart.append('g')
       .attr('transform', `translate(0, ${height})`)
@@ -91,22 +112,21 @@ class QuestionViewHistogram extends Component {
       .attr("class", "g");
 
     bar.append("rect")
-      .attr("fill", mainColor)
+      .attr("fill", "steelblue")
       .attr("x", d => xScale(d.x0) + 1)
       .attr("y", d => yScale(d.length))
       .attr("width", d => Math.max(0, xScale(d.x1) - xScale(d.x0) - 1))
       .attr('height', d => yScale(0) - yScale(d.length))
       .style("cursor", "pointer")
       .on("click", function (d) {
-        d3.selectAll("rect").attr("fill", mainColor)
-        d3.select(this).attr("fill", "green");
-        thisComponent.updateSelection(d);
+        thisComponent.handleUpdateSelection(d, this);
       })
 
     bar.append("text")
       .attr("fill", "white")
-      .attr("x", d => (xScale(d.x0) + Math.max(0, xScale(d.x1) - xScale(d.x0) - 1) / 2 - 3))
-      .attr("y", d => yScale(d.length) + 20)
+      .attr("text-anchor", "middle")
+      .attr("x", d => xScale(d.x0) + ((xScale(d.x1) - xScale(d.x0)) / 2))
+      .attr("y", d => yScale(d.length) + 15)
       .text(d => d.length);
 
     chart.append('text')
