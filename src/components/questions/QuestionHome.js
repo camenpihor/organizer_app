@@ -101,10 +101,6 @@ class QuestionViewHistogram extends Component {
       .domain([0, d3.max(bins, d => d.length)]).nice()
       .rangeRound([height, 0]);
 
-    chart.append('g')
-      .attr('transform', `translate(0, ${height})`)
-      .call(d3.axisBottom(xScale));
-
     var bar = chart.selectAll(".bar")
       .data(bins)
       .enter()
@@ -134,6 +130,10 @@ class QuestionViewHistogram extends Component {
       .attr('y', height + margin.bottom - 7)
       .attr('text-anchor', 'middle')
       .text('Question Views');
+
+    chart.append('g')
+      .attr('transform', `translate(0, ${height})`)
+      .call(d3.axisBottom(xScale));
   }
   render() {
     const { visible, selectedData } = this.state;
