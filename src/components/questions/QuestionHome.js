@@ -69,9 +69,8 @@ class QuestionViewHistogram extends Component {
     const data = this.props.questions;
     const mainWidth = document.getElementById("root").clientWidth;
     const mainHeight = 200;
-    const margin = { top: 10, right: 50, bottom: 50, left: 50 };
+    const margin = { top: 10, right: 25, bottom: 50, left: 25 };
     const height = mainHeight - margin.top - margin.bottom;
-    const width = mainWidth - margin.left - margin.right;
     const thisComponent = this;
     var numBins = 20;
 
@@ -80,7 +79,7 @@ class QuestionViewHistogram extends Component {
       .attr("height", mainHeight);
 
     const chart = svg.append('g')
-      .attr('transform', `translate(${margin.left}, ${margin.top})`);
+      .attr('transform', `translate(5, ${margin.top})`);
 
     var maxViews = d3.max(data, d => d.num_views);
     if (maxViews < 10) {
@@ -89,7 +88,7 @@ class QuestionViewHistogram extends Component {
     }
     const xScale = d3.scaleLinear()
       .domain([0, maxViews]).nice()
-      .range([0, width - margin.right]);
+      .range([0, mainWidth - 15]);
 
     const histogram = d3.histogram()
       .domain(xScale.domain())
@@ -126,7 +125,7 @@ class QuestionViewHistogram extends Component {
       .text(d => d.length);
 
     chart.append('text')
-      .attr('x', width / 2)
+      .attr('x', (mainWidth - 10) / 2)
       .attr('y', height + margin.bottom - 7)
       .attr('text-anchor', 'middle')
       .text('Question Views');
