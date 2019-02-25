@@ -25,6 +25,7 @@ class QuestionViewHistogram extends Component {
 
   componentDidMount() {
     this.drawHistogram()
+    window.addEventListener("resize", this.redrawHistogram)
   }
 
   binQuestions = (bins, data) => {
@@ -66,6 +67,7 @@ class QuestionViewHistogram extends Component {
   }
 
   drawHistogram = () => {
+    console.log("drawing")
     const data = this.props.questions;
     const mainWidth = document.getElementById("root").clientWidth;
     const mainHeight = 200;
@@ -74,9 +76,11 @@ class QuestionViewHistogram extends Component {
     const thisComponent = this;
     var numBins = 20;
 
-    var svg = d3.select(".chart")
-      .attr("width", mainWidth)
-      .attr("height", mainHeight);
+    var svg = d3.select(".histogram")
+      .append("svg")
+        .attr("class", "chart")
+        .attr("width", mainWidth)
+        .attr("height", mainHeight);
 
     const chart = svg.append('g')
       .attr('transform', `translate(5, ${margin.top})`);
@@ -134,13 +138,17 @@ class QuestionViewHistogram extends Component {
       .attr('transform', `translate(0, ${height})`)
       .call(d3.axisBottom(xScale));
   }
+
+  redrawHistogram = () => {
+    d3.select(".chart").remove()
+    this.drawHistogram()
+  }
+
   render() {
     const { visible, selectedData } = this.state;
 
     return (
       <div className="histogram">
-        <svg className="chart" >
-        </svg>
 
         {visible &&
           <QuestionList questions={selectedData} />
