@@ -24,8 +24,12 @@ class QuestionViewHistogram extends Component {
   }
 
   componentDidMount() {
-    this.drawHistogram()
-    window.addEventListener("resize", this.redrawHistogram)
+    this.drawHistogram();
+    window.addEventListener("resize", this.redrawHistogram, false);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.redrawHistogram, false);
   }
 
   binQuestions = (bins, data) => {
@@ -67,7 +71,6 @@ class QuestionViewHistogram extends Component {
   }
 
   drawHistogram = () => {
-    console.log("drawing")
     const data = this.props.questions;
     const mainWidth = document.getElementById("root").clientWidth;
     const mainHeight = 200;
@@ -78,9 +81,9 @@ class QuestionViewHistogram extends Component {
 
     var svg = d3.select(".histogram")
       .append("svg")
-        .attr("class", "chart")
-        .attr("width", mainWidth)
-        .attr("height", mainHeight);
+      .attr("class", "chart")
+      .attr("width", mainWidth)
+      .attr("height", mainHeight);
 
     const chart = svg.append('g')
       .attr('transform', `translate(5, ${margin.top})`);

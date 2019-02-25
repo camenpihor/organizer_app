@@ -7,8 +7,6 @@ import { coreObjectNotebook } from 'api'
 
 export default class Notebook extends Component {
   componentDidMount() {
-    console.log(new Date())
-
     coreObjectNotebook("question")
       .get()
       .then(response => {
@@ -29,7 +27,7 @@ export default class Notebook extends Component {
   }
 
   componentWillUnmount() {
-    this.handleFormSubmit()
+    this.handleFormSubmit();
   }
 
   constructor(props) {

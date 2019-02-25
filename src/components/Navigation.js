@@ -59,7 +59,7 @@ class NavigationHelper extends Component {
 
   componentWillUnmount() {
     window.removeEventListener("keydown", this.toggleHelper, false);
-    window.addEventListener("keydown", this.toggleToolTip, false);
+    window.removeEventListener("keydown", this.toggleToolTip, false);
   }
 
   constructor(props) {
