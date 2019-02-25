@@ -11,3 +11,7 @@
   cursor: pointer;
   padding: 10%;
 }
+
+#login-form {
+  font-size: 1.5rem;
+}
