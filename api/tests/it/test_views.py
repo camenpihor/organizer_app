@@ -24,9 +24,7 @@ class TestObjectList:
         self.client.login(username="test", password="test")
 
         for core_object_type in CORE_OBJECT_TYPES:
-            url = reverse(
-                "api:model-list", kwargs={"object_type": core_object_type}
-            )
+            url = reverse("api:model-list", kwargs={"object_type": core_object_type})
             response = self.client.get(url, response_format="json")
             assert response.status_code == 200
             assert response.data is not None
