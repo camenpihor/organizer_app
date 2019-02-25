@@ -142,8 +142,15 @@ class Resource(SupportingObject):
         db_table = "supporting_resources"
 
 
+class SuggestedBookmanager(models.Manager):
+    """Manager for `SuggestedBook` so that we don't return read books."""
+
+    def get_queryset(self):
+        return super().get_queryset().filter(read=False)
+
+
 class SuggestedBook(SupportingObject):
-    """Resources."""
+    """Supporting object for `core.Book`."""
 
     author = models.TextField()
     title = models.TextField()
@@ -151,7 +158,9 @@ class SuggestedBook(SupportingObject):
     genre = models.TextField()
     notes = models.TextField(null=True, blank=True)
     suggester = models.TextField()
-    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    read = models.BooleanField(default=False)
+
+    objects = SuggestedBookmanager()
 
     class Meta(SupportingObject.Meta):
         """Metadata for `Resource`."""
