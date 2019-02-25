@@ -87,4 +87,4 @@ class SuggestedBookSerializer(serializers.HyperlinkedModelSerializer):
         """Additional information for the serializer."""
 
         model = SuggestedBook
-        fields = ("id", "author", "title", "url", "genre", "notes", "suggester", "book")
+        fields = ("id", "author", "title", "url", "genre", "notes", "suggester")
