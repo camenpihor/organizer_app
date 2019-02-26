@@ -69,7 +69,8 @@ function getRandomSubset(inputArray, numItems) {
   if (numItems >= inputArray.length) {
     return inputArray;
   }
-  var newInputArray = inputArray.slice()  // so that we don't mutate the inputArray outside of this function
+  // so that we don't mutate the inputArray outside of this function
+  var newInputArray = inputArray.slice()
   var outputArray = [];
   for (var i = 0; i < numItems; i++) {
     let randomIdx = Math.floor(Math.random() * newInputArray.length);
