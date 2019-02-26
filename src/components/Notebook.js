@@ -207,10 +207,7 @@ export default class Notebook extends Component {
             onMouseDown={this.handleMarkdownClick}
             onTouchEndCapture={this.handleMarkdownDoubleTap}
           >
-            <Markdown
-              source={sourceText}
-              linkTarget="_blank"
-            />
+            <Markdown source={sourceText} linkTarget="_blank" />
           </div>
         }
       </div>

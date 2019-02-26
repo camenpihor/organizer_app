@@ -179,10 +179,10 @@ class NavigationHelper extends Component {
             onResultSelect={this.handleResultSelect}
             onSearchChange={this.handleSearchChange}
             onBlur={this.resetHelper}
+            onKeyDown={this.captureClosingEvent}
             results={results}
             value={value}
             icon={false}
-            onKeyDown={this.captureClosingEvent}
             size="large"
           />
         }
