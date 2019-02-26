@@ -8,3 +8,48 @@
   line-height: 25px;
   transition: border-bottom 5s linear;
 }
+
+.bookcase {
+  display: grid;
+  max-width: 750px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.bookcase a {
+  color: inherit !important;
+  text-decoration: inherit;
+}
+
+.shelf {
+  border-bottom: 5px black solid;
+  margin-bottom: 10px !important;
+  text-align: center;
+}
+
+.book {
+  background-color: lightblue;
+  border: black 1px solid;
+  padding: 10px 0px 56px 0px !important;
+  width: 55px;
+  margin: 0 !important;
+  cursor: pointer;
+  color: black;
+}
+
+.book:hover {
+  background-color: brown;
+  color: white !important;
+}
+
+.book-title {
+  text-align: center;
+  hyphens: auto;
+}
+
+.book-author {
+  text-align: center;
+  margin-top: 10px;
+  hyphens: auto;
+  font-size: 0.8rem;
+}
