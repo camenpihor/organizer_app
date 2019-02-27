@@ -35,6 +35,7 @@ function BookList(props) {
               <List.Content>
                 <List.Header className="book-title">{book.title}</List.Header>
                 <div className="book-author">{book.author}</div>
+                <div className="book-genre">{book.genre}</div>
               </List.Content>
             </List.Item>
           ))}

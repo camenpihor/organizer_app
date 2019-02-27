@@ -32,7 +32,7 @@ html .book-home-page {
 .book {
   background-color: white;
   border: black 1px solid;
-  padding: 10px 0px 56px 0px !important;
+  padding: 10px 0px 26px 0px !important;
   width: 55px;
   margin: 0 !important;
   cursor: pointer;
@@ -44,12 +44,24 @@ html .book-home-page {
   color: white !important;
 }
 
+.book:hover .book-genre {
+  opacity: 1;
+}
+
 .book-title {
   text-align: center;
   hyphens: auto;
 }
 
 .book-author {
+  text-align: center;
+  margin-top: 10px;
+  hyphens: auto;
+  font-size: 0.8rem;
+}
+
+.book-genre {
+  opacity: 0;
   text-align: center;
   margin-top: 10px;
   hyphens: auto;
