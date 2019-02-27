@@ -34,7 +34,7 @@
 }
 
 .helper input:focus {
-  border-color: inherit !important;
+  border-color: black !important;
 }
 
 .helper .results {
