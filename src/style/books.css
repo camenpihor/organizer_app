@@ -1,12 +1,16 @@
+html .book-page {
+  background-color: saddlebrown;
+}
+
 .book-section {
   margin-bottom: 50px;
 }
 
 .book-header {
   font-size: 35px;
-  border-bottom: 2px solid rgba(0, 0, 0, 0.219);
-  line-height: 25px;
-  transition: border-bottom 5s linear;
+  text-align: center;
+  color: rgb(116, 59, 18);
+  padding: 20px 0;
 }
 
 .bookcase {
@@ -63,7 +67,7 @@
 }
 
 .colored-book-list .fiction {
-  background-color: lightgreen;
+  background-color: lightskyblue;
 }
 
 .colored-book-list .nonfiction {
@@ -71,7 +75,7 @@
 }
 
 .colored-book-list .biology {
-  background-color: lightslategray;
+  background-color: lightgreen;
 }
 
 .colored-book-list .psycology {

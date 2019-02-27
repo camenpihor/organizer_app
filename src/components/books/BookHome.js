@@ -47,6 +47,8 @@ function BookList(props) {
 
 export default class BookHome extends Component {
   componentDidMount() {
+    document.body.classList.add("book-page");
+
     objectList("book")
       .get()
       .then(response => {
@@ -63,6 +65,10 @@ export default class BookHome extends Component {
           console.log(error)
         }
       });
+  }
+
+  componentWillUnmount() {
+    document.body.classList.remove("book-page");
   }
 
   constructor(props) {
@@ -104,23 +110,23 @@ export default class BookHome extends Component {
             <AppNavigation {...this.props} />
 
             <div className="book-section colored-book-list">
-              <p className="book-header">Currently Reading</p>
+              <div className="book-header">Currently Reading</div>
               <BookList books={currentlyReading} name="suggested_books" />
             </div>
 
             <div className="book-section colored-book-list">
-              <p className="book-header">Suggestions</p>
+              <div className="book-header">Suggestions</div>
               <BookList books={unreadBooks} name="suggested_books" />
             </div>
 
             <div className="book-section colored-book-list">
-              <p className="book-header">Read</p>
+              <div className="book-header">Read</div>
               <BookList books={readBooks} name="books" />
             </div>
-
+{/*
             <div className="book-section">
               <p className="book-header">Create</p>
-            </div>
+            </div> */}
           </div>
         }
       </div>
