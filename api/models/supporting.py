@@ -147,23 +147,3 @@ class SuggestedBookmanager(models.Manager):
 
     def get_queryset(self):
         return super().get_queryset().filter(read=False)
-
-
-class SuggestedBook(SupportingObject):
-    """Supporting object for `core.Book`."""
-
-    author = models.TextField()
-    title = models.TextField()
-    url = models.URLField(null=True, blank=True)
-    genre = models.TextField()
-    notes = models.TextField(null=True, blank=True)
-    suggester = models.TextField()
-    read = models.BooleanField(default=False)
-
-    objects = SuggestedBookmanager()
-
-    class Meta(SupportingObject.Meta):
-        """Metadata for `Resource`."""
-
-        db_table = "supporting_suggested_books"
-        ordering = ["title"]

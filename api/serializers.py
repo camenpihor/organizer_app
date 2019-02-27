@@ -9,7 +9,7 @@ Useful attributes for the `Meta` inner class include `model`, `fields`, and
 from rest_framework import serializers
 
 from .models.core import Question, Book, Topic, Fact, Word
-from .models.supporting import Notebook, SuggestedBook
+from .models.supporting import Notebook
 
 
 class QuestionSerializer(serializers.HyperlinkedModelSerializer):
@@ -37,6 +37,11 @@ class BookSerializer(serializers.HyperlinkedModelSerializer):
             "num_views",
             "rating",
             "created_at_utc",
+            "genre",
+            "notes",
+            "suggester",
+            "read",
+            "reading",
         )
 
 
@@ -78,13 +83,3 @@ class NotebookSerializer(serializers.HyperlinkedModelSerializer):
 
         model = Notebook
         fields = ("id", "markdown", "model_type", "created_at_utc")
-
-
-class SuggestedBookSerializer(serializers.HyperlinkedModelSerializer):
-    """Serializer for `models.supporting.SuggestedBook`."""
-
-    class Meta:
-        """Additional information for the serializer."""
-
-        model = SuggestedBook
-        fields = ("id", "author", "title", "url", "genre", "notes", "suggester")

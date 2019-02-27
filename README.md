@@ -73,6 +73,9 @@ I am using Django REST framework as a backend API with a ReactJS frontend.
 
 - think of ways to track usage (number of times a question was viewed, number of page changes, number of questions created or altered, last edit, total number of questions, total number of forgotten questions)
 
+- home page should split books into want-to-read and have-read
+- remove suggested books model
+
 - book home
 - book archive
 - book detail

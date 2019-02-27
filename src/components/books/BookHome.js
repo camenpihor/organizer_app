@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import AppNavigation from 'components/Navigation'
-import { List, Card } from 'semantic-ui-react'
+import { List } from 'semantic-ui-react'
 
 import { objectList } from 'api'
 
@@ -31,7 +31,7 @@ function BookList(props) {
       {splitArray(props.books, num_books).map((books, idx) => (
         <List key={idx} horizontal className="shelf">
           {books.map(book => (
-            <List.Item key={book.id} className="book" as="a" href={`/books/${book.id}`}>
+            <List.Item key={book.id} className={`book ${book.genre}`} as="a" href={`/books/${book.id}`}>
               <List.Content>
                 <List.Header className="book-title">{book.title}</List.Header>
                 <div className="book-author">{book.author}</div>
@@ -51,7 +51,8 @@ export default class BookHome extends Component {
       .get()
       .then(response => {
         this.setState({
-          books: response.data
+          books: response.data,
+          loadingData: false
         });
       })
       .catch(error => {
@@ -62,54 +63,63 @@ export default class BookHome extends Component {
           console.log(error)
         }
       });
-
-    objectList("suggestedbook")
-      .get()
-      .then(response => {
-        this.setState({
-          suggestedBooks: response.data
-        });
-      })
-      .catch(error => {
-        if (error.response.status === 401) {
-          this.props.history.push("/")
-          localStorage.setItem("token", null)
-        } else {
-          console.log(error)
-        }
-      });
-
-    this.setState({ loadingData: false });
   }
+
   constructor(props) {
     super(props);
     this.state = {
       books: [],
-      suggestedBooks: [],
       loadingData: true
     };
   }
 
+  splitReadBooks = (allBooks) => {
+    let readBooks = []
+    let unreadBooks = []
+    let currentlyReading = []
+    allBooks.forEach(book => {
+      if (book.read === true) {
+        readBooks.push(book);
+      } else if (book.reading === true) {
+        currentlyReading.push(book);
+      } else {
+        unreadBooks.push(book);
+      }
+    })
+    return {
+      readBooks: readBooks,
+      unreadBooks: unreadBooks,
+      currentlyReading: currentlyReading
+    }
+  }
+
   render() {
-    const { books, suggestedBooks, loadingData } = this.state;
+    const { books, loadingData } = this.state;
+    const { readBooks, unreadBooks, currentlyReading } = this.splitReadBooks(books);
 
     return (
       <div className="book-page">
         {!loadingData &&
           <div>
             <AppNavigation {...this.props} />
-            <div className="book-section">
+
+            <div className="book-section colored-book-list">
+              <p className="book-header">Currently Reading</p>
+              <BookList books={currentlyReading} name="suggested_books" />
+            </div>
+
+            <div className="book-section colored-book-list">
               <p className="book-header">Suggestions</p>
-              <BookList books={suggestedBooks} name="suggested_books" />
+              <BookList books={unreadBooks} name="suggested_books" />
+            </div>
+
+            <div className="book-section colored-book-list">
+              <p className="book-header">Read</p>
+              <BookList books={readBooks} name="books" />
             </div>
 
             <div className="book-section">
               <p className="book-header">Create</p>
-            </div>
-
-            <div className="book-section">
-              <p className="book-header">Archive</p>
-              <BookList books={books} name="books" />
             </div>
           </div>
         }

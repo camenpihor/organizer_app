@@ -28,7 +28,7 @@
 }
 
 .book {
-  background-color: lightblue;
+  background-color: white;
   border: black 1px solid;
   padding: 10px 0px 56px 0px !important;
   width: 55px;
@@ -38,7 +38,7 @@
 }
 
 .book:hover {
-  background-color: brown;
+  background-color: brown !important;
   color: white !important;
 }
 
@@ -52,4 +52,28 @@
   margin-top: 10px;
   hyphens: auto;
   font-size: 0.8rem;
+}
+
+.colored-book-list .ethics {
+  background-color: lightcoral;
+}
+
+.colored-book-list .history {
+  background-color: lightgoldenrodyellow;
+}
+
+.colored-book-list .fiction {
+  background-color: lightgreen;
+}
+
+.colored-book-list .nonfiction {
+  background-color: lightgrey;
+}
+
+.colored-book-list .biology {
+  background-color: lightslategray;
+}
+
+.colored-book-list .psycology {
+  background-color: lightseagreen;
 }

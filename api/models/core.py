@@ -68,12 +68,17 @@ class Book(CoreObject):
     title = models.TextField()
     url = models.URLField(null=True, blank=True)
     genre = models.TextField()
+    notes = models.TextField(null=True, blank=True)
+    suggester = models.TextField(null=True, blank=True)
+    read = models.BooleanField(default=False)
+    reading = models.BooleanField(default=False)
 
     class Meta(CoreObject.Meta):
         """Metadata for `Book`."""
 
         db_table = "core_books"
         ordering = ["title"]
+        unique_together = ("author", "title")
 
 
 class Fact(CoreObject):

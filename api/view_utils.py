@@ -4,24 +4,22 @@ from collections import namedtuple
 from django.http import Http404
 
 from .models.core import CORE_OBJECT_TYPES, Book, Fact, Question, Topic, Word
-from .models.supporting import SUPPORTING_OBJECT_TYPES, SuggestedBook
+from .models.supporting import SUPPORTING_OBJECT_TYPES
 from .serializers import (
     BookSerializer,
     FactSerializer,
     QuestionSerializer,
     TopicSerializer,
     WordSerializer,
-    SuggestedBookSerializer,
 )
 
-OBJECT_MODELS = [Question, Book, Topic, Fact, Word, SuggestedBook]
+OBJECT_MODELS = [Question, Book, Topic, Fact, Word]
 OBJECT_SERIALIZERS = [
     QuestionSerializer,
     BookSerializer,
     TopicSerializer,
     FactSerializer,
     WordSerializer,
-    SuggestedBookSerializer,
 ]
 
 ObjectInfo = namedtuple("ObjectInfo", ["model", "serializer"])
