@@ -21,12 +21,6 @@ body {
   padding: 0 25px;
 }
 
-body.entry-page {
-  background-color: #282c34;
-  color: white;
-  padding: 0;
-}
-
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;

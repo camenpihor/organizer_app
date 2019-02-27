@@ -15,3 +15,9 @@
 #login-form {
   font-size: 1.5rem;
 }
+
+body.entry-page {
+  background-color: #282c34;
+  color: white;
+  padding: 0;
+}
