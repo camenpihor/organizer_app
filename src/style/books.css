@@ -8,9 +8,7 @@ html .book-page {
 
 .book-header {
   font-size: 35px;
-  text-align: center;
   color: rgb(116, 59, 18);
-  padding: 20px 0;
 }
 
 .bookcase {
@@ -60,24 +58,30 @@ html .book-page {
 
 .colored-book-list .ethics {
   background-color: lightcoral;
+  opacity: 0.8;
 }
 
 .colored-book-list .history {
   background-color: lightgoldenrodyellow;
+  opacity: 0.8;
 }
 
 .colored-book-list .fiction {
   background-color: lightskyblue;
+  opacity: 0.8;
 }
 
 .colored-book-list .nonfiction {
   background-color: lightgrey;
+  opacity: 0.8;
 }
 
 .colored-book-list .biology {
   background-color: lightgreen;
+  opacity: 0.8;
 }
 
 .colored-book-list .psycology {
   background-color: lightseagreen;
+  opacity: 0.8;
 }
