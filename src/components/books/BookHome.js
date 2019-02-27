@@ -47,7 +47,7 @@ function BookList(props) {
 
 export default class BookHome extends Component {
   componentDidMount() {
-    document.body.classList.add("book-page");
+    document.body.classList.add("book-home-page");
 
     objectList("book")
       .get()
@@ -68,7 +68,7 @@ export default class BookHome extends Component {
   }
 
   componentWillUnmount() {
-    document.body.classList.remove("book-page");
+    document.body.classList.remove("book-home-page");
   }
 
   constructor(props) {

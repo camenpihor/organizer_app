@@ -37,7 +37,7 @@ export default class QuestionDetail extends Component {
 
     return (
       <div className="question-page">
-        <AppNavigation pageName="Question Detail" {...this.props} />
+        <AppNavigation {...this.props} />
         <h3>{question.question}</h3>
         <p>
           <Moment format="MMM DD YYYY">
