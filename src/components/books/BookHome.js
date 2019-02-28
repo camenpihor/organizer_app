@@ -32,7 +32,7 @@ function BookList(props) {
         <List key={idx} horizontal className="shelf">
           {books.map(book => (
             <List.Item key={book.id} className={`book ${book.genre}`} as="a" href={`/books/${book.id}`}>
-              <List.Content>
+              <List.Content className="book-info">
                 <List.Header className="book-title">{book.title}</List.Header>
                 <div className="book-author">{book.author}</div>
                 <div className="book-genre">{book.genre}</div>
@@ -46,7 +46,7 @@ function BookList(props) {
 }
 
 
-export default class BookHome extends Component {
+class BookHome extends Component {
   componentDidMount() {
     document.body.classList.add("book-home-page");
 
@@ -124,7 +124,7 @@ export default class BookHome extends Component {
               <div className="book-header">Read</div>
               <BookList books={readBooks} name="books" />
             </div>
-{/*
+            {/*
             <div className="book-section">
               <p className="book-header">Create</p>
             </div> */}
@@ -134,3 +134,5 @@ export default class BookHome extends Component {
     )
   }
 }
+
+export { BookList, BookHome }

@@ -32,8 +32,7 @@ html .book-home-page {
 .book {
   background-color: white;
   border: black 1px solid;
-  padding: 10px 0px 26px 0px !important;
-  width: 55px;
+  width: 60px;
   margin: 0 !important;
   cursor: pointer;
   color: black;
@@ -46,6 +45,10 @@ html .book-home-page {
 
 .book:hover .book-genre {
   opacity: 1;
+}
+
+.book-info {
+  padding: 10px 5px 26px 5px !important;
 }
 
 .book-title {
