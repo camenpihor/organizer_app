@@ -140,10 +140,3 @@ class Resource(SupportingObject):
         """Metadata for `Resource`."""
 
         db_table = "supporting_resources"
-
-
-class SuggestedBookmanager(models.Manager):
-    """Manager for `SuggestedBook` so that we don't return read books."""
-
-    def get_queryset(self):
-        return super().get_queryset().filter(read=False)
